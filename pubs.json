@@ -19,12 +19,13 @@
           { "coords": [8, 8], "marker": "interchange", "name": "Sir Isaac Newton", "labelPos": "SW" },
           { "coords": [10, 8], "name": "Architect", "labelPos": "S" },
           { "coords": [12, 8], "marker": "interchange", "name": "Castle Inn", "labelPos": "N" },
-          { "coords": [14, 8], "name": "Pickeral", "labelPos": "S" },
-          { "coords": [16, 8], "name": "Baron of Beef", "labelPos": "N" },
-          { "coords": [20, 8], "marker": "interchange", "name": "Mitre", "labelPos": "S" },
+          { "coords": [14, 8], "name": "The Pickeral", "labelPos": "S" },
+          { "coords": [16, 8], "name": "The Baron of Beef", "labelPos": "N" },
+          { "coords": [20, 8], "marker": "interchange", "name": "Mitre", "labelPos": "SW" },
           { "coords": [22, 8], "name": "Regal", "labelPos": "N" },
-          { "coords": [26, 8], "name": "Emperor", "labelPos": "S" },
-          { "coords": [28, 8], "name": "Great Northern", "labelPos": "N" }
+          { "coords": [24, 8], "name": "The Grain Store", "labelPos": "S" },
+          { "coords": [26, 8], "name": "Emperor", "labelPos": "N" },
+          { "coords": [28, 8], "name": "Great Northern", "labelPos": "S" }
       ]
     },
     {
@@ -58,14 +59,13 @@
       [
           { "coords": [20, 6], "name": "Maypole", "labelPos": "E" },
           { "coords": [20, 4], "name": "St Radegund", "labelPos": "E" },
-          { "coords": [20, 3] },
-          { "coords": [21, 2], "dir": "N" },
-          { "coords": [22, 2] },
-          { "coords": [24, 2], "name": "Hopbine", "labelPos": "S" }
+          { "coords": [21, 3], "dir": "N" },
+          { "coords": [22, 3] },
+          { "coords": [24, 3], "name": "Hopbine", "labelPos": "S" }
       ]
     },
     {
-      "label": "Picadilly",
+      "label": "Chesterton",
       "color": "#003688",
       "shiftCoords": [0, 0],
       "reverseMarkers": false,
@@ -80,7 +80,9 @@
         { "coords": [14, 2], "name": "The Portland Arms", "labelPos": "S" },
         { "coords": [16, 2], "name": "The Waterman", "labelPos": "N" },
         { "coords": [18, 2], "name": "The Old Spring", "labelPos": "S" },
-        { "coords": [24, 2], "name": "The Haymakers", "labelPos": "N"}
+        { "coords": [24, 2], "name": "The Haymakers", "labelPos": "N" },
+        { "coords": [26, 2], "name": "The Green Dragon", "labelPos": "S" },
+        { "coords": [30, 2], "name": "The Plough", "labelPos": "N" }
       ]
     }
   ]
