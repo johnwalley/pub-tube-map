@@ -229,13 +229,14 @@ d3.json("pubs.json", function(data) {
       }
     };
 
+    var interchangeMarkers = svg.append("g");
     var markers = svg.append("g");
 
     var drawMarkers = function() {
 
         var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange"; });
 
-        markers.selectAll("path")
+        interchangeMarkers.selectAll("path")
          .data(interchangePubs)
          .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
          .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
@@ -248,16 +249,15 @@ d3.json("pubs.json", function(data) {
          .attr("stroke-width", lineWidth/4)
          .on("click", function(d) { addPub(d)(); });
 
-         var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
+        var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
 
-          var length = lineWidth;
+        var length = lineWidth;
 
-
-          markers.selectAll("path")
-           .data(stationPubs)
-           .enter()
-           .append("path")
-           .attr("d", function(d) {
+        markers.selectAll("path")
+         .data(stationPubs)
+         .enter()
+         .append("path")
+         .attr("d", function(d) {
 
              var dir;
 
@@ -283,8 +283,8 @@ d3.json("pubs.json", function(data) {
            })
            .attr("stroke", function(d) { return d.color; })
            .attr("stroke-width", lineWidth/2)
-           .attr("fill", "none");
-
+           .attr("fill", "none")
+           .on("click", function(d) { return addPub(d)(); });
         }
 
         var labels = svg.append("g");
