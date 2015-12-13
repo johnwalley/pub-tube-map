@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cambridge Tube Pub Map</title>
+  <script src="d3.v3.min.js" charset="utf-8"></script>
+  <script src="parse-1.6.7.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="pubs.css">
+  <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css">
+</head>
+<body>
+  <!--<script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1551289211778400',
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>-->
+
+  <div class="container">
+    <div class="fb-share-button" data-href="http://localhost:8000" data-layout="button"></div>
+
+    <div id="legend">
+      Awards: <ul id="awards"></ul>
+      <ul>
+        <li id="visited">
+          <p></p>
+          <ul></ul>
+        </li>
+        <li id="stillToVisit"></li>
+      </ul>
+      <ul id="lines"></ul>
+    </div>
+    <div id="map"></div>
+  </div>
+  <script src="pubs.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+}
+
+#legend {
+  font-family: 'Hammersmith One', sans-serif;
+  min-width: 300px;
+}
+
+#legend li {
+  list-style: none;
+}
+
+#awards li {
+  display: inline;
+}
+
+#awards {
+  display: inline;
+  list-style: none;
+}
+
+text {
+  font-family: 'Hammersmith One', sans-serif;
+  color: #444444;
+}
+
+
+/* Bakerloo #b363305, District #00782a, Hammersmith and City #f3a9bb
+ Jubilee #a0a5a9, Metropoliton #9b0056, Northern #000000
+ Waterloo and City #95cdba
+ DLR #00a4a7 */

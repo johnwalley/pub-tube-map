@@ -1,0 +1,87 @@
+{
+  "columns": 60,
+  "rows": 40,
+  "cellSize": 30,
+  "legendId": "legend",
+  "textClass": "text",
+  "gridNumbers": true,
+  "grid": false,
+  "lineWidth": 8,
+  "lines":
+  [
+    {
+      "label": "Central",
+      "color": "#e32017",
+      "shiftCoords": [0, 0],
+      "reverseMarkers": false,
+      "nodes":
+      [
+          { "coords": [8, 8], "marker": "interchange", "name": "Sir Isaac Newton", "labelPos": "SW" },
+          { "coords": [10, 8], "name": "Architect", "labelPos": "S" },
+          { "coords": [12, 8], "marker": "interchange", "name": "Castle Inn", "labelPos": "N" },
+          { "coords": [14, 8], "name": "Pickeral", "labelPos": "S" },
+          { "coords": [16, 8], "name": "Baron of Beef", "labelPos": "N" },
+          { "coords": [20, 8], "marker": "interchange", "name": "Mitre", "labelPos": "S" },
+          { "coords": [22, 8], "name": "Regal", "labelPos": "N" },
+          { "coords": [26, 8], "name": "Emperor", "labelPos": "S" },
+          { "coords": [28, 8], "name": "Great Northern", "labelPos": "N" }
+      ]
+    },
+    {
+      "label": "Circle",
+      "color": "#ffd300",
+      "shiftCoords": [0, 0],
+      "reverseMarkers": false,
+      "nodes":
+      [
+          { "coords": [12, 8], "marker": "interchange" },
+          { "coords": [12, 10], "name": "Punter", "labelPos": "W" },
+          { "coords": [12, 11] },
+          { "coords": [13, 12], "dir": "S" },
+          { "coords": [14, 12] },
+          { "coords": [16, 12], "name": "The Anchor", "labelPos": "S" },
+          { "coords": [18, 12], "name": "The Mill", "labelPos": "N" },
+          { "coords": [19, 12] },
+          { "coords": [20, 11], "dir": "E" },
+          { "coords": [20, 10] },
+          { "coords": [20, 8] },
+          { "coords": [20, 6], "name": "Maypole", "labelPos": "E" },
+          { "coords": [20, 4], "name": "St Radegund", "labelPos": "E" }
+      ]
+    },
+    {
+      "label": "Chesterton",
+      "color": "#0098d4",
+      "shiftCoords": [8, 0],
+      "reverseMarkers": false,
+      "nodes":
+      [
+          { "coords": [20, 6], "name": "Maypole", "labelPos": "E" },
+          { "coords": [20, 4], "name": "St Radegund", "labelPos": "E" },
+          { "coords": [20, 3] },
+          { "coords": [21, 2], "dir": "N" },
+          { "coords": [22, 2] },
+          { "coords": [24, 2], "name": "Hopbine", "labelPos": "S" }
+      ]
+    },
+    {
+      "label": "Picadilly",
+      "color": "#003688",
+      "shiftCoords": [0, 0],
+      "reverseMarkers": false,
+      "nodes":
+      [
+        { "coords": [8, 8], "marker": "interchange" },
+        { "coords": [8, 3], "marker": "interchange" },
+        { "coords": [9, 2], "dir": "N" },
+        { "coords": [10, 2] },
+        { "coords": [11, 2] },
+        { "coords": [12, 2], "name": "The Carpenters Arms", "labelPos": "N" },
+        { "coords": [14, 2], "name": "The Portland Arms", "labelPos": "S" },
+        { "coords": [16, 2], "name": "The Waterman", "labelPos": "N" },
+        { "coords": [18, 2], "name": "The Old Spring", "labelPos": "S" },
+        { "coords": [24, 2], "name": "The Haymakers", "labelPos": "N"}
+      ]
+    }
+  ]
+}
