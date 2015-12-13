@@ -82,7 +82,7 @@ d3.json("pubs.json", function(data) {
                 lineStartCorrection [ 0, -lineWidth/(4*scale)];
             }
 
-            if (lineNode === lineNodes.length) {
+            if (lineNode === lineNodes.length - 2) {
               if (xDiff > 0)
                 lineEndCorrection = [-lineWidth/(4*scale), 0];
               if (xDiff < 0)
