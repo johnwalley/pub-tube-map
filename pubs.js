@@ -196,7 +196,7 @@ d3.json("pubs.json", function(data) {
     var textPos = function(data) {
       var pos;
       var textAnchor;
-      var offset = lineWidth * 1.8;
+      var offset = lineWidth * 2.6;
       switch (data.labelPos.toLowerCase()) {
         case "n":
             pos = [0, -offset];
@@ -211,8 +211,9 @@ d3.json("pubs.json", function(data) {
             textAnchor = "middle";
             break;
         case "sw":
-            pos: [-offset, offset];
+            pos = [-offset, offset];
             textAnchor = "end";
+            break;
         case "w":
             pos = [-offset, 0];
             textAnchor = "end";
