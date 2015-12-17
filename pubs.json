@@ -2,8 +2,6 @@
   "columns": 60,
   "rows": 40,
   "cellSize": 30,
-  "legendId": "legend",
-  "textClass": "text",
   "gridNumbers": true,
   "grid": false,
   "lineWidth": 8,
@@ -51,7 +49,7 @@
       ]
     },
     {
-      "label": "Chesterton",
+      "label": "Grafton",
       "color": "#0098d4",
       "shiftCoords": [8, 0],
       "reverseMarkers": false,
@@ -71,8 +69,8 @@
       "reverseMarkers": false,
       "nodes":
       [
-        { "coords": [8, 8], "marker": "interchange" },
-        { "coords": [8, 3], "marker": "interchange" },
+        { "coords": [8, 8], "marker": "interchange", "name": "Sir Isaac Newton", "labelPos": "SW" },
+        { "coords": [8, 3] },
         { "coords": [9, 2], "dir": "N" },
         { "coords": [10, 2] },
         { "coords": [11, 2] },

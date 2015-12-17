@@ -5,11 +5,10 @@ var options = {};
 d3.json("pubs.json", function(data) {
   options.rows = data.rows;
   options.columns = data.columns;
+
   var scale = data.cellSize;
   var lineWidth = data.lineWidth;
-  var textClass = data.textClass;
   var grid = data.grid;
-  var legendId = data.legendId;
   var gridNumbers = data.gridNumbers;
   var reverseMarkers = data.reverseMarkers;
 
@@ -197,9 +196,10 @@ d3.json("pubs.json", function(data) {
     var pos;
     var textAnchor;
     var offset = lineWidth * 2.6;
+
     switch (data.labelPos.toLowerCase()) {
       case "n":
-      pos = [0, -offset];
+      pos = [0, -offset*2];
       textAnchor = "middle";
       break;
       case "e":
@@ -310,23 +310,15 @@ d3.json("pubs.json", function(data) {
   var drawAwards = function() {
     var awards = score(visitedPubs.values(), lines);
 
-
     var selectedIcons = awardIcons.selectAll("li").data(awards.filter(function(award) { return award.unlocked === true; }), function(d) { return d.name; });
 
     var selectedSpan = selectedIcons
     .enter()
     .append("li")
-    .append("span")
-    .attr("class", "fa-stack fa-2x");
-
-    selectedSpan
-    .append("i")
-    .attr("class", "fa fa-circle-o fa-stack-2x")
-    .style("color", function(d) { return d.color; });
+    .append("span");
 
     selectedSpan
     .append("strong")
-    .attr("class", "fa-stack-1x")
     .style("color", function(d) { return d.color; })
     .text(function(d) { return d.name; });
 
