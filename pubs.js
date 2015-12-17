@@ -5,9 +5,10 @@ var options = {};
 d3.json("pubs.json", function(data) {
   options.rows = data.rows;
   options.columns = data.columns;
+  options.lineWidth = data.lineWidth;
+
 
   var scale = data.cellSize;
-  var lineWidth = data.lineWidth;
   var grid = data.grid;
   var gridNumbers = data.gridNumbers;
   var reverseMarkers = data.reverseMarkers;
@@ -18,31 +19,26 @@ d3.json("pubs.json", function(data) {
   var h = options.rows * scale;
 
   var svg = d3.select("#map")
-  .append("svg")
-  .attr("width", w)
-  .attr("height", h);
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h);
 
   var lineFunction = d3.svg.line()
-  .x(function(d) { return d[0] * scale; })
-  .y(function(d) { return d[1] * scale; })
-  .interpolate("linear");
-
-  var lineFunctionUnscaled = d3.svg.line()
-  .x(function(d) { return d[0]; })
-  .y(function(d) { return d[1]; })
-  .interpolate("linear");
+    .x(function(d) { return d[0] * scale; })
+    .y(function(d) { return d[1] * scale; })
+    .interpolate("linear");
 
   var curveFunction = d3.svg.arc()
-  .innerRadius(scale - lineWidth/2)
-  .outerRadius(scale + lineWidth/2)
-  .startAngle(function(angle) { return angle[0]; })
-  .endAngle(function(angle) { return angle[1]; });
+    .innerRadius(scale - options.lineWidth/2)
+    .outerRadius(scale + options.lineWidth/2)
+    .startAngle(function(angle) { return angle[0]; })
+    .endAngle(function(angle) { return angle[1]; });
 
   var markerFunction = d3.svg.arc()
-  .innerRadius(0)
-  .outerRadius(lineWidth/2)
-  .startAngle(0)
-  .endAngle(2*Math.PI);
+    .innerRadius(0)
+    .outerRadius(options.lineWidth/2)
+    .startAngle(0)
+    .endAngle(2*Math.PI);
 
   var lines = svg.append("g");
 
@@ -72,40 +68,40 @@ d3.json("pubs.json", function(data) {
 
           if (lineNode === 0) {
             if (xDiff > 0)
-            lineStartCorrection = [lineWidth/(4*scale), 0];
+              lineStartCorrection = [options.lineWidth/(4*scale), 0];
             if (xDiff < 0)
-            lineStartCorrection = [-lineWidth/(4*scale), 0];
+              lineStartCorrection = [-options.lineWidth/(4*scale), 0];
             if (yDiff > 0)
-            lineStartCorrection = [0, lineWidth/(4*scale)];
+              lineStartCorrection = [0, options.lineWidth/(4*scale)];
             if (yDiff < 0)
-            lineStartCorrection [ 0, -lineWidth/(4*scale)];
+              lineStartCorrection [ 0, -options.lineWidth/(4*scale)];
           }
 
           if (lineNode === lineNodes.length - 2) {
             if (xDiff > 0)
-            lineEndCorrection = [-lineWidth/(4*scale), 0];
+              lineEndCorrection = [-options.lineWidth/(4*scale), 0];
             if (xDiff < 0)
-            lineEndCorrection = [lineWidth/(4*scale), 0];
+              lineEndCorrection = [options.lineWidth/(4*scale), 0];
             if (yDiff > 0)
-            lineEndCorrection = [0, -lineWidth/(4*scale)];
+              lineEndCorrection = [0, -options.lineWidth/(4*scale)];
             if (yDiff < 0)
-            lineEndCorrection [ 0, lineWidth/(4*scale)];
+              lineEndCorrection [ 0, options.lineWidth/(4*scale)];
           }
 
           lines.append("path")
-          .attr("d", lineFunction([
-            [
-              currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
-              currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1]
-            ],
-            [
-              nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0],
-              nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1]
-            ]
-          ]))
-          .attr("stroke", line.color)
-          .attr("stroke-width", lineWidth)
-          .attr("fill", "none");
+            .attr("d", lineFunction([
+              [
+                currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
+                currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1]
+              ],
+              [
+                nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0],
+                nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1]
+              ]
+            ]))
+            .attr("stroke", line.color)
+            .attr("stroke-width", options.lineWidth)
+            .attr("fill", "none");
         } else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
           direction = nextNode.dir.toLowerCase();
           var phi;
@@ -116,9 +112,9 @@ d3.json("pubs.json", function(data) {
           }
 
           lines.append("path")
-          .attr("d", curveFunction(phi))
-          .attr("transform", "translate(" + ((currNode.coords[0] + shiftCoords[0]) * scale + xVal) + "," + ((currNode.coords[1] + shiftCoords[1]) * scale + yVal) + ")")
-          .attr("fill", line.color);
+            .attr("d", curveFunction(phi))
+            .attr("transform", "translate(" + ((currNode.coords[0] + shiftCoords[0]) * scale + xVal) + "," + ((currNode.coords[1] + shiftCoords[1]) * scale + yVal) + ")")
+            .attr("fill", line.color);
         }
       }
     }
@@ -195,11 +191,13 @@ d3.json("pubs.json", function(data) {
   var textPos = function(data) {
     var pos;
     var textAnchor;
-    var offset = lineWidth * 2.6;
+    var offset = options.lineWidth * 2;
+
+    var numLines = data.name.split(/\n/).length;
 
     switch (data.labelPos.toLowerCase()) {
       case "n":
-      pos = [0, -offset*2];
+      pos = [0, -offset * numLines];
       textAnchor = "middle";
       break;
       case "e":
@@ -211,7 +209,7 @@ d3.json("pubs.json", function(data) {
       textAnchor = "middle";
       break;
       case "sw":
-      pos = [-offset, offset];
+      pos = [-offset*0.7, offset*0.8];
       textAnchor = "end";
       break;
       case "w":
@@ -246,12 +244,12 @@ d3.json("pubs.json", function(data) {
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
     .attr("fill", bgColor)
     .attr("stroke", fgColor)
-    .attr("stroke-width", lineWidth/4)
+    .attr("stroke-width", options.lineWidth/4)
     .on("click", function(d) { addPub(d)(); });
 
     var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
 
-    var length = lineWidth;
+    var length = options.lineWidth/scale;
 
     markers.selectAll("path")
     .data(stationPubs)
@@ -279,10 +277,10 @@ d3.json("pubs.json", function(data) {
         break;
       }
 
-      return lineFunctionUnscaled([[d.x, d.y], [d.x + length*dir[0], d.y + length*dir[1]]]);
+      return lineFunction([[d.x/scale, d.y/scale], [d.x/scale + length*dir[0], d.y/scale + length*dir[1]]]);
     })
     .attr("stroke", function(d) { return d.color; })
-    .attr("stroke-width", lineWidth/2)
+    .attr("stroke-width", options.lineWidth/2)
     .attr("fill", "none")
     .on("click", function(d) { return addPub(d)(); });
   }
@@ -338,7 +336,9 @@ d3.json("pubs.json", function(data) {
   .text(function(d) { return d.label })
   .style("color", function(d) { return d.color; });
 
-  d3.select("#visited").select("p").on("click", function() { d3.select("#visited").select("ul").style("display", "none"); });
+  d3.select("#visited").select("p").on("click", function() {
+    toggle(d3.select("#visited").select("ul"));
+  });
 
   var visitedList = d3.select("#visited").select("ul");
 
@@ -362,21 +362,24 @@ d3.json("pubs.json", function(data) {
     drawMarkers();
     drawLabels();
     drawLists();
+    drawAwards();
+
 
     d3.select("#visited").select("p")
-    .text("Visited: " + visitedPubs.size());
+      .text("Visited: " + visitedPubs.size());
 
-    d3.select("#stillToVisit")
-    .text("Pubs left: " + (pubs.length - visitedPubs.size()));
+    // TODO: pubs contains duplicates so we over count the number of pubs left
+    d3.select("#stillToVisit").select("p")
+      .text("Pubs left: " + (pubs.length - visitedPubs.size()));
 
-    drawAwards();
   };
 
   update();
 
   // Split long pub names into multiple lines
+
   labels.selectAll("text")
-  .call(wrap, 100);
+  .call(wrap);
 
 });
 
@@ -421,27 +424,32 @@ function score(visited, lines) {
   return awards;
 }
 
-function wrap(text, width) {
+// Render line breaks for svg text
+function wrap(text) {
   text.each(function() {
-    var text = d3.select(this),
-    words = text.text().split(/\s+/).reverse(),
-    word,
-    line = [],
-    lineNumber = 0,
-    lineHeight = 1.1, // ems
-    y = text.attr("y"),
-    x = text.attr("x"),
-    dy = parseFloat(text.attr("dy")),
-    tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
-    while (word = words.pop()) {
-      line.push(word);
-      tspan.text(line.join(" "));
-      if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-      }
-    }
+    var text = d3.select(this);
+    var lines = text.text().split(/\n/);
+
+    var y = text.attr("y");
+    var x = text.attr("x");
+    var dy = parseFloat(text.attr("dy"));
+
+    var tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em").text(lines[0]);
+
+    for (var lineNum = 1; lineNum < lines.length; lineNum++) {
+      tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", lineNum * 1.1 + dy + "em").text(lines[lineNum])
+    };
+
   });
-}
+};
+
+// Toggle visibility of an element
+function toggle(el) {
+  var display = el.style("display");
+
+  if (display === "block") {
+    el.style("display", "none");
+  } else {
+    el.style("display", "block");
+  }
+};

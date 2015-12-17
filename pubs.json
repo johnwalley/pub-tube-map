@@ -14,11 +14,11 @@
       "reverseMarkers": false,
       "nodes":
       [
-          { "coords": [8, 8], "marker": "interchange", "name": "Sir Isaac Newton 2", "labelPos": "SW", "hide": true },
+          { "coords": [8, 8], "marker": "interchange", "name": "Sir Isaac Newton", "labelPos": "SW", "hide": true },
           { "coords": [10, 8], "name": "Architect", "labelPos": "S" },
           { "coords": [12, 8], "marker": "interchange", "name": "Castle Inn", "labelPos": "N" },
           { "coords": [14, 8], "name": "The Pickeral", "labelPos": "S" },
-          { "coords": [16, 8], "name": "The Baron of Beef", "labelPos": "N" },
+          { "coords": [16, 8], "name": "The Baron\nof Beef", "labelPos": "N" },
           { "coords": [20, 8], "marker": "interchange", "name": "Mitre", "labelPos": "SW" },
           { "coords": [22, 8], "name": "Regal", "labelPos": "N" },
           { "coords": [24, 8], "name": "The Grain Store", "labelPos": "S" },
@@ -60,7 +60,7 @@
           { "coords": [21, 4], "dir": "N" },
           { "coords": [22, 4] },
           { "coords": [25, 4], "name": "Hopbine", "labelPos": "S" },
-          { "coords": [27, 4], "name": "The Elm Tree", "labelPos": "N" }
+          { "coords": [28, 4], "name": "The Elm Tree", "labelPos": "N" }
       ]
     },
     {
@@ -75,12 +75,12 @@
         { "coords": [9, 2], "dir": "N" },
         { "coords": [10, 2] },
         { "coords": [11, 2] },
-        { "coords": [12, 2], "name": "The Carpenters Arms", "labelPos": "N" },
-        { "coords": [14, 2], "name": "The Portland Arms", "labelPos": "S" },
+        { "coords": [12, 2], "name": "The Carpenters\nArms", "labelPos": "N" },
+        { "coords": [14, 2], "name": "The Portland\nArms", "labelPos": "S" },
         { "coords": [16, 2], "name": "The Waterman", "labelPos": "N" },
         { "coords": [18, 2], "name": "The Old Spring", "labelPos": "S" },
         { "coords": [24, 2], "name": "The Haymakers", "labelPos": "N" },
-        { "coords": [26, 2], "name": "The Green Dragon", "labelPos": "S" },
+        { "coords": [26, 2], "name": "The Green\nDragon", "labelPos": "S" },
         { "coords": [30, 2], "name": "The Plough", "labelPos": "N" }
       ]
     }
