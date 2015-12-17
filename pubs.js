@@ -6,7 +6,7 @@ d3.json("pubs.json", function(data) {
   options.rows = data.rows;
   options.columns = data.columns;
   options.lineWidth = data.lineWidth;
-
+  options.scale = data.cellSize;
 
   var scale = data.cellSize;
   var grid = data.grid;
@@ -23,129 +23,9 @@ d3.json("pubs.json", function(data) {
     .attr("width", w)
     .attr("height", h);
 
-  var lineFunction = d3.svg.line()
-    .x(function(d) { return d[0] * scale; })
-    .y(function(d) { return d[1] * scale; })
-    .interpolate("linear");
-
-  var curveFunction = d3.svg.arc()
-    .innerRadius(scale - options.lineWidth/2)
-    .outerRadius(scale + options.lineWidth/2)
-    .startAngle(function(angle) { return angle[0]; })
-    .endAngle(function(angle) { return angle[1]; });
-
-  var markerFunction = d3.svg.arc()
-    .innerRadius(0)
-    .outerRadius(options.lineWidth/2)
-    .startAngle(0)
-    .endAngle(2*Math.PI);
-
   var lines = svg.append("g");
 
-  data.lines.forEach(function(line) {
-    var lineNodes = [];
-
-    lineNodes = line.nodes;
-
-    var shiftCoords = [line.shiftCoords[0]/scale, line.shiftCoords[1]/scale];
-
-    for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
-      if (lineNode < (lineNodes.length - 1)) {
-        var nextNode = lineNodes[lineNode+1];
-        var currNode = lineNodes[lineNode];
-
-        var xVal = 0;
-        var yVal = 0;
-        var direction = "";
-
-        var xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
-        var yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
-
-        var lineStartCorrection = [0, 0];
-        var lineEndCorrection = [0, 0];
-
-        if ((xDiff == 0) || (yDiff == 0)) {
-
-          if (lineNode === 0) {
-            if (xDiff > 0)
-              lineStartCorrection = [options.lineWidth/(4*scale), 0];
-            if (xDiff < 0)
-              lineStartCorrection = [-options.lineWidth/(4*scale), 0];
-            if (yDiff > 0)
-              lineStartCorrection = [0, options.lineWidth/(4*scale)];
-            if (yDiff < 0)
-              lineStartCorrection [ 0, -options.lineWidth/(4*scale)];
-          }
-
-          if (lineNode === lineNodes.length - 2) {
-            if (xDiff > 0)
-              lineEndCorrection = [-options.lineWidth/(4*scale), 0];
-            if (xDiff < 0)
-              lineEndCorrection = [options.lineWidth/(4*scale), 0];
-            if (yDiff > 0)
-              lineEndCorrection = [0, -options.lineWidth/(4*scale)];
-            if (yDiff < 0)
-              lineEndCorrection [ 0, options.lineWidth/(4*scale)];
-          }
-
-          lines.append("path")
-            .attr("d", lineFunction([
-              [
-                currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
-                currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1]
-              ],
-              [
-                nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0],
-                nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1]
-              ]
-            ]))
-            .attr("stroke", line.color)
-            .attr("stroke-width", options.lineWidth)
-            .attr("fill", "none");
-        } else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
-          direction = nextNode.dir.toLowerCase();
-          var phi;
-          switch (direction) {
-            case "e": if (yDiff > 0) { xVal = 0; yVal = -scale; phi = [Math.PI, Math.PI/2]} else { xVal = 0; yVal = scale; phi = [0, Math.PI/2] }  break;
-            case "s": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, Math.PI] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, Math.PI]} break;
-            case "n": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, 0] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, 2*Math.PI]} break;
-          }
-
-          lines.append("path")
-            .attr("d", curveFunction(phi))
-            .attr("transform", "translate(" + ((currNode.coords[0] + shiftCoords[0]) * scale + xVal) + "," + ((currNode.coords[1] + shiftCoords[1]) * scale + yVal) + ")")
-            .attr("fill", line.color);
-        }
-      }
-    }
-  });
-
-  var extractPubs = function(data) {
-
-    var pubs = [];
-
-    data.lines.forEach(function(line) {
-      for (node = 0; node < line.nodes.length; node++) {
-        var data = line.nodes[node];
-
-        if (!data.hasOwnProperty("name"))
-        continue;
-
-        pubs[pubs.length] = {
-          "x": data.coords[0] * scale + line.shiftCoords[0],
-          "y": data.coords[1] * scale + line.shiftCoords[1],
-          "name": data.name,
-          "labelPos": data.labelPos,
-          "visited": false,
-          "color": line.color,
-          "marker": (data.hasOwnProperty("marker")) ? data.marker : "station",
-          "hide": data.hide
-        }
-      }
-    });
-
-    return pubs;
-  }
+  drawLines(lines, data);
 
   var pubs = extractPubs(data);
 
@@ -174,7 +54,7 @@ d3.json("pubs.json", function(data) {
   var fgColor = "#000000";
   var bgColor = "#ffffff";
 
-  var addPub = function(pub) {
+  var togglePub = function(pub) {
     return function() {
       if (visitedPubs.has(pub.name)) {
         visitedPubs.remove(pub.name);
@@ -230,22 +110,28 @@ d3.json("pubs.json", function(data) {
   var interchangeMarkers = svg.append("g");
   var markers = svg.append("g");
 
+  var markerFunction = d3.svg.arc()
+      .innerRadius(0)
+      .outerRadius(options.lineWidth/2)
+      .startAngle(0)
+      .endAngle(2*Math.PI);
+
   var drawMarkers = function() {
 
     var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange" && d.hide != true; });
 
     interchangeMarkers.selectAll("path")
-    .data(interchangePubs)
-    .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
-    .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
-    .enter()
-    .append("path")
-    .attr("d", markerFunction)
-    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
-    .attr("fill", bgColor)
-    .attr("stroke", fgColor)
-    .attr("stroke-width", options.lineWidth/4)
-    .on("click", function(d) { addPub(d)(); });
+      .data(interchangePubs)
+      .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
+      .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
+      .enter()
+      .append("path")
+      .attr("d", markerFunction())
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
+      .attr("fill", bgColor)
+      .attr("stroke", fgColor)
+      .attr("stroke-width", options.lineWidth/4)
+      .on("click", function(d) { togglePub(d)(); });
 
     var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
 
@@ -277,12 +163,12 @@ d3.json("pubs.json", function(data) {
         break;
       }
 
-      return lineFunction([[d.x/scale, d.y/scale], [d.x/scale + length*dir[0], d.y/scale + length*dir[1]]]);
+      return lineFunction()([[d.x/scale, d.y/scale], [d.x/scale + length*dir[0], d.y/scale + length*dir[1]]]);
     })
     .attr("stroke", function(d) { return d.color; })
     .attr("stroke-width", options.lineWidth/2)
     .attr("fill", "none")
-    .on("click", function(d) { return addPub(d)(); });
+    .on("click", function(d) { return togglePub(d)(); });
   }
 
   var labels = svg.append("g");
@@ -301,7 +187,7 @@ d3.json("pubs.json", function(data) {
     .attr("dy", .1)
     .attr("font-family", "sans-serif")
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
-    .on("click", function(d) { return addPub(d)(); });
+    .on("click", function(d) { return togglePub(d)(); });
   }
 
   var awardIcons = d3.select("#awards");
@@ -452,4 +338,129 @@ function toggle(el) {
   } else {
     el.style("display", "block");
   }
+};
+
+function extractPubs(data) {
+
+  var pubs = [];
+
+  data.lines.forEach(function(line) {
+    for (node = 0; node < line.nodes.length; node++) {
+      var data = line.nodes[node];
+
+      if (!data.hasOwnProperty("name"))
+        continue;
+
+      pubs[pubs.length] = {
+        "x": data.coords[0] * options.scale + line.shiftCoords[0],
+        "y": data.coords[1] * options.scale + line.shiftCoords[1],
+        "name": data.name,
+        "labelPos": data.labelPos,
+        "visited": false,
+        "color": line.color,
+        "marker": (data.hasOwnProperty("marker")) ? data.marker : "station",
+        "hide": data.hide
+      }
+    }
+  });
+
+  return pubs;
+}
+
+function drawLines(lines, data) {
+
+  var scale = options.scale;
+
+  data.lines.forEach(function(line) {
+    var lineNodes = [];
+
+    lineNodes = line.nodes;
+
+    var shiftCoords = [line.shiftCoords[0]/scale, line.shiftCoords[1]/scale];
+
+    for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
+      if (lineNode < (lineNodes.length - 1)) {
+        var nextNode = lineNodes[lineNode+1];
+        var currNode = lineNodes[lineNode];
+
+        var xVal = 0;
+        var yVal = 0;
+        var direction = "";
+
+        var xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
+        var yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
+
+        var lineStartCorrection = [0, 0];
+        var lineEndCorrection = [0, 0];
+
+        if ((xDiff == 0) || (yDiff == 0)) {
+
+          if (lineNode === 0) {
+            if (xDiff > 0)
+              lineStartCorrection = [options.lineWidth/(4*scale), 0];
+            if (xDiff < 0)
+              lineStartCorrection = [-options.lineWidth/(4*scale), 0];
+            if (yDiff > 0)
+              lineStartCorrection = [0, options.lineWidth/(4*scale)];
+            if (yDiff < 0)
+              lineStartCorrection [ 0, -options.lineWidth/(4*scale)];
+          }
+
+          if (lineNode === lineNodes.length - 2) {
+            if (xDiff > 0)
+              lineEndCorrection = [-options.lineWidth/(4*scale), 0];
+            if (xDiff < 0)
+              lineEndCorrection = [options.lineWidth/(4*scale), 0];
+            if (yDiff > 0)
+              lineEndCorrection = [0, -options.lineWidth/(4*scale)];
+            if (yDiff < 0)
+              lineEndCorrection [ 0, options.lineWidth/(4*scale)];
+          }
+
+          lines.append("path")
+            .attr("d", lineFunction()([
+              [
+                currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
+                currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1]
+              ],
+              [
+                nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0],
+                nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1]
+              ]
+            ]))
+            .attr("stroke", line.color)
+            .attr("stroke-width", options.lineWidth)
+            .attr("fill", "none");
+        } else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
+          direction = nextNode.dir.toLowerCase();
+          var phi;
+          switch (direction) {
+            case "e": if (yDiff > 0) { xVal = 0; yVal = -scale; phi = [Math.PI, Math.PI/2]} else { xVal = 0; yVal = scale; phi = [0, Math.PI/2] }  break;
+            case "s": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, Math.PI] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, Math.PI]} break;
+            case "n": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, 0] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, 2*Math.PI]} break;
+          }
+
+          lines.append("path")
+            .attr("d", curveFunction()(phi))
+            .attr("transform", "translate(" + ((currNode.coords[0] + shiftCoords[0]) * scale + xVal) + "," + ((currNode.coords[1] + shiftCoords[1]) * scale + yVal) + ")")
+            .attr("fill", line.color);
+        }
+      }
+    }
+  });
+};
+
+function lineFunction() {
+  return d3.svg.line()
+    .x(function(d) { return d[0] * options.scale; })
+    .y(function(d) { return d[1] * options.scale; })
+    .interpolate("linear");
+};
+
+function curveFunction() {
+  return d3.svg.arc()
+    .innerRadius(options.scale - options.lineWidth/2)
+    .outerRadius(options.scale + options.lineWidth/2)
+    .startAngle(function(angle) { return angle[0]; })
+    .endAngle(function(angle) { return angle[1]; });
 };
