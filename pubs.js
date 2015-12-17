@@ -142,7 +142,8 @@ d3.json("pubs.json", function(data) {
           "labelPos": data.labelPos,
           "visited": false,
           "color": line.color,
-          "marker": (data.hasOwnProperty("marker")) ? data.marker : "station"
+          "marker": (data.hasOwnProperty("marker")) ? data.marker : "station",
+          "hide": data.hide
         }
       }
     });
@@ -150,8 +151,7 @@ d3.json("pubs.json", function(data) {
     return pubs;
   }
 
-
-  var pubs = extractPubs(data)
+  var pubs = extractPubs(data);
 
   var lines = [];
 
@@ -234,7 +234,7 @@ d3.json("pubs.json", function(data) {
 
   var drawMarkers = function() {
 
-    var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange"; });
+    var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange" && d.hide != true; });
 
     interchangeMarkers.selectAll("path")
     .data(interchangePubs)
@@ -297,6 +297,7 @@ d3.json("pubs.json", function(data) {
     .enter()
     .append("text")
     .text(function(d) { return d.name })
+    .style("display", function(d) { return d.hide != true ? "block" : "none"; })
     .attr("x", function(d) { return d.x + textPos(d).pos[0]; })
     .attr("y", function(d) { return d.y + textPos(d).pos[1] + 4; })
     .attr("dy", .1)
