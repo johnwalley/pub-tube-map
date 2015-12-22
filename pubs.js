@@ -51,9 +51,6 @@ d3.json("pubs.json", function(data) {
     }
   });
 
-  var fgColor = "#000000";
-  var bgColor = "#ffffff";
-
   var togglePub = function(pub) {
     return function() {
       if (visitedPubs.has(pub.name)) {
@@ -85,15 +82,15 @@ d3.json("pubs.json", function(data) {
       textAnchor = "start";
       break;
       case "s":
-      pos = [0, offset];
+      pos = [0, 1.2*offset];
       textAnchor = "middle";
       break;
       case "sw":
-      pos = [-offset*0.7, offset*0.8];
+      pos = [-offset*0.7, offset];
       textAnchor = "end";
       break;
       case "w":
-      pos = [-offset, 0];
+      pos = [-1.2*offset, 0];
       textAnchor = "end";
       break;
       default:
@@ -110,67 +107,6 @@ d3.json("pubs.json", function(data) {
   var interchangeMarkers = svg.append("g");
   var markers = svg.append("g");
 
-  var markerFunction = d3.svg.arc()
-      .innerRadius(0)
-      .outerRadius(options.lineWidth/2)
-      .startAngle(0)
-      .endAngle(2*Math.PI);
-
-  var drawMarkers = function() {
-
-    var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange" && d.hide != true; });
-
-    interchangeMarkers.selectAll("path")
-      .data(interchangePubs)
-      .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
-      .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
-      .enter()
-      .append("path")
-      .attr("d", markerFunction())
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
-      .attr("fill", bgColor)
-      .attr("stroke", fgColor)
-      .attr("stroke-width", options.lineWidth/4)
-      .on("click", function(d) { togglePub(d)(); });
-
-    var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
-
-    var length = options.lineWidth/scale;
-
-    markers.selectAll("path")
-    .data(stationPubs)
-    .enter()
-    .append("path")
-    .attr("d", function(d) {
-
-      var dir;
-
-      switch (d.labelPos.toLowerCase()) {
-        case "n":
-        dir = [0, -1];
-        break;
-        case "e":
-        dir = [1, 0];
-        break;
-        case "s":
-        dir = [0, 1];
-        break;
-        case "w":
-        dir = [-1, 0];
-        break;
-        default:
-        dir = [0, 0];
-        break;
-      }
-
-      return lineFunction()([[d.x/scale, d.y/scale], [d.x/scale + length*dir[0], d.y/scale + length*dir[1]]]);
-    })
-    .attr("stroke", function(d) { return d.color; })
-    .attr("stroke-width", options.lineWidth/2)
-    .attr("fill", "none")
-    .on("click", function(d) { return togglePub(d)(); });
-  }
-
   var labels = svg.append("g");
 
   var drawLabels = function() {
@@ -183,7 +119,7 @@ d3.json("pubs.json", function(data) {
     .text(function(d) { return d.name })
     .style("display", function(d) { return d.hide != true ? "block" : "none"; })
     .attr("x", function(d) { return d.x + textPos(d).pos[0]; })
-    .attr("y", function(d) { return d.y + textPos(d).pos[1] + 4; })
+    .attr("y", function(d) { return d.y + textPos(d).pos[1]; })
     .attr("dy", .1)
     .attr("font-family", "sans-serif")
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
@@ -245,7 +181,7 @@ d3.json("pubs.json", function(data) {
   }
 
   var update = function() {
-    drawMarkers();
+    drawMarkers(pubs, interchangeMarkers, markers);
     drawLabels();
     drawLists();
     drawAwards();
@@ -448,6 +384,72 @@ function drawLines(lines, data) {
       }
     }
   });
+};
+
+function drawMarkers(pubs, interchangeMarkers, markers) {
+
+  var scale = options.scale;
+
+  var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange" && d.hide != true; });
+
+  var fgColor = "#000000";
+  var bgColor = "#ffffff";
+
+  var markerFunction = d3.svg.arc()
+      .innerRadius(0)
+      .outerRadius(options.lineWidth/2)
+      .startAngle(0)
+      .endAngle(2*Math.PI);
+      
+  interchangeMarkers.selectAll("path")
+    .data(interchangePubs)
+    .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
+    .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
+    .enter()
+    .append("path")
+    .attr("d", markerFunction)
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
+    .attr("fill", bgColor)
+    .attr("stroke", fgColor)
+    .attr("stroke-width", options.lineWidth/4)
+    .on("click", function(d) { togglePub(d)(); });
+
+  var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
+
+  var length = options.lineWidth / options.scale;
+
+  markers.selectAll("path")
+  .data(stationPubs)
+  .enter()
+  .append("path")
+  .attr("d", function(d) {
+
+    var dir;
+
+    switch (d.labelPos.toLowerCase()) {
+      case "n":
+      dir = [0, -1];
+      break;
+      case "e":
+      dir = [1, 0];
+      break;
+      case "s":
+      dir = [0, 1];
+      break;
+      case "w":
+      dir = [-1, 0];
+      break;
+      default:
+      dir = [0, 0];
+      break;
+    }
+
+    return lineFunction()([[d.x/scale, d.y/scale], [d.x/scale + length*dir[0], d.y/scale + length*dir[1]]]);
+  })
+  .attr("stroke", function(d) { return d.color; })
+  .attr("stroke-width", options.lineWidth/2)
+  .attr("fill", "none")
+  .on("click", function(d) { return togglePub(d)(); });
 };
 
 function lineFunction() {
