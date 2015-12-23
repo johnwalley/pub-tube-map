@@ -1,5 +1,3 @@
-//Parse.initialize("viYcdJsQzu51MuROsQnEToQYhyK5CkQa7lmcUmQV", "NpR8DaCfiMwXgP7OtfUkKrduhexjD74oMmVmrZXj");
-
 var options = {};
 
 d3.json("pubs.json", function(data) {
@@ -19,13 +17,14 @@ d3.json("pubs.json", function(data) {
   var h = options.rows * scale;
 
   var svg = d3.select("#map")
-    .append("svg")
     .attr("width", w)
     .attr("height", h);
 
-  var lines = svg.append("g");
+  var LinesElement = svg.append("g").attr("id", "lines");
 
-  drawLines(lines, data);
+  d3.select(window).on('resize', resizeFunc(LinesElement, data));
+
+  drawLines(LinesElement, data);
 
   var pubs = extractPubs(data);
 
@@ -65,66 +64,10 @@ d3.json("pubs.json", function(data) {
     }
   };
 
-  var textPos = function(data) {
-    var pos;
-    var textAnchor;
-    var offset = options.lineWidth * 2;
+  var interchangeMarkers = svg.append("g").attr("id", "interchanges");
+  var markers = svg.append("g").attr("id", "stations");
 
-    var numLines = data.name.split(/\n/).length;
-
-    switch (data.labelPos.toLowerCase()) {
-      case "n":
-      pos = [0, -offset * numLines];
-      textAnchor = "middle";
-      break;
-      case "e":
-      pos = [offset, 0];
-      textAnchor = "start";
-      break;
-      case "s":
-      pos = [0, 1.2*offset];
-      textAnchor = "middle";
-      break;
-      case "sw":
-      pos = [-offset*0.7, offset];
-      textAnchor = "end";
-      break;
-      case "w":
-      pos = [-1.2*offset, 0];
-      textAnchor = "end";
-      break;
-      default:
-      pos = [0, 0];
-      break;
-    }
-
-    return {
-      "pos": pos,
-      "textAnchor": textAnchor
-    }
-  };
-
-  var interchangeMarkers = svg.append("g");
-  var markers = svg.append("g");
-
-  var labels = svg.append("g");
-
-  var drawLabels = function() {
-
-    labels.selectAll("text")
-    .data(pubs)
-    .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
-    .enter()
-    .append("text")
-    .text(function(d) { return d.name })
-    .style("display", function(d) { return d.hide != true ? "block" : "none"; })
-    .attr("x", function(d) { return d.x + textPos(d).pos[0]; })
-    .attr("y", function(d) { return d.y + textPos(d).pos[1]; })
-    .attr("dy", .1)
-    .attr("font-family", "sans-serif")
-    .attr("text-anchor", function(d) { return textPos(d).textAnchor })
-    .on("click", function(d) { return togglePub(d)(); });
-  }
+  var labels = svg.append("g").attr("id", "labels");
 
   var awardIcons = d3.select("#awards");
 
@@ -182,7 +125,7 @@ d3.json("pubs.json", function(data) {
 
   var update = function() {
     drawMarkers(pubs, interchangeMarkers, markers);
-    drawLabels();
+    drawLabels(labels, pubs);
     drawLists();
     drawAwards();
 
@@ -308,6 +251,8 @@ function drawLines(lines, data) {
   var scale = options.scale;
 
   data.lines.forEach(function(line) {
+    var lineEl = lines.append("g").attr("id", line.label);
+
     var lineNodes = [];
 
     lineNodes = line.nodes;
@@ -353,7 +298,9 @@ function drawLines(lines, data) {
               lineEndCorrection [ 0, options.lineWidth/(4*scale)];
           }
 
-          lines.append("path")
+
+
+          lineEl.append("path")
             .attr("d", lineFunction()([
               [
                 currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
@@ -376,7 +323,7 @@ function drawLines(lines, data) {
             case "n": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, 0] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, 2*Math.PI]} break;
           }
 
-          lines.append("path")
+          lineEl.append("path")
             .attr("d", curveFunction()(phi))
             .attr("transform", "translate(" + ((currNode.coords[0] + shiftCoords[0]) * scale + xVal) + "," + ((currNode.coords[1] + shiftCoords[1]) * scale + yVal) + ")")
             .attr("fill", line.color);
@@ -400,12 +347,21 @@ function drawMarkers(pubs, interchangeMarkers, markers) {
       .outerRadius(options.lineWidth/2)
       .startAngle(0)
       .endAngle(2*Math.PI);
-      
-  interchangeMarkers.selectAll("path")
-    .data(interchangePubs)
+
+  // DATA JOIN
+  // Join new data with old elements, if any
+  var interchangePubs = interchangeMarkers.selectAll("path")
+    .data(interchangePubs);
+
+  // UPDATE
+  // Update old elements as needed
+  interchangePubs
     .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
-    .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
-    .enter()
+    .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; });
+
+  // ENTER
+  // Create new elements as needed
+  interchangePubs.enter()
     .append("path")
     .attr("d", markerFunction)
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
@@ -413,6 +369,16 @@ function drawMarkers(pubs, interchangeMarkers, markers) {
     .attr("stroke", fgColor)
     .attr("stroke-width", options.lineWidth/4)
     .on("click", function(d) { togglePub(d)(); });
+
+  // ENTER + UPDATE
+  // Appending to the enter selection expands the update selection to include
+  // entering elements; so, operations on the update selection after appending to
+  // the enter selection will apply to both entering and updating nodes
+
+
+  // EXIT
+  // Remove old elements as needed.
+  interchangePubs.exit().remove();
 
   var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
 
@@ -465,4 +431,94 @@ function curveFunction() {
     .outerRadius(options.scale + options.lineWidth/2)
     .startAngle(function(angle) { return angle[0]; })
     .endAngle(function(angle) { return angle[1]; });
+};
+
+function resizeFunc(lines, data) {
+  console.log("ResizeFunc");
+
+  return function() {
+    console.log("Resize");
+    var width = parseInt(d3.select("#map").style("width"));
+    var height = parseInt(d3.select("#map").style("height"));
+
+    options.scale = width/30;
+
+    console.log(options.scale);
+
+    drawLines(lines, data);
+  }
+
+}
+
+function drawLabels(labelElement, pubs) {
+  // DATA JOIN
+  // Join new data with old elements, if any
+  var text = labelElement.selectAll("text")
+    .data(pubs);
+
+  // UPDATE
+  // Update old elements as needed
+  text.attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
+
+  // ENTER
+  // Create new elements as needed
+  text.enter()
+    .append("text")
+    .attr("x", function(d) { return d.x + textPos(d).pos[0]; })
+    .attr("y", function(d) { return d.y + textPos(d).pos[1]; })
+    .attr("dy", .1)
+    .attr("font-family", "sans-serif")
+    .attr("text-anchor", function(d) { return textPos(d).textAnchor })
+    .on("click", function(d) { return togglePub(d)(); });
+
+  // ENTER + UPDATE
+  // Appending to the enter selection expands the update selection to include
+  // entering elements; so, operations on the update selection after appending to
+  // the enter selection will apply to both entering and updating nodes
+  text.text(function(d) { return d.name })
+    .attr("id", function(d) { return d.name })
+    .style("display", function(d) { return d.hide != true ? "block" : "none"; });
+
+  // EXIT
+  // Remove old elements as needed.
+  text.exit().remove();
+}
+
+function textPos(data) {
+  var pos;
+  var textAnchor;
+  var offset = options.lineWidth * 2;
+
+  var numLines = data.name.split(/\n/).length;
+
+  switch (data.labelPos.toLowerCase()) {
+    case "n":
+    pos = [0, -offset * numLines];
+    textAnchor = "middle";
+    break;
+    case "e":
+    pos = [offset, 0];
+    textAnchor = "start";
+    break;
+    case "s":
+    pos = [0, 1.2*offset];
+    textAnchor = "middle";
+    break;
+    case "sw":
+    pos = [-offset*0.7, offset];
+    textAnchor = "end";
+    break;
+    case "w":
+    pos = [-1.2*offset, 0];
+    textAnchor = "end";
+    break;
+    default:
+    pos = [0, 0];
+    break;
+  }
+
+  return {
+    "pos": pos,
+    "textAnchor": textAnchor
+  }
 };
