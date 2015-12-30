@@ -1,5 +1,16 @@
+html, body
+{
+  height: 100%;
+}
+
 .container {
-    display: flex;
+  min-height: 100%;
+  display: flex;
+}
+
+#map-container {
+  min-height: 100%;
+  flex-grow: 1;
 }
 
 h1 {

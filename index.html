@@ -3,15 +3,15 @@
 <head>
   <title>Cambridge Pub Tube Map</title>
   <script src="d3.v3.min.js" charset="utf-8"></script>
-  <script src="parse-1.6.7.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="pubs.css">
-  <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css">
 </head>
 <body>
   <h1>Cambridge Pub Tube Map</h1>
   <div class="container">
-    <div id="map"></div>
+    <div id="map-container">
+      <svg id="map" width="100%" height="640"></svg>
+    </div>
     <div id="legend">
       Awards: <ul id="awards"></ul>
       <ul>
