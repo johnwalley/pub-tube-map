@@ -1,98 +1,32 @@
 var options = {};
 
+var visitedPubs = d3.set();
+
+// Set up svg elements
+var svg = d3.select("#map");
+var linesElement = svg.append("g").attr("id", "lines");
+var interchangeMarkers = svg.append("g").attr("id", "interchanges");
+var markers = svg.append("g").attr("id", "stations");
+var labels = svg.append("g").attr("id", "labels");
+
+var awardIcons = d3.select("#awards");
+var legend = d3.select("#lines").attr("class", "list-inline");
+var visitedList = d3.select("#visited").select("ul");
+
 d3.json("pubs.json", function(data) {
   options.rows = data.rows;
   options.columns = data.columns;
   options.lineWidth = data.lineWidth;
-  options.scale = data.cellSize;
 
-  var scale = data.cellSize;
-  var grid = data.grid;
-  var gridNumbers = data.gridNumbers;
-  var reverseMarkers = data.reverseMarkers;
+  var w = parseInt(d3.select("#map-container").style("width"));
+  var h = parseInt(d3.select("#map-container").style("height"));
 
-  var visitedPubs = d3.set();
+  options.scale = w/40;
+  scale = options.scale;
 
-  var w = options.columns * scale;
-  var h = options.rows * scale;
-
-  var svg = d3.select("#map")
-    .attr("width", w)
-    .attr("height", h);
-
-  var LinesElement = svg.append("g").attr("id", "lines");
-
-  d3.select(window).on('resize', resizeFunc(LinesElement, data));
-
-  drawLines(LinesElement, data);
-
+  // Data manipulation
   var pubs = extractPubs(data);
-
-  var lines = [];
-
-  data.lines.forEach(function(line) {
-
-    var lineObj = {
-      "name": line.label,
-      "pubs": [],
-      "color": line.color
-    };
-
-    lines[lines.length] = lineObj;
-
-    for (node = 0; node < line.nodes.length; node++) {
-      var data = line.nodes[node];
-
-      if (!data.hasOwnProperty("name"))
-      continue;
-
-      lineObj.pubs[lineObj.pubs.length] = data.name;
-    }
-  });
-
-  var togglePub = function(pub) {
-    return function() {
-      if (visitedPubs.has(pub.name)) {
-        visitedPubs.remove(pub.name);
-        pub.visited = false;
-      } else {
-        visitedPubs.add(pub.name);
-        pub.visited = true;
-      }
-
-      update();
-    }
-  };
-
-  var interchangeMarkers = svg.append("g").attr("id", "interchanges");
-  var markers = svg.append("g").attr("id", "stations");
-
-  var labels = svg.append("g").attr("id", "labels");
-
-  var awardIcons = d3.select("#awards");
-
-  var drawAwards = function() {
-    var awards = score(visitedPubs.values(), lines);
-
-    var selectedIcons = awardIcons.selectAll("li").data(awards.filter(function(award) { return award.unlocked === true; }), function(d) { return d.name; });
-
-    var selectedSpan = selectedIcons
-    .enter()
-    .append("li")
-    .append("span");
-
-    selectedSpan
-    .append("strong")
-    .style("color", function(d) { return d.color; })
-    .text(function(d) { return d.name; });
-
-    selectedIcons
-    .exit()
-    .remove();
-  }
-
-  var legend = d3.select("#lines")
-  .attr("class", "list-inline");
+  var lines = extractLines(data);
 
   legend.selectAll("li")
   .data(data.lines)
@@ -105,48 +39,56 @@ d3.json("pubs.json", function(data) {
     toggle(d3.select("#visited").select("ul"));
   });
 
-  var visitedList = d3.select("#visited").select("ul");
+  // Update on window resize
+  d3.select(window).on('resize', resizeFunc(data, pubs, lines));
 
-  var drawLists = function() {
-    var selectedPubs = visitedList.selectAll("li").data(visitedPubs.values().sort());
-
-    selectedPubs
-    .text(function(d) { return d });
-
-    selectedPubs
-    .enter()
-    .append("li")
-    .text(function(d) { return d });
-
-    selectedPubs
-    .exit()
-    .remove();
-  }
-
-  var update = function() {
-    drawMarkers(pubs, interchangeMarkers, markers);
-    drawLabels(labels, pubs);
-    drawLists();
-    drawAwards();
-
-
-    d3.select("#visited").select("p")
-      .text("Visited: " + visitedPubs.size());
-
-    // TODO: pubs contains duplicates so we over count the number of pubs left
-    d3.select("#stillToVisit").select("p")
-      .text("Pubs left: " + (pubs.length - visitedPubs.size()));
-
-  };
-
-  update();
-
-  // Split long pub names into multiple lines
-
-  labels.selectAll("text")
-  .call(wrap);
-
+  // Initial draw
+  update(pubs, lines, data);
 });
+
+function drawLists(pubs) {
+  var selectedPubs = visitedList.selectAll("li").data(visitedPubs.values().sort());
+
+  selectedPubs
+  .text(function(d) { return d });
+
+  selectedPubs
+  .enter()
+  .append("li")
+  .text(function(d) { return d });
+
+  selectedPubs
+  .exit()
+  .remove();
+
+  d3.select("#visited").select("p")
+    .text("Visited: " + visitedPubs.size());
+
+  // TODO: pubs contains duplicates so we over count the number of pubs left
+  d3.select("#stillToVisit").select("p")
+    .text("Pubs left: " + (pubs.length - visitedPubs.size()));
+}
+
+function updateFunc(pubs, lines, data) {
+  return function() {
+    update(pubs, lines, data);
+  }
+}
+
+function update(pubs, lines, data) {
+  var w = parseInt(d3.select("#map-container").style("width"));
+  var h = parseInt(d3.select("#map-container").style("height"));
+
+  options.scale = w/40;
+  scale = options.scale;
+
+  // TODO: Can we combine these into one object? For example data.lines, data.markers, data.labels?
+  drawLines(data);
+  drawMarkers(pubs, lines, data);
+  drawLabels(pubs, lines, data);
+  drawLists(pubs);
+  drawAwards(lines);
+}
 
 function score(visited, lines) {
 
@@ -206,7 +148,7 @@ function wrap(text) {
     };
 
   });
-};
+}
 
 // Toggle visibility of an element
 function toggle(el) {
@@ -217,7 +159,33 @@ function toggle(el) {
   } else {
     el.style("display", "block");
   }
-};
+}
+
+function extractLines(data) {
+  var lines = [];
+
+  data.lines.forEach(function(line) {
+
+    var lineObj = {
+      "name": line.label,
+      "pubs": [],
+      "color": line.color
+    };
+
+    lines[lines.length] = lineObj;
+
+    for (node = 0; node < line.nodes.length; node++) {
+      var data = line.nodes[node];
+
+      if (!data.hasOwnProperty("name"))
+      continue;
+
+      lineObj.pubs[lineObj.pubs.length] = data.name;
+    }
+  });
+
+  return lines;
+}
 
 function extractPubs(data) {
 
@@ -231,8 +199,8 @@ function extractPubs(data) {
         continue;
 
       pubs[pubs.length] = {
-        "x": data.coords[0] * options.scale + line.shiftCoords[0],
-        "y": data.coords[1] * options.scale + line.shiftCoords[1],
+        "x": data.coords[0] + line.shiftCoords[0]/options.scale,
+        "y": data.coords[1] + line.shiftCoords[1]/options.scale,
         "name": data.name,
         "labelPos": data.labelPos,
         "visited": false,
@@ -246,18 +214,54 @@ function extractPubs(data) {
   return pubs;
 }
 
-function drawLines(lines, data) {
+function drawLines(data) {
+  // DATA JOIN
+  // Join new data with old elements, if any
+
+  // UPDATE
+  // Update old elements as needed
+
+  // ENTER
+  // Create new elements as needed
+
+  // ENTER + UPDATE
+  // Appending to the enter selection expands the update selection to include
+  // entering elements; so, operations on the update selection after appending to
+  // the enter selection will apply to both entering and updating nodes
+
+  // EXIT
+  // Remove old elements as needed.
 
   var scale = options.scale;
 
   data.lines.forEach(function(line) {
-    var lineEl = lines.append("g").attr("id", line.label);
+    var lineEl = linesElement.select("g#" + line.label);
+
+    if (lineEl.empty())
+      lineEl = linesElement.append("g").attr("id", line.label);
 
     var lineNodes = [];
 
     lineNodes = line.nodes;
 
     var shiftCoords = [line.shiftCoords[0]/scale, line.shiftCoords[1]/scale];
+
+    // DATA JOIN
+    // Join new data with old elements, if any
+
+    // UPDATE
+    // Update old elements as needed
+
+    // ENTER
+    // Create new elements as needed
+
+    // ENTER + UPDATE
+    // Appending to the enter selection expands the update selection to include
+    // entering elements; so, operations on the update selection after appending to
+    // the enter selection will apply to both entering and updating nodes
+
+    // EXIT
+    // Remove old elements as needed
 
     for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
       if (lineNode < (lineNodes.length - 1)) {
@@ -298,19 +302,23 @@ function drawLines(lines, data) {
               lineEndCorrection [ 0, options.lineWidth/(4*scale)];
           }
 
+          var points = [
+            [
+              currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
+              currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1]
+            ],
+            [
+              nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0],
+              nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1]
+            ]
+          ]
 
+          var el = lineEl.select("path#id" + lineNode);
 
-          lineEl.append("path")
-            .attr("d", lineFunction()([
-              [
-                currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
-                currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1]
-              ],
-              [
-                nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0],
-                nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1]
-              ]
-            ]))
+          if (el.empty())
+            el = lineEl.append("path").attr("id", "id" + lineNode);
+
+          el.attr("d", lineFunction()(points))
             .attr("stroke", line.color)
             .attr("stroke-width", options.lineWidth)
             .attr("fill", "none");
@@ -323,17 +331,21 @@ function drawLines(lines, data) {
             case "n": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, 0] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, 2*Math.PI]} break;
           }
 
-          lineEl.append("path")
-            .attr("d", curveFunction()(phi))
+          var el = lineEl.select("path#id" + lineNode);
+
+          if (el.empty())
+            el = lineEl.append("path").attr("id", "id" + lineNode);
+
+          el.attr("d", curveFunction()(phi))
             .attr("transform", "translate(" + ((currNode.coords[0] + shiftCoords[0]) * scale + xVal) + "," + ((currNode.coords[1] + shiftCoords[1]) * scale + yVal) + ")")
             .attr("fill", line.color);
         }
       }
     }
   });
-};
+}
 
-function drawMarkers(pubs, interchangeMarkers, markers) {
+function drawMarkers(pubs, lines, data) {
 
   var scale = options.scale;
 
@@ -364,16 +376,16 @@ function drawMarkers(pubs, interchangeMarkers, markers) {
   interchangePubs.enter()
     .append("path")
     .attr("d", markerFunction)
-    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
     .attr("fill", bgColor)
     .attr("stroke", fgColor)
     .attr("stroke-width", options.lineWidth/4)
-    .on("click", function(d) { togglePub(d)(); });
+    .on("click", function(d) { togglePub(d, pubs, lines, data)(); });
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
+  interchangePubs.attr("transform", function(d) { return "translate(" + d.x * options.scale + "," + d.y * options.scale + ")" });
 
 
   // EXIT
@@ -384,11 +396,19 @@ function drawMarkers(pubs, interchangeMarkers, markers) {
 
   var length = options.lineWidth / options.scale;
 
-  markers.selectAll("path")
-  .data(stationPubs)
-  .enter()
-  .append("path")
-  .attr("d", function(d) {
+  var normalPubs = markers.selectAll("path")
+  .data(stationPubs);
+
+  // ENTER
+  // Create new elements as needed
+  normalPubs.enter()
+  .append("path");
+
+  // ENTER + UPDATE
+  // Appending to the enter selection expands the update selection to include
+  // entering elements; so, operations on the update selection after appending to
+  // the enter selection will apply to both entering and updating nodes
+  normalPubs.attr("d", function(d) {
 
     var dir;
 
@@ -410,20 +430,20 @@ function drawMarkers(pubs, interchangeMarkers, markers) {
       break;
     }
 
-    return lineFunction()([[d.x/scale, d.y/scale], [d.x/scale + length*dir[0], d.y/scale + length*dir[1]]]);
+    return lineFunction()([[d.x, d.y], [d.x + length*dir[0], d.y + length*dir[1]]]);
   })
   .attr("stroke", function(d) { return d.color; })
   .attr("stroke-width", options.lineWidth/2)
   .attr("fill", "none")
-  .on("click", function(d) { return togglePub(d)(); });
-};
+  .on("click", function(d) { return togglePub(d, pubs, lines, data)(); });
+}
 
 function lineFunction() {
   return d3.svg.line()
     .x(function(d) { return d[0] * options.scale; })
     .y(function(d) { return d[1] * options.scale; })
     .interpolate("linear");
-};
+}
 
 function curveFunction() {
   return d3.svg.arc()
@@ -431,53 +451,42 @@ function curveFunction() {
     .outerRadius(options.scale + options.lineWidth/2)
     .startAngle(function(angle) { return angle[0]; })
     .endAngle(function(angle) { return angle[1]; });
-};
-
-function resizeFunc(lines, data) {
-  console.log("ResizeFunc");
-
-  return function() {
-    console.log("Resize");
-    var width = parseInt(d3.select("#map").style("width"));
-    var height = parseInt(d3.select("#map").style("height"));
-
-    options.scale = width/30;
-
-    console.log(options.scale);
-
-    drawLines(lines, data);
-  }
-
 }
 
-function drawLabels(labelElement, pubs) {
+function resizeFunc(data, pubs, lines) {
+  return function() {
+    update(pubs, lines, data);
+  }
+}
+
+function drawLabels(pubs, lines, data) {
   // DATA JOIN
   // Join new data with old elements, if any
-  var text = labelElement.selectAll("text")
+  var text = labels.selectAll("text")
     .data(pubs);
 
   // UPDATE
   // Update old elements as needed
-  text.attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
 
   // ENTER
   // Create new elements as needed
   text.enter()
     .append("text")
-    .attr("x", function(d) { return d.x + textPos(d).pos[0]; })
-    .attr("y", function(d) { return d.y + textPos(d).pos[1]; })
+    .attr("id", function(d) { return d.name })
     .attr("dy", .1)
-    .attr("font-family", "sans-serif")
-    .attr("text-anchor", function(d) { return textPos(d).textAnchor })
-    .on("click", function(d) { return togglePub(d)(); });
+    .on("click", function(d) { return togglePub(d, pubs, lines, data)(); });
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
   text.text(function(d) { return d.name })
-    .attr("id", function(d) { return d.name })
-    .style("display", function(d) { return d.hide != true ? "block" : "none"; });
+    .attr("x", function(d) { return d.x * options.scale + textPos(d).pos[0]; })
+    .attr("y", function(d) { return d.y * options.scale + textPos(d).pos[1]; })
+    .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
+    .attr("text-anchor", function(d) { return textPos(d).textAnchor })
+    .style("display", function(d) { return d.hide != true ? "block" : "none"; })
+    .call(wrap);
 
   // EXIT
   // Remove old elements as needed.
@@ -521,4 +530,52 @@ function textPos(data) {
     "pos": pos,
     "textAnchor": textAnchor
   }
-};
+}
+
+function togglePub(pub, pubs, lines, data) {
+  return function() {
+    if (visitedPubs.has(pub.name)) {
+      visitedPubs.remove(pub.name);
+      pub.visited = false;
+    } else {
+      visitedPubs.add(pub.name);
+      pub.visited = true;
+    }
+
+    update(pubs, lines, data);
+  }
+}
+
+function drawAwards(lines) {
+  var awards = score(visitedPubs.values(), lines);
+
+  // DATA JOIN
+  // Join new data with old elements, if any
+  var selectedIcons = awardIcons.selectAll("li")
+    .data(awards.filter(function(award) { return award.unlocked === true; }), function(d) { return d.name; });
+
+  // UPDATE
+  // Update old elements as needed
+
+  // ENTER
+  // Create new elements as needed
+  var selectedSpan = selectedIcons
+    .enter()
+    .append("li")
+    .append("span");
+
+  // ENTER + UPDATE
+  // Appending to the enter selection expands the update selection to include
+  // entering elements; so, operations on the update selection after appending to
+  // the enter selection will apply to both entering and updating nodes
+  selectedSpan
+    .append("strong")
+    .style("color", function(d) { return d.color; })
+    .text(function(d) { return d.name; });
+
+  // EXIT
+  // Remove old elements as needed
+  selectedIcons
+    .exit()
+    .remove();
+}
