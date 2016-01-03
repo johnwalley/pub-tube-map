@@ -51,7 +51,7 @@
     {
       "label": "Grafton",
       "color": "#0098d4",
-      "shiftCoords": [8, 0],
+      "shiftCoords": [1, 0],
       "reverseMarkers": false,
       "nodes":
       [
