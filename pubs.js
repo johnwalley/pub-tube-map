@@ -13,37 +13,35 @@ var awardIcons = d3.select("#awards");
 var legend = d3.select("ul#lines").attr("class", "list-inline");
 var visitedList = d3.select("#visited").select("ul");
 
-d3.json("pubs.json", function(data) {
-  options.rows = data.rows;
-  options.columns = data.columns;
-  options.lineWidth = data.lineWidth;
-
+d3.json("pubs.json", function(d) {
   var w = parseInt(d3.select("#map-container").style("width"));
   var h = parseInt(d3.select("#map-container").style("height"));
 
   options.scale = w/40;
   scale = options.scale;
 
+  var data = { "raw": d };
+
   // Data manipulation
-  var pubs = extractPubs(data);
-  var lines = extractLines(data);
+  data.pubs = extractPubs(d);
+  data.lines = extractLines(d);
 
   legend.selectAll("li")
-  .data(data.lines)
-  .enter()
-  .append("li")
-  .text(function(d) { return d.label })
-  .style("color", function(d) { return d.color; });
+    .data(data.raw)
+    .enter()
+    .append("li")
+    .text(function(d) { return d.label })
+    .style("color", function(d) { return d.color; });
 
   d3.select("#visited").select("p").on("click", function() {
     toggle(d3.select("#visited").select("ul"));
   });
 
   // Update on window resize
-  d3.select(window).on('resize', resizeFunc(data, pubs, lines));
+  d3.select(window).on('resize', resizeFunc(data));
 
   // Initial draw
-  update(pubs, lines, data);
+  update(data);
 });
 
 function drawLists(pubs) {
@@ -69,13 +67,13 @@ function drawLists(pubs) {
     .text("Pubs left: " + (pubs.length - visitedPubs.size()));
 }
 
-function updateFunc(pubs, lines, data) {
+function updateFunc(data) {
   return function() {
-    update(pubs, lines, data);
+    update(data);
   }
 }
 
-function update(pubs, lines, data) {
+function update(data) {
   var w = parseInt(d3.select("#map-container").style("width"));
   var h = parseInt(d3.select("#map-container").style("height"));
 
@@ -85,11 +83,11 @@ function update(pubs, lines, data) {
   options.lineWidth = w/120;
 
   // TODO: Can we combine these into one object? For example data.lines, data.markers, data.labels?
-  drawLines(data);
-  drawMarkers(pubs, lines, data);
-  drawLabels(pubs, lines, data);
-  drawLists(pubs);
-  drawAwards(lines);
+  drawLines(data.raw);
+  drawMarkers(data);
+  drawLabels(data);
+  drawLists(data.pubs);
+  drawAwards(data.lines);
 }
 
 function score(visited, lines) {
@@ -166,7 +164,7 @@ function toggle(el) {
 function extractLines(data) {
   var lines = [];
 
-  data.lines.forEach(function(line) {
+  data.forEach(function(line) {
 
     var lineObj = {
       "name": line.label,
@@ -193,7 +191,7 @@ function extractPubs(data) {
 
   var pubs = [];
 
-  data.lines.forEach(function(line) {
+  data.forEach(function(line) {
     for (node = 0; node < line.nodes.length; node++) {
       var data = line.nodes[node];
 
@@ -221,7 +219,7 @@ function extractPubs(data) {
 function drawLines(data) {
   // DATA JOIN
   // Join new data with old elements, if any
-  var g = linesElement.selectAll("path").data(data.lines);
+  var g = linesElement.selectAll("path").data(data);
 
   // UPDATE
   // Update old elements as needed
@@ -242,7 +240,9 @@ function drawLines(data) {
 
 }
 
-function drawMarkers(pubs, lines, data) {
+function drawMarkers(data) {
+
+  var pubs = data.pubs;
 
   var scale = options.scale;
 
@@ -274,7 +274,7 @@ function drawMarkers(pubs, lines, data) {
     .append("path")
     .attr("fill", bgColor)
     .attr("stroke", fgColor)
-    .on("click", function(d) { togglePub(d, pubs, lines, data)(); });
+    .on("click", function(d) { togglePub(d, data)(); });
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
@@ -329,10 +329,10 @@ function drawMarkers(pubs, lines, data) {
 
     return lineFunction()([[d.x + (d.shiftX*options.lineWidth/options.scale), d.y + (d.shiftY*options.lineWidth/options.scale)], [d.x + (d.shiftX*options.lineWidth/options.scale) + length*dir[0], d.y + (d.shiftY*options.lineWidth/options.scale) + length*dir[1]]]);
   })
-  .attr("stroke", function(d) { return d.color; })
-  .attr("stroke-width", options.lineWidth/2)
-  .attr("fill", "none")
-  .on("click", function(d) { return togglePub(d, pubs, lines, data)(); });
+    .attr("stroke", function(d) { return d.color; })
+    .attr("stroke-width", options.lineWidth/2)
+    .attr("fill", "none")
+    .on("click", function(d) { return togglePub(d, data)(); });
 }
 
 function lineFunction() {
@@ -350,13 +350,15 @@ function curveFunction() {
     .endAngle(function(angle) { return angle[1]; });
 }
 
-function resizeFunc(data, pubs, lines) {
+function resizeFunc(data) {
   return function() {
-    update(pubs, lines, data);
+    update(data);
   }
 }
 
-function drawLabels(pubs, lines, data) {
+function drawLabels(data) {
+  var pubs = data.pubs;
+
   // DATA JOIN
   // Join new data with old elements, if any
   var text = labels.selectAll("text")
@@ -371,7 +373,7 @@ function drawLabels(pubs, lines, data) {
     .append("text")
     .attr("id", function(d) { return d.name })
     .attr("dy", .1)
-    .on("click", function(d) { return togglePub(d, pubs, lines, data)(); });
+    .on("click", function(d) { return togglePub(d, data)(); });
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
@@ -383,6 +385,7 @@ function drawLabels(pubs, lines, data) {
     .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
     .style("display", function(d) { return d.hide != true ? "block" : "none"; })
+    .style("font-size", options.scale/1.6 + "px")
     .call(wrap);
 
   // EXIT
@@ -429,7 +432,7 @@ function textPos(data) {
   }
 }
 
-function togglePub(pub, pubs, lines, data) {
+function togglePub(pub, data) {
   return function() {
     if (visitedPubs.has(pub.name)) {
       visitedPubs.remove(pub.name);
@@ -439,7 +442,7 @@ function togglePub(pub, pubs, lines, data) {
       pub.visited = true;
     }
 
-    update(pubs, lines, data);
+    update(data);
   }
 }
 
@@ -487,6 +490,8 @@ function tubeline(data) {
 
   var shiftCoords = [data.shiftCoords[0]*options.lineWidth/scale, data.shiftCoords[1]*options.lineWidth/scale];
 
+  var lastSectionType = "";
+
   for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
     if (lineNode > 0) {
       var nextNode = lineNodes[lineNode];
@@ -524,9 +529,14 @@ function tubeline(data) {
         ]
       ]
 
-      if ((xDiff == 0) || (yDiff == 0)) {
+      if (((xDiff == 0) || (yDiff == 0))) {
+        lastSectionType = "udlr"
         path += "L" + points[1][0] + "," + points[1][1];
-      } else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
+      } else if ((Math.abs(xDiff) == Math.abs(yDiff)) && (Math.abs(xDiff) > 1)) {
+        lastSectionType = "diagonal"
+        path += "L" + points[1][0] + "," + points[1][1];
+      }
+      else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
         direction = nextNode.dir.toLowerCase();
         var phi;
         switch (direction) {
@@ -540,6 +550,23 @@ function tubeline(data) {
             path += "Q" + points[0][0] + "," + points[1][1] + "," + points[1][0] + "," + points[1][1];
             break;
         }
+      }
+      else if (((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 2)) || ((Math.abs(xDiff) == 2) && (Math.abs(yDiff) == 1))) {
+        if (xDiff == 1) {
+          if (lastSectionType == "udlr") {
+            controlPoints = [
+              points[0][0],
+              points[0][1] + (points[1][1] - points[0][1])/2
+            ];  
+          } else if (lastSectionType == "diagonal") {
+          controlPoints = [
+            points[1][0],
+            points[0][1] + (points[1][1] - points[0][1])/2
+          ];
+          }
+
+          path += "C" + controlPoints[0] + "," + controlPoints[1] + "," + controlPoints[0] + "," + controlPoints[1] + "," + points[1][0] + "," + points[1][1];
+        }      
       }
     } else {
       var nextNode = lineNodes[lineNode + 1];

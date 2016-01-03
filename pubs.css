@@ -14,7 +14,7 @@ html, body
 }
 
 h1 {
-  font-family: sans-serif;
+  font-family: 'Hammersmith One', sans-serif;
 }
 
 #legend {
@@ -27,7 +27,7 @@ h1 {
 }
 
 #awards li {
-  display: inline;
+  /*display: inline;*/
 }
 
 #awards {
