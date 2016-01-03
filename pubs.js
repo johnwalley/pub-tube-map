@@ -1,3 +1,7 @@
+var log = log4javascript.getDefaultLogger();
+consoleAppender = new log4javascript.BrowserConsoleAppender();
+log.addAppender(consoleAppender);
+
 var options = {};
 
 var visitedPubs = d3.set();
@@ -13,12 +17,38 @@ var legend = d3.select("ul#lines").attr("class", "list-inline");
 var progress = d3.select("#progress");
 var visitedList = d3.select("#visited").select("ul");
 
+var minX = Infinity;
+var maxX = -Infinity;
+var minY = Infinity;
+var maxY = -Infinity;
+
+var xMargin = 10;
+var yMargin = 10;
+
+var aspectRatio = 1;
+
 d3.json("pubs.json", function(d) {
+
+  log.info("Succesfulyl loaded pubs.json");
+
   var w = parseInt(d3.select("#map-container").style("width"));
   var h = parseInt(d3.select("#map-container").style("height"));
 
-  options.scale = w/40;
-  scale = options.scale;
+  d.forEach(function(line) {
+    line.nodes.forEach(function(node) {
+      if (node.coords[0] < minX)
+        minX = node.coords[0];
+
+      if (node.coords[0] > maxX)
+        maxX = node.coords[0];
+
+      if (node.coords[1] < minY)
+        minY = node.coords[1];
+
+      if (node.coords[1] > maxY)
+        maxY = node.coords[1];
+    })
+  })
 
   var data = { "raw": d };
 
@@ -70,15 +100,32 @@ function updateFunc(data) {
 }
 
 function update(data) {
-  var w = parseInt(d3.select("#map-container").style("width"));
-  var h = parseInt(d3.select("#map-container").style("height"));
+  var w = parseInt(d3.select("#map").style("width"));
+  var h = parseInt(d3.select("#map").style("height"));
 
-  options.scale = w/40;
-  scale = options.scale;
+  log.debug("SVG container dimensions: " + w + "x" + h);
+
+  var desiredAspectRatio = (maxX - minX) / (maxY - minY);
+  var actualAspectRatio = w/h;
+
+  var xMargin = w/10;
+  var yMargin = h/10;
+
+  if (desiredAspectRatio > actualAspectRatio) {
+    // Container is too tall
+    options.xScale = d3.scale.linear().domain([minX, maxX]).range([xMargin, w - xMargin]);
+    options.yScale = d3.scale.linear().domain([minY, maxY]).range([yMargin, (h - yMargin) * actualAspectRatio / desiredAspectRatio]);
+  } else {
+    log.debug("Container is too wide");
+    options.xScale = d3.scale.linear().domain([minX, maxX]).range([xMargin * desiredAspectRatio / actualAspectRatio, (w - xMargin) * desiredAspectRatio / actualAspectRatio ]);
+    options.yScale = d3.scale.linear().domain([minY, maxY]).range([yMargin, h - yMargin]);
+  }
+
+  log.debug("Max x position: " + options.xScale(maxX));
+  log.debug("Should be: " + (w - xMargin));
 
   options.lineWidth = w/120;
 
-  // TODO: Can we combine these into one object? For example data.lines, data.markers, data.labels?
   drawLines(data.raw);
   drawMarkers(data);
   drawLabels(data);
@@ -240,7 +287,7 @@ function drawMarkers(data) {
 
   var pubs = data.pubs;
 
-  var scale = options.scale;
+  var unitLength = (options.xScale(1) - options.xScale(0));
 
   var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange" && d.hide != true; });
 
@@ -276,7 +323,7 @@ function drawMarkers(data) {
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
-  interchangePubs.attr("transform", function(d) { return "translate(" + d.x * options.scale + "," + d.y * options.scale + ")" })
+  interchangePubs.attr("transform", function(d) { return "translate(" + options.xScale(d.x) + "," + options.yScale(d.y) + ")" })
     .attr("d", markerFunction)
     .attr("stroke-width", options.lineWidth/4);
 
@@ -287,7 +334,7 @@ function drawMarkers(data) {
 
   var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
 
-  var length = options.lineWidth / options.scale;
+  var length = options.lineWidth / unitLength;
 
   var normalPubs = markers.selectAll("path")
     .data(stationPubs);
@@ -323,7 +370,7 @@ function drawMarkers(data) {
       break;
     }
 
-    return lineFunction()([[d.x + (d.shiftX*options.lineWidth/options.scale), d.y + (d.shiftY*options.lineWidth/options.scale)], [d.x + (d.shiftX*options.lineWidth/options.scale) + length*dir[0], d.y + (d.shiftY*options.lineWidth/options.scale) + length*dir[1]]]);
+    return lineFunction()([[d.x + (d.shiftX*options.lineWidth/unitLength), d.y + (d.shiftY*options.lineWidth/unitLength)], [d.x + (d.shiftX*options.lineWidth/unitLength) + length*dir[0], d.y + (d.shiftY*options.lineWidth/unitLength) + length*dir[1]]]);
   })
     .attr("stroke", function(d) { return d.color; })
     .attr("stroke-width", options.lineWidth/2)
@@ -333,15 +380,17 @@ function drawMarkers(data) {
 
 function lineFunction() {
   return d3.svg.line()
-    .x(function(d) { return d[0] * options.scale; })
-    .y(function(d) { return d[1] * options.scale; })
+    .x(function(d) { return options.xScale(d[0]); })
+    .y(function(d) { return options.yScale(d[1]); })
     .interpolate("linear");
 }
 
 function curveFunction() {
+  var unitLength = (options.xScale(1) - options.xScale(0));
+
   return d3.svg.arc()
-    .innerRadius(options.scale - options.lineWidth/2)
-    .outerRadius(options.scale + options.lineWidth/2)
+    .innerRadius(unitLength - options.lineWidth/2)
+    .outerRadius(unitLength + options.lineWidth/2)
     .startAngle(function(angle) { return angle[0]; })
     .endAngle(function(angle) { return angle[1]; });
 }
@@ -354,6 +403,8 @@ function resizeFunc(data) {
 
 function drawLabels(data) {
   var pubs = data.pubs;
+
+  var unitLength = (options.xScale(1) - options.xScale(0));
 
   // DATA JOIN
   // Join new data with old elements, if any
@@ -376,12 +427,12 @@ function drawLabels(data) {
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
   text.text(function(d) { return d.name })
-    .attr("x", function(d) { return d.x * options.scale + textPos(d).pos[0]; })
-    .attr("y", function(d) { return d.y * options.scale + textPos(d).pos[1]; })
+    .attr("x", function(d) { return options.xScale(d.x) + textPos(d).pos[0]; })
+    .attr("y", function(d) { return options.yScale(d.y) + textPos(d).pos[1]; })
     .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
     .style("display", function(d) { return d.hide != true ? "block" : "none"; })
-    .style("font-size", options.scale/1.6 + "px")
+    .style("font-size", unitLength/2 + "px")
     .call(wrap);
 
   // EXIT
@@ -448,9 +499,9 @@ function tubeline(data) {
 
   lineNodes = data.nodes;
 
-  var scale = options.scale;
+  var unitLength = (options.xScale(1) - options.xScale(0));
 
-  var shiftCoords = [data.shiftCoords[0]*options.lineWidth/scale, data.shiftCoords[1]*options.lineWidth/scale];
+  var shiftCoords = [data.shiftCoords[0]*options.lineWidth/unitLength, data.shiftCoords[1]*options.lineWidth/unitLength];
 
   var lastSectionType = "";
 
@@ -471,23 +522,23 @@ function tubeline(data) {
 
       if (lineNode === lineNodes.length - 1) {
         if (xDiff > 0)
-          lineEndCorrection = [-options.lineWidth/(4*scale), 0];
+          lineEndCorrection = [-options.lineWidth/(4*unitLength), 0];
         if (xDiff < 0)
-          lineEndCorrection = [options.lineWidth/(4*scale), 0];
+          lineEndCorrection = [options.lineWidth/(4*unitLength), 0];
         if (yDiff > 0)
-          lineEndCorrection = [0, -options.lineWidth/(4*scale)];
+          lineEndCorrection = [0, -options.lineWidth/(4*unitLength)];
         if (yDiff < 0)
-          lineEndCorrection [ 0, options.lineWidth/(4*scale)];
+          lineEndCorrection [ 0, options.lineWidth/(4*unitLength)];
       }
 
       var points = [
         [
-          options.scale * (currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
-          options.scale * (currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
+          options.xScale(currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
+          options.yScale(currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
         ],
         [
-          options.scale * (nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0]),
-          options.scale * (nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1])
+          options.xScale(nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0]),
+          options.yScale(nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1])
         ]
       ]
 
@@ -545,17 +596,17 @@ function tubeline(data) {
 
 
       if (xDiff > 0)
-        lineStartCorrection = [options.lineWidth/(4*scale), 0];
+        lineStartCorrection = [options.lineWidth/(4*unitLength), 0];
       if (xDiff < 0)
-        lineStartCorrection = [-options.lineWidth/(4*scale), 0];
+        lineStartCorrection = [-options.lineWidth/(4*unitLength), 0];
       if (yDiff > 0)
-        lineStartCorrection = [0, options.lineWidth/(4*scale)];
+        lineStartCorrection = [0, options.lineWidth/(4*unitLength)];
       if (yDiff < 0)
-        lineStartCorrection [ 0, -options.lineWidth/(4*scale)];
+        lineStartCorrection [ 0, -options.lineWidth/(4*unitLength)];
 
       var points = [
-        options.scale * (currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
-        options.scale * (currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
+        options.xScale(currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
+        options.yScale(currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
       ];
 
       path += "M" + points[0] + "," + points[1];
