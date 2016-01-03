@@ -10,7 +10,7 @@ var markers = svg.append("g").attr("id", "stations");
 var labels = svg.append("g").attr("id", "labels");
 
 var awardIcons = d3.select("#awards");
-var legend = d3.select("#lines").attr("class", "list-inline");
+var legend = d3.select("ul#lines").attr("class", "list-inline");
 var visitedList = d3.select("#visited").select("ul");
 
 d3.json("pubs.json", function(data) {
@@ -81,6 +81,8 @@ function update(pubs, lines, data) {
 
   options.scale = w/40;
   scale = options.scale;
+
+  options.lineWidth = w/120;
 
   // TODO: Can we combine these into one object? For example data.lines, data.markers, data.labels?
   drawLines(data);
@@ -199,8 +201,10 @@ function extractPubs(data) {
         continue;
 
       pubs[pubs.length] = {
-        "x": data.coords[0] + line.shiftCoords[0]/options.scale,
-        "y": data.coords[1] + line.shiftCoords[1]/options.scale,
+        "x": data.coords[0],
+        "y": data.coords[1],
+        "shiftX": line.shiftCoords[0],
+        "shiftY": line.shiftCoords[1],
         "name": data.name,
         "labelPos": data.labelPos,
         "visited": false,
@@ -217,132 +221,25 @@ function extractPubs(data) {
 function drawLines(data) {
   // DATA JOIN
   // Join new data with old elements, if any
+  var g = linesElement.selectAll("path").data(data.lines);
 
   // UPDATE
   // Update old elements as needed
 
   // ENTER
   // Create new elements as needed
+  g.enter().append("path")
+    .attr("id", function(d) { return d.label; })
+    .attr("stroke", function(d) { return d.color; })
+    .attr("fill", "none");
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
+  g.attr("d", function(d) { return tubeline(d); })
+    .attr("stroke-width", options.lineWidth);
 
-  // EXIT
-  // Remove old elements as needed.
-
-  var scale = options.scale;
-
-  data.lines.forEach(function(line) {
-    var lineEl = linesElement.select("g#" + line.label);
-
-    if (lineEl.empty())
-      lineEl = linesElement.append("g").attr("id", line.label);
-
-    var lineNodes = [];
-
-    lineNodes = line.nodes;
-
-    var shiftCoords = [line.shiftCoords[0]/scale, line.shiftCoords[1]/scale];
-
-    // DATA JOIN
-    // Join new data with old elements, if any
-
-    // UPDATE
-    // Update old elements as needed
-
-    // ENTER
-    // Create new elements as needed
-
-    // ENTER + UPDATE
-    // Appending to the enter selection expands the update selection to include
-    // entering elements; so, operations on the update selection after appending to
-    // the enter selection will apply to both entering and updating nodes
-
-    // EXIT
-    // Remove old elements as needed
-
-    for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
-      if (lineNode < (lineNodes.length - 1)) {
-        var nextNode = lineNodes[lineNode+1];
-        var currNode = lineNodes[lineNode];
-
-        var xVal = 0;
-        var yVal = 0;
-        var direction = "";
-
-        var xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
-        var yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
-
-        var lineStartCorrection = [0, 0];
-        var lineEndCorrection = [0, 0];
-
-        if ((xDiff == 0) || (yDiff == 0)) {
-
-          if (lineNode === 0) {
-            if (xDiff > 0)
-              lineStartCorrection = [options.lineWidth/(4*scale), 0];
-            if (xDiff < 0)
-              lineStartCorrection = [-options.lineWidth/(4*scale), 0];
-            if (yDiff > 0)
-              lineStartCorrection = [0, options.lineWidth/(4*scale)];
-            if (yDiff < 0)
-              lineStartCorrection [ 0, -options.lineWidth/(4*scale)];
-          }
-
-          if (lineNode === lineNodes.length - 2) {
-            if (xDiff > 0)
-              lineEndCorrection = [-options.lineWidth/(4*scale), 0];
-            if (xDiff < 0)
-              lineEndCorrection = [options.lineWidth/(4*scale), 0];
-            if (yDiff > 0)
-              lineEndCorrection = [0, -options.lineWidth/(4*scale)];
-            if (yDiff < 0)
-              lineEndCorrection [ 0, options.lineWidth/(4*scale)];
-          }
-
-          var points = [
-            [
-              currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0],
-              currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1]
-            ],
-            [
-              nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0],
-              nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1]
-            ]
-          ]
-
-          var el = lineEl.select("path#id" + lineNode);
-
-          if (el.empty())
-            el = lineEl.append("path").attr("id", "id" + lineNode);
-
-          el.attr("d", lineFunction()(points))
-            .attr("stroke", line.color)
-            .attr("stroke-width", options.lineWidth)
-            .attr("fill", "none");
-        } else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
-          direction = nextNode.dir.toLowerCase();
-          var phi;
-          switch (direction) {
-            case "e": if (yDiff > 0) { xVal = 0; yVal = -scale; phi = [Math.PI, Math.PI/2]} else { xVal = 0; yVal = scale; phi = [0, Math.PI/2] }  break;
-            case "s": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, Math.PI] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, Math.PI]} break;
-            case "n": if (xDiff > 0) { xVal = -scale; yVal = 0; phi = [Math.PI/2, 0] } else { xVal = scale; yVal = 0; phi = [3*Math.PI/2, 2*Math.PI]} break;
-          }
-
-          var el = lineEl.select("path#id" + lineNode);
-
-          if (el.empty())
-            el = lineEl.append("path").attr("id", "id" + lineNode);
-
-          el.attr("d", curveFunction()(phi))
-            .attr("transform", "translate(" + ((currNode.coords[0] + shiftCoords[0]) * scale + xVal) + "," + ((currNode.coords[1] + shiftCoords[1]) * scale + yVal) + ")")
-            .attr("fill", line.color);
-        }
-      }
-    }
-  });
 }
 
 function drawMarkers(pubs, lines, data) {
@@ -375,17 +272,17 @@ function drawMarkers(pubs, lines, data) {
   // Create new elements as needed
   interchangePubs.enter()
     .append("path")
-    .attr("d", markerFunction)
     .attr("fill", bgColor)
     .attr("stroke", fgColor)
-    .attr("stroke-width", options.lineWidth/4)
     .on("click", function(d) { togglePub(d, pubs, lines, data)(); });
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
-  interchangePubs.attr("transform", function(d) { return "translate(" + d.x * options.scale + "," + d.y * options.scale + ")" });
+  interchangePubs.attr("transform", function(d) { return "translate(" + d.x * options.scale + "," + d.y * options.scale + ")" })
+    .attr("d", markerFunction)
+    .attr("stroke-width", options.lineWidth/4);
 
 
   // EXIT
@@ -397,12 +294,12 @@ function drawMarkers(pubs, lines, data) {
   var length = options.lineWidth / options.scale;
 
   var normalPubs = markers.selectAll("path")
-  .data(stationPubs);
+    .data(stationPubs);
 
   // ENTER
   // Create new elements as needed
   normalPubs.enter()
-  .append("path");
+    .append("path");
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
@@ -430,7 +327,7 @@ function drawMarkers(pubs, lines, data) {
       break;
     }
 
-    return lineFunction()([[d.x, d.y], [d.x + length*dir[0], d.y + length*dir[1]]]);
+    return lineFunction()([[d.x + (d.shiftX*options.lineWidth/options.scale), d.y + (d.shiftY*options.lineWidth/options.scale)], [d.x + (d.shiftX*options.lineWidth/options.scale) + length*dir[0], d.y + (d.shiftY*options.lineWidth/options.scale) + length*dir[1]]]);
   })
   .attr("stroke", function(d) { return d.color; })
   .attr("stroke-width", options.lineWidth/2)
@@ -578,4 +475,103 @@ function drawAwards(lines) {
   selectedIcons
     .exit()
     .remove();
+}
+
+function tubeline(data) {
+
+  var path = "";
+
+  lineNodes = data.nodes;
+
+  var scale = options.scale;
+
+  var shiftCoords = [data.shiftCoords[0]*options.lineWidth/scale, data.shiftCoords[1]*options.lineWidth/scale];
+
+  for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
+    if (lineNode > 0) {
+      var nextNode = lineNodes[lineNode];
+      var currNode = lineNodes[lineNode - 1];
+
+      var xVal = 0;
+      var yVal = 0;
+      var direction = "";
+
+      var xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
+      var yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
+
+      var lineStartCorrection = [0, 0];
+      var lineEndCorrection = [0, 0];
+
+      if (lineNode === lineNodes.length - 1) {
+        if (xDiff > 0)
+          lineEndCorrection = [-options.lineWidth/(4*scale), 0];
+        if (xDiff < 0)
+          lineEndCorrection = [options.lineWidth/(4*scale), 0];
+        if (yDiff > 0)
+          lineEndCorrection = [0, -options.lineWidth/(4*scale)];
+        if (yDiff < 0)
+          lineEndCorrection [ 0, options.lineWidth/(4*scale)];
+      }
+
+      var points = [
+        [
+          options.scale * (currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
+          options.scale * (currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
+        ],
+        [
+          options.scale * (nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0]),
+          options.scale * (nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1])
+        ]
+      ]
+
+      if ((xDiff == 0) || (yDiff == 0)) {
+        path += "L" + points[1][0] + "," + points[1][1];
+      } else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
+        direction = nextNode.dir.toLowerCase();
+        var phi;
+        switch (direction) {
+          case "e":
+            path += "Q" + points[1][0] + "," + points[0][1] + "," + points[1][0] + "," + points[1][1];
+            break;
+          case "s":
+            path += "Q" + points[0][0] + "," + points[1][1] + "," + points[1][0] + "," + points[1][1];
+            break;
+          case "n":
+            path += "Q" + points[0][0] + "," + points[1][1] + "," + points[1][0] + "," + points[1][1];
+            break;
+        }
+      }
+    } else {
+      var nextNode = lineNodes[lineNode + 1];
+      var currNode = lineNodes[lineNode];
+
+      var xVal = 0;
+      var yVal = 0;
+
+      var xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
+      var yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
+
+      var lineStartCorrection = [0, 0];
+      var lineEndCorrection = [0, 0];
+
+
+      if (xDiff > 0)
+        lineStartCorrection = [options.lineWidth/(4*scale), 0];
+      if (xDiff < 0)
+        lineStartCorrection = [-options.lineWidth/(4*scale), 0];
+      if (yDiff > 0)
+        lineStartCorrection = [0, options.lineWidth/(4*scale)];
+      if (yDiff < 0)
+        lineStartCorrection [ 0, -options.lineWidth/(4*scale)];
+
+      var points = [
+        options.scale * (currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
+        options.scale * (currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
+      ];
+
+      path += "M" + points[0] + "," + points[1];
+    }
+  }
+
+  return path;
 }
