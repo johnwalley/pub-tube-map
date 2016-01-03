@@ -50,6 +50,8 @@ d3.json("pubs.json", function(d) {
     })
   })
 
+  log.debug("MinY: " + minY + ", MaxY: " + maxY);
+
   var data = { "raw": d };
 
   // Data manipulation
@@ -108,23 +110,25 @@ function update(data) {
   var desiredAspectRatio = (maxX - minX) / (maxY - minY);
   var actualAspectRatio = w/h;
 
-  var xMargin = w/10;
+  log.debug("desiredAspectRatio: " + desiredAspectRatio);
+  log.debug("actualAspectRatio: " + actualAspectRatio);
+
+
+  var xMargin = w/7;
   var yMargin = h/10;
 
+  // Note that we flip the sense of the y-axis here
   if (desiredAspectRatio > actualAspectRatio) {
     // Container is too tall
     options.xScale = d3.scale.linear().domain([minX, maxX]).range([xMargin, w - xMargin]);
-    options.yScale = d3.scale.linear().domain([minY, maxY]).range([yMargin, (h - yMargin) * actualAspectRatio / desiredAspectRatio]);
+    options.yScale = d3.scale.linear().domain([minY, maxY]).range([(h - yMargin) * actualAspectRatio / desiredAspectRatio, yMargin]);
   } else {
     log.debug("Container is too wide");
     options.xScale = d3.scale.linear().domain([minX, maxX]).range([xMargin * desiredAspectRatio / actualAspectRatio, (w - xMargin) * desiredAspectRatio / actualAspectRatio ]);
-    options.yScale = d3.scale.linear().domain([minY, maxY]).range([yMargin, h - yMargin]);
+    options.yScale = d3.scale.linear().domain([minY, maxY]).range([h - yMargin, yMargin]);
   }
 
-  log.debug("Max x position: " + options.xScale(maxX));
-  log.debug("Should be: " + (w - xMargin));
-
-  options.lineWidth = w/120;
+  options.lineWidth = (options.xScale(1) - options.xScale(0))/1.2;
 
   drawLines(data.raw);
   drawMarkers(data);
@@ -296,7 +300,7 @@ function drawMarkers(data) {
 
   var markerFunction = d3.svg.arc()
       .innerRadius(0)
-      .outerRadius(options.lineWidth/2)
+      .outerRadius(options.lineWidth)
       .startAngle(0)
       .endAngle(2*Math.PI);
 
@@ -428,11 +432,11 @@ function drawLabels(data) {
   // the enter selection will apply to both entering and updating nodes
   text.text(function(d) { return d.name })
     .attr("x", function(d) { return options.xScale(d.x) + textPos(d).pos[0]; })
-    .attr("y", function(d) { return options.yScale(d.y) + textPos(d).pos[1]; })
+    .attr("y", function(d) { return options.yScale(d.y) - textPos(d).pos[1]; }) // Flip y-axis
     .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
     .style("display", function(d) { return d.hide != true ? "block" : "none"; })
-    .style("font-size", unitLength/2 + "px")
+    .style("font-size", unitLength/1 + "px")
     .call(wrap);
 
   // EXIT
@@ -528,13 +532,13 @@ function tubeline(data) {
         if (yDiff > 0)
           lineEndCorrection = [0, -options.lineWidth/(4*unitLength)];
         if (yDiff < 0)
-          lineEndCorrection [ 0, options.lineWidth/(4*unitLength)];
+          lineEndCorrection = [0, options.lineWidth/(4*unitLength)];
       }
 
       var points = [
         [
-          options.xScale(currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
-          options.yScale(currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
+          options.xScale(currNode.coords[0] + shiftCoords[0]),
+          options.yScale(currNode.coords[1] + shiftCoords[1])
         ],
         [
           options.xScale(nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0]),
@@ -562,6 +566,9 @@ function tubeline(data) {
           case "n":
             path += "Q" + points[0][0] + "," + points[1][1] + "," + points[1][0] + "," + points[1][1];
             break;
+          case "w":
+            path += "Q" + points[1][0] + "," + points[0][1] + "," + points[1][0] + "," + points[1][1];
+            break;            
         }
       }
       else if (((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 2)) || ((Math.abs(xDiff) == 2) && (Math.abs(yDiff) == 1))) {
@@ -572,14 +579,26 @@ function tubeline(data) {
               points[0][1] + (points[1][1] - points[0][1])/2
             ];  
           } else if (lastSectionType == "diagonal") {
-          controlPoints = [
-            points[1][0],
-            points[0][1] + (points[1][1] - points[0][1])/2
-          ];
+            controlPoints = [
+              points[1][0],
+              points[0][1] + (points[1][1] - points[0][1])/2
+            ];
+          } 
+        } else if (xDiff == -1) {
+          if (lastSectionType == "udlr") {
+            controlPoints = [
+              points[0][0],
+              points[0][1] + (points[1][1] - points[0][1])/2
+            ];  
+          } else if (lastSectionType == "diagonal") {
+            controlPoints = [
+              points[1][0],
+              points[0][1] + (points[1][1] - points[0][1])/2
+            ];
           }
+        }
 
-          path += "C" + controlPoints[0] + "," + controlPoints[1] + "," + controlPoints[0] + "," + controlPoints[1] + "," + points[1][0] + "," + points[1][1];
-        }      
+        path += "C" + controlPoints[0] + "," + controlPoints[1] + "," + controlPoints[0] + "," + controlPoints[1] + "," + points[1][0] + "," + points[1][1];     
       }
     } else {
       var nextNode = lineNodes[lineNode + 1];
@@ -602,7 +621,7 @@ function tubeline(data) {
       if (yDiff > 0)
         lineStartCorrection = [0, options.lineWidth/(4*unitLength)];
       if (yDiff < 0)
-        lineStartCorrection [ 0, -options.lineWidth/(4*unitLength)];
+        lineStartCorrection = [0, -options.lineWidth/(4*unitLength)];
 
       var points = [
         options.xScale(currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
