@@ -9,8 +9,8 @@ var interchangeMarkers = svg.append("g").attr("id", "interchanges");
 var markers = svg.append("g").attr("id", "stations");
 var labels = svg.append("g").attr("id", "labels");
 
-var awardIcons = d3.select("#awards");
 var legend = d3.select("ul#lines").attr("class", "list-inline");
+var progress = d3.select("#progress");
 var visitedList = d3.select("#visited").select("ul");
 
 d3.json("pubs.json", function(d) {
@@ -26,12 +26,6 @@ d3.json("pubs.json", function(d) {
   data.pubs = extractPubs(d);
   data.lines = extractLines(d);
 
-  legend.selectAll("li")
-    .data(data.raw)
-    .enter()
-    .append("li")
-    .text(function(d) { return d.label })
-    .style("color", function(d) { return d.color; });
 
   d3.select("#visited").select("p").on("click", function() {
     toggle(d3.select("#visited").select("ul"));
@@ -44,27 +38,29 @@ d3.json("pubs.json", function(d) {
   update(data);
 });
 
-function drawLists(pubs) {
+function drawLists(data) {
   var selectedPubs = visitedList.selectAll("li").data(visitedPubs.values().sort());
 
   selectedPubs
-  .text(function(d) { return d });
+    .text(function(d) { return d });
 
   selectedPubs
-  .enter()
-  .append("li")
-  .text(function(d) { return d });
+    .enter()
+    .append("li")
+    .text(function(d) { return d });
 
   selectedPubs
-  .exit()
-  .remove();
+    .exit()
+    .remove();
+
+  var visited = visitedPubs.size();
+
+  var total = data.pubs
+    .map(function(pub) { return pub.name; })
+    .filter(function(value, index, self) { return self.indexOf(value) === index; }).length;  // Unique elements
 
   d3.select("#visited").select("p")
-    .text("Visited: " + visitedPubs.size());
-
-  // TODO: pubs contains duplicates so we over count the number of pubs left
-  d3.select("#stillToVisit").select("p")
-    .text("Pubs left: " + (pubs.length - visitedPubs.size()));
+    .text("Visited: " + visited + "/" + total);
 }
 
 function updateFunc(data) {
@@ -86,8 +82,8 @@ function update(data) {
   drawLines(data.raw);
   drawMarkers(data);
   drawLabels(data);
-  drawLists(data.pubs);
-  drawAwards(data.lines);
+  drawLists(data);
+  drawLegend(data);
 }
 
 function score(visited, lines) {
@@ -106,10 +102,10 @@ function score(visited, lines) {
   ];
 
   if (visited.length >= 10)
-  awards[0].unlocked = true;
+    awards[0].unlocked = true;
 
   if (visited.length >= 20)
-  awards[1].unlocked = true;
+    awards[1].unlocked = true;
 
   lines.forEach(function(line) {
     var award = {
@@ -446,40 +442,6 @@ function togglePub(pub, data) {
   }
 }
 
-function drawAwards(lines) {
-  var awards = score(visitedPubs.values(), lines);
-
-  // DATA JOIN
-  // Join new data with old elements, if any
-  var selectedIcons = awardIcons.selectAll("li")
-    .data(awards.filter(function(award) { return award.unlocked === true; }), function(d) { return d.name; });
-
-  // UPDATE
-  // Update old elements as needed
-
-  // ENTER
-  // Create new elements as needed
-  var selectedSpan = selectedIcons
-    .enter()
-    .append("li")
-    .append("span");
-
-  // ENTER + UPDATE
-  // Appending to the enter selection expands the update selection to include
-  // entering elements; so, operations on the update selection after appending to
-  // the enter selection will apply to both entering and updating nodes
-  selectedSpan
-    .append("strong")
-    .style("color", function(d) { return d.color; })
-    .text(function(d) { return d.name; });
-
-  // EXIT
-  // Remove old elements as needed
-  selectedIcons
-    .exit()
-    .remove();
-}
-
 function tubeline(data) {
 
   var path = "";
@@ -601,4 +563,42 @@ function tubeline(data) {
   }
 
   return path;
+}
+
+function drawLegend(data) {
+
+  var awards = score(visitedPubs.values(), data.lines);
+
+  var filteredAwards = awards.filter(function(award) { return award.unlocked === true; });
+
+  var filteredNames = filteredAwards.map(function(d) { return d.name; });
+
+  // DATA JOIN
+  // Join new data with old elements, if any
+  var lines = legend.selectAll("li")
+    .data(data.lines);
+
+  // UPDATE
+  // Update old elements as needed
+
+  // ENTER
+  // Create new elements as needed
+  lines.enter()
+    .append("li")
+    .text(function(d) { return d.name })
+    .style("color", function(d) { return d.color; });
+
+  // ENTER + UPDATE
+  // Appending to the enter selection expands the update selection to include
+  // entering elements; so, operations on the update selection after appending to
+  // the enter selection will apply to both entering and updating nodes
+  lines.style("text-decoration", function(d) {
+    var found = (filteredNames.indexOf(d.name) > -1);
+
+    return found ? "line-through" : "none";
+  });
+
+  // EXIT
+  // Remove old elements as needed.
+  lines.exit().remove();
 }
