@@ -22,17 +22,9 @@ var maxX = -Infinity;
 var minY = Infinity;
 var maxY = -Infinity;
 
-var xMargin = 10;
-var yMargin = 10;
-
-var aspectRatio = 1;
-
 d3.json("pubs.json", function(d) {
 
-  log.info("Succesfulyl loaded pubs.json");
-
-  var w = parseInt(d3.select("#map-container").style("width"));
-  var h = parseInt(d3.select("#map-container").style("height"));
+  log.info("Successfully loaded pubs.json");
 
   d.forEach(function(line) {
     line.nodes.forEach(function(node) {
@@ -48,7 +40,7 @@ d3.json("pubs.json", function(d) {
       if (node.coords[1] > maxY)
         maxY = node.coords[1];
     })
-  })
+  });
 
   log.debug("MinY: " + minY + ", MaxY: " + maxY);
 
@@ -70,7 +62,7 @@ d3.json("pubs.json", function(d) {
   update(data);
 });
 
-function drawLists(data) {
+function drawPubLists(data) {
   var selectedPubs = visitedList.selectAll("li").data(visitedPubs.values().sort());
 
   selectedPubs
@@ -93,12 +85,6 @@ function drawLists(data) {
 
   d3.select("#visited").select("p")
     .text("Visited: " + visited + "/" + total);
-}
-
-function updateFunc(data) {
-  return function() {
-    update(data);
-  }
 }
 
 function update(data) {
@@ -133,7 +119,7 @@ function update(data) {
   drawLines(data.raw);
   drawMarkers(data);
   drawLabels(data);
-  drawLists(data);
+  drawPubLists(data);
   drawLegend(data);
 }
 
@@ -164,7 +150,7 @@ function score(visited, lines) {
       "unlocked": true,
       "color": line.color,
       "icon": "check-square-o"
-    }
+    };
 
     awards[awards.length] = award;
 
@@ -192,7 +178,7 @@ function wrap(text) {
 
     for (var lineNum = 1; lineNum < lines.length; lineNum++) {
       tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", lineNum * 1.1 + dy + "em").text(lines[lineNum])
-    };
+    }
 
   });
 }
@@ -216,12 +202,13 @@ function extractLines(data) {
     var lineObj = {
       "name": line.label,
       "pubs": [],
-      "color": line.color
+      "color": line.color,
+      "shiftCoords": line.shiftCoords
     };
 
     lines[lines.length] = lineObj;
 
-    for (node = 0; node < line.nodes.length; node++) {
+    for (var node = 0; node < line.nodes.length; node++) {
       var data = line.nodes[node];
 
       if (!data.hasOwnProperty("name"))
@@ -239,7 +226,7 @@ function extractPubs(data) {
   var pubs = [];
 
   data.forEach(function(line) {
-    for (node = 0; node < line.nodes.length; node++) {
+    for (var node = 0; node < line.nodes.length; node++) {
       var data = line.nodes[node];
 
       if (!data.hasOwnProperty("name"))
@@ -282,7 +269,7 @@ function drawLines(data) {
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
-  g.attr("d", function(d) { return tubeline(d); })
+  g.attr("d", function(d) { return tubeLine(d); })
     .attr("stroke-width", options.lineWidth);
 
 }
@@ -293,7 +280,7 @@ function drawMarkers(data) {
 
   var unitLength = (options.xScale(1) - options.xScale(0));
 
-  var interchangePubs = pubs.filter(function(d) { return d.marker === "interchange" && d.hide != true; });
+  var interchangePubsList = pubs.filter(function(d) { return d.marker === "interchange" && d.hide != true; });
 
   var fgColor = "#000000";
   var bgColor = "#ffffff";
@@ -307,7 +294,7 @@ function drawMarkers(data) {
   // DATA JOIN
   // Join new data with old elements, if any
   var interchangePubs = interchangeMarkers.selectAll("path")
-    .data(interchangePubs);
+    .data(interchangePubsList);
 
   // UPDATE
   // Update old elements as needed
@@ -389,16 +376,6 @@ function lineFunction() {
     .interpolate("linear");
 }
 
-function curveFunction() {
-  var unitLength = (options.xScale(1) - options.xScale(0));
-
-  return d3.svg.arc()
-    .innerRadius(unitLength - options.lineWidth/2)
-    .outerRadius(unitLength + options.lineWidth/2)
-    .startAngle(function(angle) { return angle[0]; })
-    .endAngle(function(angle) { return angle[1]; });
-}
-
 function resizeFunc(data) {
   return function() {
     update(data);
@@ -436,7 +413,7 @@ function drawLabels(data) {
     .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
     .style("display", function(d) { return d.hide != true ? "block" : "none"; })
-    .style("font-size", unitLength/1 + "px")
+    .style("font-size", unitLength + "px")
     .call(wrap);
 
   // EXIT
@@ -497,31 +474,30 @@ function togglePub(pub, data) {
   }
 }
 
-function tubeline(data) {
+function tubeLine(data) {
 
   var path = "";
 
-  lineNodes = data.nodes;
+  var lineNodes = data.nodes;
 
   var unitLength = (options.xScale(1) - options.xScale(0));
 
   var shiftCoords = [data.shiftCoords[0]*options.lineWidth/unitLength, data.shiftCoords[1]*options.lineWidth/unitLength];
 
   var lastSectionType = "";
+  var nextNode, currNode, xDiff, yDiff;
+  var points;
 
   for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
     if (lineNode > 0) {
-      var nextNode = lineNodes[lineNode];
-      var currNode = lineNodes[lineNode - 1];
+      nextNode = lineNodes[lineNode];
+      currNode = lineNodes[lineNode - 1];
 
-      var xVal = 0;
-      var yVal = 0;
       var direction = "";
 
-      var xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
-      var yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
+      xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
+      yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
 
-      var lineStartCorrection = [0, 0];
       var lineEndCorrection = [0, 0];
 
       if (lineNode === lineNodes.length - 1) {
@@ -535,7 +511,7 @@ function tubeline(data) {
           lineEndCorrection = [0, options.lineWidth/(4*unitLength)];
       }
 
-      var points = [
+      points = [
         [
           options.xScale(currNode.coords[0] + shiftCoords[0]),
           options.yScale(currNode.coords[1] + shiftCoords[1])
@@ -544,18 +520,18 @@ function tubeline(data) {
           options.xScale(nextNode.coords[0] + shiftCoords[0] + lineEndCorrection[0]),
           options.yScale(nextNode.coords[1] + shiftCoords[1] + lineEndCorrection[1])
         ]
-      ]
+      ];
 
       if (((xDiff == 0) || (yDiff == 0))) {
-        lastSectionType = "udlr"
+        lastSectionType = "udlr";
         path += "L" + points[1][0] + "," + points[1][1];
       } else if ((Math.abs(xDiff) == Math.abs(yDiff)) && (Math.abs(xDiff) > 1)) {
-        lastSectionType = "diagonal"
+        lastSectionType = "diagonal";
         path += "L" + points[1][0] + "," + points[1][1];
       }
       else if ((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 1)) {
         direction = nextNode.dir.toLowerCase();
-        var phi;
+
         switch (direction) {
           case "e":
             path += "Q" + points[1][0] + "," + points[0][1] + "," + points[1][0] + "," + points[1][1];
@@ -572,6 +548,7 @@ function tubeline(data) {
         }
       }
       else if (((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 2)) || ((Math.abs(xDiff) == 2) && (Math.abs(yDiff) == 1))) {
+        var controlPoints;
         if (xDiff == 1) {
           if (lastSectionType == "udlr") {
             controlPoints = [
@@ -601,18 +578,13 @@ function tubeline(data) {
         path += "C" + controlPoints[0] + "," + controlPoints[1] + "," + controlPoints[0] + "," + controlPoints[1] + "," + points[1][0] + "," + points[1][1];     
       }
     } else {
-      var nextNode = lineNodes[lineNode + 1];
-      var currNode = lineNodes[lineNode];
+      nextNode = lineNodes[lineNode + 1];
+      currNode = lineNodes[lineNode];
 
-      var xVal = 0;
-      var yVal = 0;
-
-      var xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
-      var yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
+      xDiff = Math.round(currNode.coords[0] - nextNode.coords[0]);
+      yDiff = Math.round(currNode.coords[1] - nextNode.coords[1]);
 
       var lineStartCorrection = [0, 0];
-      var lineEndCorrection = [0, 0];
-
 
       if (xDiff > 0)
         lineStartCorrection = [options.lineWidth/(4*unitLength), 0];
@@ -623,7 +595,7 @@ function tubeline(data) {
       if (yDiff < 0)
         lineStartCorrection = [0, -options.lineWidth/(4*unitLength)];
 
-      var points = [
+      points = [
         options.xScale(currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
         options.yScale(currNode.coords[1] + shiftCoords[1] + lineStartCorrection[1])
       ];
