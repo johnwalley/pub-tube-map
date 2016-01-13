@@ -1,75 +1,110 @@
 [
   {
-    "label": "Central",
-    "color": "#e32017",
-    "shiftCoords": [0, 0],
-    "nodes":
-    [
-        { "coords": [8, 8], "marker": "interchange", "name": "Sir Isaac Newton", "labelPos": "SW", "hide": true },
-        { "coords": [10, 8], "name": "Architect", "labelPos": "S" },
-        { "coords": [12, 8], "marker": "interchange", "name": "Castle Inn", "labelPos": "N" },
-        { "coords": [14, 8], "name": "The Pickeral", "labelPos": "S" },
-        { "coords": [16, 8], "name": "The Baron\nof Beef", "labelPos": "N" },
-        { "coords": [20, 8], "marker": "interchange", "name": "Mitre", "labelPos": "SW" },
-        { "coords": [22, 8], "name": "Regal", "labelPos": "N" },
-        { "coords": [24, 8], "name": "The Grain Store", "labelPos": "S" },
-        { "coords": [26, 8], "name": "Emperor", "labelPos": "N" },
-        { "coords": [28, 8], "name": "Great Northern", "labelPos": "S" }
-    ]
-  },
-  {
-    "label": "Circle",
+    "label": "Town",
     "color": "#ffd300",
     "shiftCoords": [0, 0],
     "nodes":
     [
-        { "coords": [12, 8], "marker": "interchange" },
-        { "coords": [12, 10], "name": "Punter", "labelPos": "W" },
-        { "coords": [12, 11] },
-        { "coords": [13, 12], "dir": "S" },
-        { "coords": [14, 12] },
-        { "coords": [16, 12], "name": "The Anchor", "labelPos": "S" },
-        { "coords": [18, 12], "name": "The Mill", "labelPos": "N" },
-        { "coords": [19, 12] },
-        { "coords": [20, 11], "dir": "E" },
-        { "coords": [20, 10] },
-        { "coords": [20, 8] },
-        { "coords": [20, 7], "name": "Maypole", "labelPos": "W", "hide": true },
-        { "coords": [20, 5], "name": "St Radegund", "labelPos": "E", "hide": true }
-    ]
+        { "coords": [16, -4], "name": "The Mill", "labelPos": "N" },
+        { "coords": [18, -4], "name": "The Anchor", "labelPos": "S" },
+        { "coords": [23, -4], "marker": "interchange", "name": "The Regal", "labelPos": "S" },
+        { "coords": [30, -4] },
+        { "coords": [31, -3], "dir": "E" },
+        { "coords": [31, -2], "name": "The Clarendon Arms", "labelPos": "E" },
+        { "coords": [31, 7], "name": "The St Radegund", "labelPos": "E" },
+        { "coords": [31, 9] },
+        { "coords": [30, 10], "dir": "N" },
+        { "coords": [27, 10], "name": "The King Street Run", "labelPos": "S" },
+        { "coords": [25, 10], "name": "The Champion of the Thames", "labelPos": "N" },
+        { "coords": [23, 10], "marker": "interchange", "name": "The Brew House", "labelPos": "S" },
+        { "coords": [16, 10], "name": "The Mitre", "labelPos": "N" },
+        { "coords": [14, 10], "name": "The Baron of Beef", "labelPos": "S" },
+        { "coords": [12, 10] },
+        { "coords": [11, 9], "dir": "W" },
+        { "coords": [11, -3] },
+        { "coords": [12, -4], "dir": "S" },
+        { "coords": [16, -4], "dir": "S" }
+        ]
   },
   {
-    "label": "Grafton",
-    "color": "#0098d4",
-    "shiftCoords": [1, 0],
-    "nodes":
-    [
-        { "coords": [20, 7], "name": "Maypole", "labelPos": "W" },
-        { "coords": [20, 5], "name": "St Radegund", "labelPos": "E" },
-        { "coords": [21, 4], "dir": "N" },
-        { "coords": [22, 4] },
-        { "coords": [25, 4], "name": "Hopbine", "labelPos": "S" },
-        { "coords": [28, 4], "name": "The Elm Tree", "labelPos": "N" }
-    ]
-  },
-  {
-    "label": "Chesterton",
-    "color": "#003688",
+    "label": "Castle",
+    "color": "#b36305",
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [8, 8], "marker": "interchange", "name": "Sir Isaac Newton", "labelPos": "SW" },
-      { "coords": [8, 3] },
-      { "coords": [9, 2], "dir": "N" },
-      { "coords": [10, 2] },
-      { "coords": [11, 2] },
-      { "coords": [12, 2], "name": "The Carpenters\nArms", "labelPos": "N" },
-      { "coords": [14, 2], "name": "The Portland\nArms", "labelPos": "S" },
-      { "coords": [16, 2], "name": "The Waterman", "labelPos": "N" },
-      { "coords": [18, 2], "name": "The Old Spring", "labelPos": "S" },
-      { "coords": [24, 2], "name": "The Haymakers", "labelPos": "N" },
-      { "coords": [26, 2], "name": "The Green\nDragon", "labelPos": "S" },
-      { "coords": [30, 2], "name": "The Plough", "labelPos": "N" }
+        { "coords": [-2, 14], "name": "The Carpenters Arms", "labelPos": "N" },
+        { "coords": [0, 12], "name": "The Grapes", "labelPos": "N" },
+        { "coords": [2, 10], "name": "The Sir Isaac Newton", "labelPos": "N" },
+        { "coords": [4, 8], "name": "The Architect", "labelPos": "S" },
+        { "coords": [6, 6], "name": "The Castle Inn", "labelPos": "E" },
+        { "coords": [8, 4], "name": "The Punter", "labelPos": "E" },
+        { "coords": [10, 2], "name": "The Pickeral", "labelPos": "E" },        
+        { "coords": [12, 0] }
+        ]
+  },
+  {
+    "label": "Riverbank",
+    "color": "#0098d4",
+    "shiftCoords": [0, 0],
+    "nodes":
+    [
+      { "coords": [12, 14], "name": "The Boathouse", "labelPos": "N" },
+      { "coords": [14, 14], "name": "The Portland\nArms", "labelPos": "S" },
+      { "coords": [16, 14], "name": "The Waterman", "labelPos": "N" },
+      { "coords": [23, 14], "name": "The Old Spring", "labelPos": "S" },
+      { "coords": [28, 14], "name": "The Haymakers", "labelPos": "N" },
+      { "coords": [30, 14], "name": "The Green\nDragon", "labelPos": "S" }
+    ]
+  },  
+  {
+    "label": "Backstreet",
+    "color": "#e32017",
+    "shiftCoords": [0, 0],
+    "nodes":
+    [
+        { "coords": [10, 4], "name": "The Eagle", "labelPos": "S" },
+        { "coords": [14, 4], "name": "The Bath House", "labelPos": "S" },
+        { "coords": [16, 4], "name": "The Pint Shop", "labelPos": "N" },
+        { "coords": [31, 4], "marker": "interchange", "name": "The Clarendon Arms", "labelPos": "N" },
+        { "coords": [36, 4], "name": "The Elm Tree", "labelPos": "S" },
+        { "coords": [38, 4], "name": "The Cricketers", "labelPos": "N" },
+        { "coords": [40, 4], "name": "The Free Press", "labelPos": "S" },
+        { "coords": [42, 4], "name": "The Tram Depot", "labelPos": "N" },
+        { "coords": [44, 4], "name": "The Duke of Cambridge", "labelPos": "S" },
+        { "coords": [46, 4], "name": "The Alexandra Arms", "labelPos": "N" },
+        { "coords": [48, 4], "name": "The Geldart", "labelPos": "S" }
+    ]
+  },
+  {
+    "label": "Grantchester",
+    "color": "#00782a",
+    "shiftCoords": [1, -1],
+    "nodes":
+    [
+        { "coords": [0, -18], "name": "The Green Man", "labelPos": "W" },
+        { "coords": [0, -16], "name": "The Red Lion", "labelPos": "W" },
+        { "coords": [0, -14], "name": "The Rupert Brook", "labelPos": "W" },
+        { "coords": [0, -12], "name": "The Blue Ball Inn", "labelPos": "W" },
+        { "coords": [0, -5] },
+        { "coords": [1, -4], "dir": "N" },
+        { "coords": [8, -4], "name": "The Red Bull", "labelPos": "N" },
+        { "coords": [14, -4], "name": "The Granta", "labelPos": "S" },
+        { "coords": [16, -4], "name": "The Mill", "labelPos": "N" },
+        { "coords": [18, -4], "name": "The Anchor", "labelPos": "S" },
+        { "coords": [29, -4], "marker": "interchange", "name": "The Regal", "labelPos": "S", "hide": true },
+        { "coords": [30, -4] },
+        { "coords": [31, -3], "dir": "E" },
+        { "coords": [31, -2], "name": "The Clarendon Arms", "labelPos": "E" },
+        { "coords": [31, 0], "name": "The St Radegund", "labelPos": "E" },
+        { "coords": [31, 8] },
+        { "coords": [32, 9], "dir": "N" },
+        { "coords": [36, 9], "name": "Hopbine", "labelPos": "S" },
+        { "coords": [38, 9], "name": "Burleigh\nArms", "labelPos": "N" },
+        { "coords": [48, 9], "name": "Corner House", "labelPos": "S" },
+        { "coords": [50, 9], "name": "Wrestlers", "labelPos": "N" },
+        { "coords": [76, 9], "name": "Ancient\nShepherds", "labelPos": "S" },
+        { "coords": [78, 9], "name": "King's Head", "labelPos": "N" },
+        { "coords": [80, 9], "name": "Plough", "labelPos": "S" }
     ]
   },
   {
@@ -78,12 +113,21 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [17, 1] },
-      { "coords": [17, 6] },
-      { "coords": [16, 8] },
-      { "coords": [14, 10] },
-      { "coords": [13, 12] },
-      { "coords": [13, 14] }
+      { "coords": [10, -20], "name": "The Lord Byron Inn", "labelPos": "W" },
+      { "coords": [12, -18], "name": "Hudson's Ale House", "labelPos": "W" },
+      { "coords": [14, -16], "name": "The Green Man", "labelPos": "W" },
+      { "coords": [20, -10], "name": "The Alma", "labelPos": "W"  },
+      { "coords": [22, -8], "name": "The Panton Arms", "labelPos": "W"  },
+      { "coords": [23, -6] },
+      { "coords": [23, -4], "marker": "interchange", "name": "The Regal", "labelPos": "W" },
+      { "coords": [23, 10], "marker": "interchange", "name": "The Brew House", "labelPos": "W", "hide": true },
+      { "coords": [23, 12], "name": "The Fort St George", "labelPos": "W" }  ,
+      { "coords": [23, 22], "name": "The Old Spring", "labelPos": "W" },
+      { "coords": [23, 24] },
+      { "coords": [24, 26] },
+      { "coords": [26, 28], "name": "Milton Arms", "labelPos": "W" },
+      { "coords": [28, 30], "name": "Golden Hind", "labelPos": "W" },
+      { "coords": [30, 32], "name": "Jenny Wren", "labelPos": "W" }      
     ]      
   }
 ]
