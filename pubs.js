@@ -275,7 +275,6 @@ function drawLines(data) {
 }
 
 function drawMarkers(data) {
-
   var pubs = data.pubs;
 
   var unitLength = (options.xScale(1) - options.xScale(0));
@@ -345,20 +344,32 @@ function drawMarkers(data) {
 
     switch (d.labelPos.toLowerCase()) {
       case "n":
-      dir = [0, -1];
-      break;
+        dir = [0, 1];
+        break;
+      case "ne":
+        dir = [1/Math.sqrt(2), 1/Math.sqrt(2)];
+        break;
       case "e":
-      dir = [1, 0];
-      break;
+        dir = [1, 0];
+        break;
+      case "se":
+        dir = [1/Math.sqrt(2), -1/Math.sqrt(2)];
+        break;
       case "s":
-      dir = [0, 1];
-      break;
+        dir = [0, -1];
+        break;
+      case "sw":
+        dir = [-1/Math.sqrt(2), -1/Math.sqrt(2)];
+        break;
       case "w":
-      dir = [-1, 0];
-      break;
+        dir = [-1, 0];
+        break;
+      case "nw":
+        dir = [-1/Math.sqrt(2), 1/Math.sqrt(2)];
+        break;
       default:
-      dir = [0, 0];
-      break;
+        log.error(d.labelPos + ": unexpected value");
+        break;
     }
 
     return lineFunction()([[d.x + (d.shiftX*options.lineWidth/unitLength), d.y + (d.shiftY*options.lineWidth/unitLength)], [d.x + (d.shiftX*options.lineWidth/unitLength) + length*dir[0], d.y + (d.shiftY*options.lineWidth/unitLength) + length*dir[1]]]);
@@ -430,28 +441,40 @@ function textPos(data) {
 
   switch (data.labelPos.toLowerCase()) {
     case "n":
-    pos = [0, -offset * numLines];
-    textAnchor = "middle";
-    break;
+      pos = [0, offset * numLines];
+      textAnchor = "middle";
+      break;
+    case "ne":
+      pos = [offset, offset * numLines];
+      textAnchor = "start";
+      break;
     case "e":
-    pos = [offset, 0];
-    textAnchor = "start";
-    break;
+      pos = [offset, 0];
+      textAnchor = "start";
+      break;
+    case "se":
+      pos = [offset, -offset];
+      textAnchor = "start";
+      break;
     case "s":
-    pos = [0, 1.2*offset];
-    textAnchor = "middle";
-    break;
+      pos = [0, -1.2*offset];
+      textAnchor = "middle";
+      break;
     case "sw":
-    pos = [-offset*0.7, offset];
-    textAnchor = "end";
-    break;
+      pos = [-offset*0.7, -offset];
+      textAnchor = "end";
+      break;
     case "w":
-    pos = [-1.2*offset, 0];
-    textAnchor = "end";
-    break;
+      pos = [-1.2*offset, 0];
+      textAnchor = "end";
+      break;
+    case "nw":
+      pos = [-1.2*offset, offset];
+      textAnchor = "end";
+      break;
     default:
-    pos = [0, 0];
-    break;
+      log.error(data.labelPos + " not one of the expected values, e.g. 'N', 'SW'");
+      break;
   }
 
   return {
