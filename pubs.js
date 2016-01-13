@@ -152,7 +152,7 @@ function score(visited, lines) {
       "icon": "check-square-o"
     };
 
-    awards[awards.length] = award;
+    awards.push(award);
 
     line.pubs.forEach(function(pub) {
       if (visited.indexOf(pub) < 0) {
@@ -206,7 +206,7 @@ function extractLines(data) {
       "shiftCoords": line.shiftCoords
     };
 
-    lines[lines.length] = lineObj;
+    lines.push(lineObj);
 
     for (var node = 0; node < line.nodes.length; node++) {
       var data = line.nodes[node];
@@ -214,7 +214,7 @@ function extractLines(data) {
       if (!data.hasOwnProperty("name"))
       continue;
 
-      lineObj.pubs[lineObj.pubs.length] = data.name;
+      lineObj.pubs.push(data.name);
     }
   });
 
@@ -232,7 +232,7 @@ function extractPubs(data) {
       if (!data.hasOwnProperty("name"))
         continue;
 
-      pubs[pubs.length] = {
+      pubs.push({
         "x": data.coords[0],
         "y": data.coords[1],
         "shiftX": line.shiftCoords[0],
@@ -243,7 +243,7 @@ function extractPubs(data) {
         "color": line.color,
         "marker": (data.hasOwnProperty("marker")) ? data.marker : "station",
         "hide": data.hide
-      }
+      });
     }
   });
 
