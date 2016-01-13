@@ -32,7 +32,8 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-        { "coords": [0, 12], "name": "The Carpenters Arms", "labelPos": "N" },
+        { "coords": [-2, 14], "name": "The Carpenters Arms", "labelPos": "N" },
+        { "coords": [0, 12], "name": "The Grapes", "labelPos": "N" },
         { "coords": [2, 10], "name": "The Sir Isaac Newton", "labelPos": "N" },
         { "coords": [4, 8], "name": "The Architect", "labelPos": "S" },
         { "coords": [6, 6], "name": "The Castle Inn", "labelPos": "E" },
