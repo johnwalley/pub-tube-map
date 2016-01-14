@@ -235,8 +235,8 @@ function extractPubs(data) {
       pubs.push({
         "x": data.coords[0],
         "y": data.coords[1],
-        "shiftX": line.shiftCoords[0],
-        "shiftY": line.shiftCoords[1],
+        "shiftX": data.hasOwnProperty("shiftCoords") ? data.shiftCoords[0] : line.shiftCoords[0],
+        "shiftY": data.hasOwnProperty("shiftCoords") ? data.shiftCoords[1] : line.shiftCoords[1],
         "name": data.name,
         "labelPos": data.labelPos,
         "visited": false,
@@ -419,8 +419,8 @@ function drawLabels(data) {
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
   text.text(function(d) { return d.name })
-    .attr("x", function(d) { return options.xScale(d.x) + textPos(d).pos[0]; })
-    .attr("y", function(d) { return options.yScale(d.y) - textPos(d).pos[1]; }) // Flip y-axis
+    .attr("x", function(d) { return options.xScale(d.x + d.shiftX) + textPos(d).pos[0]; })
+    .attr("y", function(d) { return options.yScale(d.y + d.shiftY) - textPos(d).pos[1]; }) // Flip y-axis
     .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
     .style("display", function(d) { return d.hide != true ? "block" : "none"; })
