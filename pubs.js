@@ -421,9 +421,9 @@ function drawLabels(data) {
   text.text(function(d) { return d.name })
     .attr("x", function(d) { return options.xScale(d.x + d.shiftX) + textPos(d).pos[0]; })
     .attr("y", function(d) { return options.yScale(d.y + d.shiftY) - textPos(d).pos[1]; }) // Flip y-axis
-    .attr("font-weight", function(d) { return (d.visited ? "bold" : "normal"); })
     .attr("text-anchor", function(d) { return textPos(d).textAnchor })
     .style("display", function(d) { return d.hide != true ? "block" : "none"; })
+    .classed("highlighted", function(d) { return d.visited; })
     .style("font-size", unitLength + "px")
     .call(wrap);
 
