@@ -14,8 +14,8 @@
       { "coords": [31, 6], "name": "St Radegund", "labelPos": "E", "hide": true },
       { "coords": [31, 9] },
       { "coords": [30, 10], "dir": "N" },
-      { "coords": [27, 10], "name": "King Street\nRun", "labelPos": "S" },
-      { "coords": [25, 10], "name": "Champion\nof the\nThames", "labelPos": "N" },
+      { "coords": [28, 10], "name": "King Street\nRun", "labelPos": "S" },
+      { "coords": [26, 10], "name": "Champion\nof the\nThames", "labelPos": "N" },
       { "coords": [23, 10], "marker": "interchange", "name": "Brew House", "labelPos": "SW" },
       { "coords": [16, 10], "name": "Mitre", "labelPos": "N" },
       { "coords": [14, 10], "name": "Baron of Beef", "labelPos": "S" },
@@ -32,14 +32,14 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [-2, 14], "name": "Carpenters Arms", "labelPos": "NE" },
-      { "coords": [0, 12], "name": "Grapes", "labelPos": "NE" },
-      { "coords": [2, 10], "name": "Sir Isaac Newton", "labelPos": "NE" },
-      { "coords": [4, 8], "name": "Architect", "labelPos": "SW" },
-      { "coords": [6, 6], "name": "Castle Inn", "labelPos": "SW" },
-      { "coords": [8, 4], "name": "Punter", "labelPos": "SW" },
-      { "coords": [10, 2], "name": "Pickeral", "labelPos": "SW" },
-      { "coords": [12, 0] }
+      { "coords": [-2, 16], "name": "Carpenters Arms", "labelPos": "NE" },
+      { "coords": [0, 14], "name": "Grapes", "labelPos": "NE" },
+      { "coords": [2, 12], "name": "Sir Isaac Newton", "labelPos": "NE" },
+      { "coords": [4, 10], "name": "Architect", "labelPos": "SW" },
+      { "coords": [6, 8], "name": "Castle Inn", "labelPos": "SW" },
+      { "coords": [8, 6], "name": "Punter", "labelPos": "SW" },
+      { "coords": [10, 4], "name": "Pickeral", "labelPos": "SW" },
+      { "coords": [12, 2] }
       ]
   },
   {
@@ -48,10 +48,10 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [10, 22], "name": "Boathouse", "labelPos": "N" },
-      { "coords": [13, 22], "name": "Portland\nArms", "labelPos": "S" },
-      { "coords": [16, 22], "name": "Waterman", "labelPos": "N" },
-      { "coords": [23, 22], "name": "Old Spring", "labelPos": "S" },
+      { "coords": [10, 22], "name": "Boathouse", "labelPos": "S" },
+      { "coords": [13, 22], "name": "Portland\nArms", "labelPos": "N" },
+      { "coords": [16, 22], "name": "Waterman", "labelPos": "S" },
+      { "coords": [23, 22], "marker": "interchange", "name": "Old Spring", "labelPos": "S", "hide": true },
       { "coords": [28, 22], "name": "Haymakers", "labelPos": "N" },
       { "coords": [46, 22], "name": "Green\nDragon", "labelPos": "S" }
     ]
@@ -119,10 +119,10 @@
       { "coords": [20, -10], "name": "Alma", "labelPos": "SE"  },
       { "coords": [22, -8], "name": "Panton Arms", "labelPos": "SE"  },
       { "coords": [23, -6] },
-      { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "NE" },
+      { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "NE", "shiftCoords": [0, -0.5] },
       { "coords": [23, 10], "marker": "interchange", "name": "Brew House", "labelPos": "W", "hide": true },
       { "coords": [23, 16], "name": "Fort\nSt George", "labelPos": "W" }  ,
-      { "coords": [23, 22], "name": "Old Spring", "labelPos": "W" },
+      { "coords": [23, 22], "marker": "interchange", "name": "Old Spring", "labelPos": "NW" },
       { "coords": [23, 24] },
       { "coords": [24, 26] },
       { "coords": [26, 28], "name": "Milton Arms", "labelPos": "NW" },
