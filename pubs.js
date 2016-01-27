@@ -526,13 +526,13 @@ function tubeLine(data) {
             lineEndCorrection = [0, options.lineWidth / (4 * unitLength)];
         } else {
           if ((xDiff > 0) && (yDiff > 0))
-            lineEndCorrection = [-options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+            lineEndCorrection = [-options.lineWidth / (4 * unitLength * Math.sqrt(2)), -options.lineWidth / (4 * unitLength * Math.sqrt(2))];
           if ((xDiff > 0) && (yDiff < 0))
-            lineEndCorrection = [-options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+            lineEndCorrection = [-options.lineWidth / (4 * unitLength * Math.sqrt(2)), options.lineWidth / (4 * unitLength * Math.sqrt(2))];
           if ((xDiff < 0) && (yDiff > 0))
-            lineEndCorrection = [options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+            lineEndCorrection = [options.lineWidth / (4 * unitLength * Math.sqrt(2)), -options.lineWidth / (4 * unitLength * Math.sqrt(2))];
           if ((xDiff < 0) && (yDiff < 0))
-            lineEndCorrection = [options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+            lineEndCorrection = [options.lineWidth / (4 * unitLength * Math.sqrt(2)), options.lineWidth / (4 * unitLength * Math.sqrt(2))];
         }
       }
 
@@ -649,13 +649,13 @@ function tubeLine(data) {
           lineStartCorrection = [0, -options.lineWidth / (4 * unitLength)];
       } else {
         if ((xDiff > 0) && (yDiff > 0))
-          lineStartCorrection = [options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+          lineStartCorrection = [options.lineWidth / (4 * unitLength * Math.sqrt(2)), options.lineWidth / (4 * unitLength * Math.sqrt(2))];
         if ((xDiff > 0) && (yDiff < 0))
-          lineStartCorrection = [options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+          lineStartCorrection = [options.lineWidth / (4 * unitLength * Math.sqrt(2)), -options.lineWidth / (4 * unitLength * Math.sqrt(2))];
         if ((xDiff < 0) && (yDiff > 0))
-          lineStartCorrection = [-options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+          lineStartCorrection = [-options.lineWidth / (4 * unitLength * Math.sqrt(2)), options.lineWidth / (4 * unitLength * Math.sqrt(2))];
         if ((xDiff < 0) && (yDiff < 0))
-          lineStartCorrection = [-options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+          lineStartCorrection = [-options.lineWidth / (4 * unitLength * Math.sqrt(2)), -options.lineWidth / (4 * unitLength * Math.sqrt(2))];
       }
 
       points = [
