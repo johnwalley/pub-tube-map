@@ -89,21 +89,20 @@ function update(data) {
 
   log.debug("SVG container dimensions: " + w + "x" + h);
 
+  var xMargin = w/7;
+  var yMargin = h/10;
+
   var desiredAspectRatio = (maxX - minX) / (maxY - minY);
-  var actualAspectRatio = w/h;
+  var actualAspectRatio = (w - 2*xMargin)/(h - 2*yMargin);
 
   log.debug("desiredAspectRatio: " + desiredAspectRatio);
   log.debug("actualAspectRatio: " + actualAspectRatio);
-
-
-  var xMargin = w/7;
-  var yMargin = h/10;
 
   // Note that we flip the sense of the y-axis here
   if (desiredAspectRatio > actualAspectRatio) {
     // Container is too tall
     options.xScale = d3.scale.linear().domain([minX, maxX]).range([xMargin, w - xMargin]);
-    options.yScale = d3.scale.linear().domain([minY, maxY]).range([(h - yMargin) * actualAspectRatio / desiredAspectRatio, yMargin]);
+    options.yScale = d3.scale.linear().domain([minY, maxY]).range([(h - yMargin) * actualAspectRatio / desiredAspectRatio, yMargin * actualAspectRatio / desiredAspectRatio]);
   } else {
     log.debug("Container is too wide");
     options.xScale = d3.scale.linear().domain([minX, maxX]).range([xMargin * desiredAspectRatio / actualAspectRatio, (w - xMargin) * desiredAspectRatio / actualAspectRatio ]);
