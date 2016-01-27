@@ -333,7 +333,6 @@ function drawMarkers(data) {
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
   normalPubs.attr("d", function(d) {
-
     var dir;
 
     switch (d.labelPos.toLowerCase()) {
