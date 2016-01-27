@@ -32,15 +32,15 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
+      { "coords": [-4, 18], "name": "Carlton Arms", "labelPos": "NE" },
       { "coords": [-2, 16], "name": "Carpenters Arms", "labelPos": "NE" },
       { "coords": [0, 14], "name": "Grapes", "labelPos": "NE" },
       { "coords": [2, 12], "name": "Sir Isaac Newton", "labelPos": "NE" },
       { "coords": [4, 10], "name": "Architect", "labelPos": "SW" },
       { "coords": [6, 8], "name": "Castle Inn", "labelPos": "SW" },
       { "coords": [8, 6], "name": "Punter", "labelPos": "SW" },
-      { "coords": [10, 4], "name": "Pickeral", "labelPos": "SW" },
-      { "coords": [12, 2] }
-      ]
+      { "coords": [10, 4], "name": "Pickeral", "labelPos": "SW" }
+    ]
   },
   {
     "label": "Riverbank",
@@ -129,5 +129,37 @@
       { "coords": [28, 30], "name": "Golden Hind", "labelPos": "NW" },
       { "coords": [30, 32], "name": "Jenny Wren", "labelPos": "NW" }
     ]      
+  },
+  {
+    "label": "Mill Road",
+    "color": "#a0a5a9",
+    "shiftCoords": [0, 0],
+    "nodes":
+    [
+      { "coords": [50,-4], "name": "Six Bells", "labelPos": "SW" },
+      { "coords": [52, -6], "name": "Live and\nLet Live", "labelPos": "SW" },
+      { "coords": [54, -8], "name": "Salisbury Arms", "labelPos": "SW" },
+      { "coords": [56, -10], "name": "White Swan", "labelPos": "SW" },
+      { "coords": [58, -12], "name": "Devonshire Arms", "labelPos": "SW" },
+      { "coords": [60, -14], "name": "Earl of\nBeaconsfield", "labelPos": "SW" },
+      { "coords": [62, -16], "name": "Empress", "labelPos": "SW" },
+      { "coords": [64, -18], "name": "Royal\nStandard", "labelPos": "SW" },
+      { "coords": [66, -20], "name": "Brook", "labelPos": "SW" }
+    ]
+  },
+  {
+    "label": "Hills Road",
+    "color": "#9b0056",
+    "shiftCoords": [0, 0],
+    "nodes":
+    [
+      { "coords": [40,-4], "name": "Grain Store", "labelPos": "W" },
+      { "coords": [40, -6], "name": "Prince Regent", "labelPos": "W" },
+      { "coords": [40, -8], "name": "Flying Pig", "labelPos": "W" },
+      { "coords": [40, -10], "name": "Earl of Derby", "labelPos": "W" },
+      { "coords": [40, -12], "name": "Rock", "labelPos": "W" },
+      { "coords": [40, -14], "name": "Med", "labelPos": "W" },
+      { "coords": [40, -16], "name": "Empress", "labelPos": "W" }
+    ]
   }
 ]
