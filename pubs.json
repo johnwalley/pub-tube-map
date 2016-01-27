@@ -18,7 +18,7 @@
       { "coords": [26, 10], "name": "Champion\nof the\nThames", "labelPos": "N" },
       { "coords": [23, 10], "marker": "interchange", "name": "Brew House", "labelPos": "SW" },
       { "coords": [16, 10], "name": "Mitre", "labelPos": "N" },
-      { "coords": [14, 10], "name": "Baron\nof Beef", "labelPos": "S" },
+      { "coords": [14, 10], "marker": "interchange", "name": "Baron\nof Beef", "labelPos": "S" },
       { "coords": [12, 10] },
       { "coords": [11, 9], "dir": "W" },
       { "coords": [11, 2], "marker": "interchange", "name": "Eagle", "labelPos": "NW", "hide": true },
@@ -33,14 +33,15 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [-6, 28], "name": "Carlton Arms", "labelPos": "NE" },
-      { "coords": [-4, 26], "name": "Carpenters Arms", "labelPos": "NE" },
-      { "coords": [-2, 24], "name": "Grapes", "labelPos": "NE" },
-      { "coords": [0, 22], "name": "Sir Isaac\nNewton", "labelPos": "SW" },
-      { "coords": [4, 18], "name": "Architect", "labelPos": "SW" },
-      { "coords": [6, 16], "name": "Castle Inn", "labelPos": "SW" },
-      { "coords": [8, 14], "name": "Punter", "labelPos": "SW" },
-      { "coords": [10, 12], "name": "Pickeral", "labelPos": "SW" }
+      { "coords": [-4, 28], "name": "Carlton Arms", "labelPos": "NE" },
+      { "coords": [-2, 26], "name": "Carpenters Arms", "labelPos": "NE" },
+      { "coords": [0, 24], "name": "Grapes", "labelPos": "NE" },
+      { "coords": [2, 22], "name": "Sir Isaac\nNewton", "labelPos": "SW" },
+      { "coords": [6, 18], "name": "Architect", "labelPos": "SW" },
+      { "coords": [8, 16], "name": "Castle Inn", "labelPos": "SW" },
+      { "coords": [10, 14], "name": "Punter", "labelPos": "SW" },
+      { "coords": [12, 12], "name": "Pickeral", "labelPos": "SW" },
+      { "coords": [14, 10], "marker": "interchange", "name": "Baron\nof Beef", "labelPos": "NW", "hide": true }
     ]
   },
   {
@@ -66,7 +67,7 @@
       { "coords": [11, 2], "marker": "interchange", "name": "Eagle", "labelPos": "NW" },
       { "coords": [14, 2], "name": "Bath\nHouse", "labelPos": "S" },
       { "coords": [16, 2], "name": "Pint Shop", "labelPos": "N" },
-      { "coords": [31, 2], "marker": "interchange", "name": "Clarendon\nArms", "labelPos": "NW" },
+      { "coords": [31, 2], "marker": "interchange", "name": "Clarendon\nArms", "labelPos": "NW", "shiftCoords": [0.5, 0] },
       { "coords": [36, 2], "name": "Elm Tree", "labelPos": "S" },
       { "coords": [38, 2], "name": "Cricketers", "labelPos": "N" },
       { "coords": [41, 2], "name": "Free Press", "labelPos": "S" },
@@ -120,7 +121,7 @@
       { "coords": [12, -18], "name": "Hudson's Ale House", "labelPos": "SE" },
       { "coords": [14, -16], "name": "Green Man", "labelPos": "SE" },
       { "coords": [20, -10], "name": "Alma", "labelPos": "SE"  },
-      { "coords": [22, -8], "name": "Panton Arms", "labelPos": "SE"  },
+      { "coords": [22, -8], "name": "Panton\nArms", "labelPos": "SE"  },
       { "coords": [23, -6] },
       { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "NE", "shiftCoords": [0, -0.5] },
       { "coords": [23, 10], "marker": "interchange", "name": "Brew House", "labelPos": "W", "hide": true },
@@ -139,15 +140,16 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [50,-4], "name": "Six Bells", "labelPos": "SW" },
-      { "coords": [52, -6], "name": "Live and Let Live", "labelPos": "SW" },
-      { "coords": [54, -8], "name": "Salisbury Arms", "labelPos": "SW" },
-      { "coords": [56, -10], "name": "White Swan", "labelPos": "SW" },
-      { "coords": [58, -12], "name": "Devonshire Arms", "labelPos": "SW" },
-      { "coords": [60, -14], "name": "Earl of Beaconsfield", "labelPos": "SW" },
-      { "coords": [62, -16], "name": "Empress", "labelPos": "SW" },
-      { "coords": [64, -18], "name": "Royal Standard", "labelPos": "SW" },
-      { "coords": [66, -20], "name": "Brook", "labelPos": "SW" }
+      { "coords": [31, 2] },
+      { "coords": [36, -3], "name": "Six Bells", "labelPos": "NE" },
+      { "coords": [38, -5], "name": "Live and Let Live", "labelPos": "NE" },
+      { "coords": [40, -7], "name": "Salisbury Arms", "labelPos": "NE" },
+      { "coords": [42, -9], "name": "White Swan", "labelPos": "NE" },
+      { "coords": [44, -11], "name": "Devonshire Arms", "labelPos": "SW" },
+      { "coords": [46, -13], "name": "Earl of Beaconsfield", "labelPos": "SW" },
+      { "coords": [48, -15], "name": "Empress", "labelPos": "SW" },
+      { "coords": [50, -17], "name": "Royal Standard", "labelPos": "SW" },
+      { "coords": [52, -19], "name": "Brook", "labelPos": "SW" }
     ]
   },
   {
@@ -156,13 +158,16 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [40,-4], "name": "Grain Store", "labelPos": "W" },
-      { "coords": [40, -6], "name": "Prince Regent", "labelPos": "W" },
-      { "coords": [40, -8], "name": "Flying Pig", "labelPos": "W" },
-      { "coords": [40, -10], "name": "Earl of Derby", "labelPos": "W" },
-      { "coords": [40, -12], "name": "Rock", "labelPos": "W" },
-      { "coords": [40, -14], "name": "Med", "labelPos": "W" },
-      { "coords": [40, -16], "name": "Empress", "labelPos": "W" }
+      { "coords": [23, -4] },
+      { "coords": [26, -7], "name": "Grain Store", "labelPos": "NE" },
+      { "coords": [28, -9], "name": "Prince Regent", "labelPos": "NE" },
+      { "coords": [30, -11], "name": "Flying Pig", "labelPos": "NE" },
+      { "coords": [32, -13], "name": "Earl of Derby", "labelPos": "SW" },
+      { "coords": [34, -15], "name": "Rock", "labelPos": "SW" },
+      { "coords": [36, -17], "name": "Med", "labelPos": "SW" },
+      { "coords": [38, -19] },
+      { "coords": [40, -20] },
+      { "coords": [41, -20], "name": "Queen Edith", "labelPos": "S" }
     ]
   }
 ]
