@@ -315,7 +315,7 @@ function drawMarkers(data) {
   // Remove old elements as needed.
   interchangePubs.exit().remove();
 
-  var stationPubs = pubs.filter(function(d) { return d.marker === "station" && d.hide != true; });
+  var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
 
   var length = options.lineWidth / unitLength;
 

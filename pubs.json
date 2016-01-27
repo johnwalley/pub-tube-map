@@ -10,7 +10,7 @@
       { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
       { "coords": [30, -4] },
       { "coords": [31, -3], "dir": "E" },
-      { "coords": [31, 2], "name": "Clarendon Arms", "labelPos": "E", "hide": true },
+      { "coords": [31, 2], "marker": "interchange", "name": "Clarendon Arms", "labelPos": "E", "hide": true },
       { "coords": [31, 6], "name": "St Radegund", "labelPos": "E", "hide": true },
       { "coords": [31, 9] },
       { "coords": [30, 10], "dir": "N" },
@@ -18,9 +18,10 @@
       { "coords": [26, 10], "name": "Champion\nof the\nThames", "labelPos": "N" },
       { "coords": [23, 10], "marker": "interchange", "name": "Brew House", "labelPos": "SW" },
       { "coords": [16, 10], "name": "Mitre", "labelPos": "N" },
-      { "coords": [14, 10], "name": "Baron of\nBeef", "labelPos": "S" },
+      { "coords": [14, 10], "name": "Baron\nof Beef", "labelPos": "S" },
       { "coords": [12, 10] },
       { "coords": [11, 9], "dir": "W" },
+      { "coords": [11, 2], "marker": "interchange", "name": "Eagle", "labelPos": "NW", "hide": true },
       { "coords": [11, -3] },
       { "coords": [12, -4], "dir": "S" },
       { "coords": [16, -4], "dir": "S" }
@@ -62,8 +63,8 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [10, 2], "name": "Eagle", "labelPos": "S" },
-      { "coords": [14, 2], "name": "Bath House", "labelPos": "S" },
+      { "coords": [11, 2], "marker": "interchange", "name": "Eagle", "labelPos": "NW" },
+      { "coords": [14, 2], "name": "Bath\nHouse", "labelPos": "S" },
       { "coords": [16, 2], "name": "Pint Shop", "labelPos": "N" },
       { "coords": [31, 2], "marker": "interchange", "name": "Clarendon\nArms", "labelPos": "NW" },
       { "coords": [36, 2], "name": "Elm Tree", "labelPos": "S" },
@@ -94,7 +95,7 @@
       { "coords": [29, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
       { "coords": [30, -4] },
       { "coords": [31, -3], "dir": "E" },
-      { "coords": [31, 2], "name": "Clarendon Arms", "labelPos": "E", "shiftCoords": [1, 0], "hide": true },
+      { "coords": [31, 2], "marker": "interchange", "name": "Clarendon Arms", "labelPos": "E", "shiftCoords": [1, 0], "hide": true },
       { "coords": [31, 6], "name": "St Radegund", "labelPos": "E", "shiftCoords": [1, 0] },
       { "coords": [31, 7] },
       { "coords": [32, 9] },
@@ -139,13 +140,13 @@
     "nodes":
     [
       { "coords": [50,-4], "name": "Six Bells", "labelPos": "SW" },
-      { "coords": [52, -6], "name": "Live and\nLet Live", "labelPos": "SW" },
+      { "coords": [52, -6], "name": "Live and Let Live", "labelPos": "SW" },
       { "coords": [54, -8], "name": "Salisbury Arms", "labelPos": "SW" },
       { "coords": [56, -10], "name": "White Swan", "labelPos": "SW" },
       { "coords": [58, -12], "name": "Devonshire Arms", "labelPos": "SW" },
-      { "coords": [60, -14], "name": "Earl of\nBeaconsfield", "labelPos": "SW" },
+      { "coords": [60, -14], "name": "Earl of Beaconsfield", "labelPos": "SW" },
       { "coords": [62, -16], "name": "Empress", "labelPos": "SW" },
-      { "coords": [64, -18], "name": "Royal\nStandard", "labelPos": "SW" },
+      { "coords": [64, -18], "name": "Royal Standard", "labelPos": "SW" },
       { "coords": [66, -20], "name": "Brook", "labelPos": "SW" }
     ]
   },
