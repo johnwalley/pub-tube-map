@@ -1,4 +1,4 @@
-var log = log4javascript.getDefaultLogger();
+var log = log4javascript.getLogger("main");
 consoleAppender = new log4javascript.BrowserConsoleAppender();
 log.addAppender(consoleAppender);
 
@@ -23,7 +23,6 @@ var minY = Infinity;
 var maxY = -Infinity;
 
 d3.json("pubs.json", function(d) {
-
   log.info("Successfully loaded pubs.json");
 
   d.forEach(function(line) {
@@ -42,14 +41,11 @@ d3.json("pubs.json", function(d) {
     })
   });
 
-  log.debug("MinY: " + minY + ", MaxY: " + maxY);
-
   var data = { "raw": d };
 
   // Data manipulation
   data.pubs = extractPubs(d);
   data.lines = extractLines(d);
-
 
   d3.select("#visited").select("p").on("click", function() {
     toggle(d3.select("#visited").select("ul"));
@@ -124,7 +120,6 @@ function update(data) {
 }
 
 function score(visited, lines) {
-
   var awards = [
     {
       "name": "Ten",
@@ -222,7 +217,6 @@ function extractLines(data) {
 }
 
 function extractPubs(data) {
-
   var pubs = [];
 
   data.forEach(function(line) {
@@ -313,7 +307,7 @@ function drawMarkers(data) {
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
-  interchangePubs.attr("transform", function(d) { return "translate(" + options.xScale(d.x) + "," + options.yScale(d.y) + ")" })
+  interchangePubs.attr("transform", function(d) { return "translate(" + options.xScale(d.x + d.shiftX) + "," + options.yScale(d.y + d.shiftY) + ")" })
     .attr("d", markerFunction)
     .attr("stroke-width", options.lineWidth/4);
 
@@ -339,7 +333,6 @@ function drawMarkers(data) {
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
   normalPubs.attr("d", function(d) {
-
     var dir;
 
     switch (d.labelPos.toLowerCase()) {
@@ -498,7 +491,6 @@ function togglePub(pub, data) {
 }
 
 function tubeLine(data) {
-
   var path = "";
 
   var lineNodes = data.nodes;
@@ -524,14 +516,25 @@ function tubeLine(data) {
       var lineEndCorrection = [0, 0];
 
       if (lineNode === lineNodes.length - 1) {
-        if (xDiff > 0)
-          lineEndCorrection = [-options.lineWidth/(4*unitLength), 0];
-        if (xDiff < 0)
-          lineEndCorrection = [options.lineWidth/(4*unitLength), 0];
-        if (yDiff > 0)
-          lineEndCorrection = [0, -options.lineWidth/(4*unitLength)];
-        if (yDiff < 0)
-          lineEndCorrection = [0, options.lineWidth/(4*unitLength)];
+        if ((xDiff == 0) || (yDiff == 0)) {
+          if (xDiff > 0)
+            lineEndCorrection = [-options.lineWidth / (4 * unitLength), 0];
+          if (xDiff < 0)
+            lineEndCorrection = [options.lineWidth / (4 * unitLength), 0];
+          if (yDiff > 0)
+            lineEndCorrection = [0, -options.lineWidth / (4 * unitLength)];
+          if (yDiff < 0)
+            lineEndCorrection = [0, options.lineWidth / (4 * unitLength)];
+        } else {
+          if ((xDiff > 0) && (yDiff > 0))
+            lineEndCorrection = [-options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+          if ((xDiff > 0) && (yDiff < 0))
+            lineEndCorrection = [-options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+          if ((xDiff < 0) && (yDiff > 0))
+            lineEndCorrection = [options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+          if ((xDiff < 0) && (yDiff < 0))
+            lineEndCorrection = [options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+        }
       }
 
       points = [
@@ -545,7 +548,7 @@ function tubeLine(data) {
         ]
       ];
 
-      if (((xDiff == 0) || (yDiff == 0))) {
+      if ((xDiff == 0) || (yDiff == 0)) {
         lastSectionType = "udlr";
         path += "L" + points[1][0] + "," + points[1][1];
       } else if ((Math.abs(xDiff) == Math.abs(yDiff)) && (Math.abs(xDiff) > 1)) {
@@ -573,17 +576,31 @@ function tubeLine(data) {
       else if (((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 2)) || ((Math.abs(xDiff) == 2) && (Math.abs(yDiff) == 1))) {
         var controlPoints;
         if (xDiff == 1) {
-          if (lastSectionType == "udlr") {
-            controlPoints = [
-              points[0][0],
-              points[0][1] + (points[1][1] - points[0][1])/2
-            ];  
-          } else if (lastSectionType == "diagonal") {
-            controlPoints = [
-              points[1][0],
-              points[0][1] + (points[1][1] - points[0][1])/2
-            ];
-          } 
+          if (yDiff == 1) {
+            if (lastSectionType == "udlr") {
+              controlPoints = [
+                points[0][0],
+                points[0][1] + (points[1][1] - points[0][1]) / 2
+              ];
+            } else if (lastSectionType == "diagonal") {
+              controlPoints = [
+                points[1][0],
+                points[0][1] + (points[1][1] - points[0][1]) / 2
+              ];
+            }
+          } else {
+            if (lastSectionType == "udlr") {
+              controlPoints = [
+                points[0][0],
+                points[0][1] + (points[1][1] - points[0][1]) / 2
+              ];
+            } else if (lastSectionType == "diagonal") {
+              controlPoints = [
+                points[1][0],
+                points[0][1] + (points[1][1] - points[0][1]) / 2
+              ];
+            }
+          }
         } else if (xDiff == -1) {
           if (lastSectionType == "udlr") {
             controlPoints = [
@@ -596,7 +613,20 @@ function tubeLine(data) {
               points[0][1] + (points[1][1] - points[0][1])/2
             ];
           }
+        } else if (xDiff == -2) {
+          if (lastSectionType == "udlr") {
+            controlPoints = [
+              points[0][0],
+              points[0][1] + (points[1][1] - points[0][1])/2
+            ];
+          } else if (lastSectionType == "diagonal") {
+            controlPoints = [
+              points[1][0],
+              points[0][1] + (points[1][0] - points[0][0])/2
+            ];
+          }
         }
+
 
         path += "C" + controlPoints[0] + "," + controlPoints[1] + "," + controlPoints[0] + "," + controlPoints[1] + "," + points[1][0] + "," + points[1][1];     
       }
@@ -609,14 +639,25 @@ function tubeLine(data) {
 
       var lineStartCorrection = [0, 0];
 
-      if (xDiff > 0)
-        lineStartCorrection = [options.lineWidth/(4*unitLength), 0];
-      if (xDiff < 0)
-        lineStartCorrection = [-options.lineWidth/(4*unitLength), 0];
-      if (yDiff > 0)
-        lineStartCorrection = [0, options.lineWidth/(4*unitLength)];
-      if (yDiff < 0)
-        lineStartCorrection = [0, -options.lineWidth/(4*unitLength)];
+      if ((xDiff == 0) || (yDiff == 0)) {
+        if (xDiff > 0)
+          lineStartCorrection = [options.lineWidth / (4 * unitLength), 0];
+        if (xDiff < 0)
+          lineStartCorrection = [-options.lineWidth / (4 * unitLength), 0];
+        if (yDiff > 0)
+          lineStartCorrection = [0, options.lineWidth / (4 * unitLength)];
+        if (yDiff < 0)
+          lineStartCorrection = [0, -options.lineWidth / (4 * unitLength)];
+      } else {
+        if ((xDiff > 0) && (yDiff > 0))
+          lineStartCorrection = [options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+        if ((xDiff > 0) && (yDiff < 0))
+          lineStartCorrection = [options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+        if ((xDiff < 0) && (yDiff > 0))
+          lineStartCorrection = [-options.lineWidth / (4 * unitLength), options.lineWidth / (4 * unitLength)];
+        if ((xDiff < 0) && (yDiff < 0))
+          lineStartCorrection = [-options.lineWidth / (4 * unitLength), -options.lineWidth / (4 * unitLength)];
+      }
 
       points = [
         options.xScale(currNode.coords[0] + shiftCoords[0] + lineStartCorrection[0]),
@@ -631,7 +672,6 @@ function tubeLine(data) {
 }
 
 function drawLegend(data) {
-
   var awards = score(visitedPubs.values(), data.lines);
 
   var filteredAwards = awards.filter(function(award) { return award.unlocked === true; });
