@@ -300,13 +300,14 @@ function drawMarkers(data) {
     .append("path")
     .attr("fill", bgColor)
     .attr("stroke", fgColor)
+    .style("cursor", "pointer")
     .on("click", function(d) { togglePub(d, data)(); });
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
-  interchangePubs.attr("transform", function(d) { return "translate(" + options.xScale(d.x + d.shiftX) + "," + options.yScale(d.y + d.shiftY) + ")" })
+  interchangePubs.attr("transform", function(d) { return "translate(" + options.xScale(d.x + d.shiftX*options.lineWidth/unitLength) + "," + options.yScale(d.y + d.shiftY*options.lineWidth/unitLength) + ")" })
     .attr("d", markerFunction)
     .attr("stroke-width", options.lineWidth/4);
 
@@ -325,7 +326,8 @@ function drawMarkers(data) {
   // ENTER
   // Create new elements as needed
   normalPubs.enter()
-    .append("path");
+    .append("path")
+    .style("cursor", "pointer");
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
@@ -437,7 +439,7 @@ function textPos(data) {
       textAnchor = "middle";
       break;
     case "ne":
-      pos = [offset, offset * numLines];
+      pos = [offset / Math.sqrt(2), offset * numLines / Math.sqrt(2)];
       textAnchor = "start";
       break;
     case "e":
@@ -445,7 +447,7 @@ function textPos(data) {
       textAnchor = "start";
       break;
     case "se":
-      pos = [offset, -offset];
+      pos = [offset / Math.sqrt(2), -offset / Math.sqrt(2)];
       textAnchor = "start";
       break;
     case "s":
