@@ -315,7 +315,7 @@ function drawMarkers(data) {
   // Remove old elements as needed.
   interchangePubs.exit().remove();
 
-  var stationPubs = pubs.filter(function(d) { return d.marker === "station"; });
+  var stationPubs = pubs.filter(function(d) { return d.marker === "station" && d.hide != true; });
 
   var length = options.lineWidth / unitLength;
 
@@ -616,16 +616,15 @@ function tubeLine(data) {
           if (lastSectionType == "udlr") {
             controlPoints = [
               points[0][0],
-              points[0][1] + (points[1][1] - points[0][1])/2
+              points[0][1] + (points[1][1] - points[0][1]) / 2
             ];
           } else if (lastSectionType == "diagonal") {
             controlPoints = [
-              points[1][0],
-              points[0][1] + (points[1][0] - points[0][0])/2
+              points[0][0] + (points[1][0] - points[0][0]) / 2,
+              points[1][1]
             ];
           }
         }
-
 
         path += "C" + controlPoints[0] + "," + controlPoints[1] + "," + controlPoints[0] + "," + controlPoints[1] + "," + points[1][0] + "," + points[1][1];     
       }

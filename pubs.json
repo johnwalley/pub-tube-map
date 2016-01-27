@@ -10,7 +10,7 @@
       { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
       { "coords": [30, -4] },
       { "coords": [31, -3], "dir": "E" },
-      { "coords": [31, -2], "name": "Clarendon Arms", "labelPos": "E", "hide": true },
+      { "coords": [31, 2], "name": "Clarendon Arms", "labelPos": "E", "hide": true },
       { "coords": [31, 6], "name": "St Radegund", "labelPos": "E", "hide": true },
       { "coords": [31, 9] },
       { "coords": [30, 10], "dir": "N" },
@@ -18,7 +18,7 @@
       { "coords": [26, 10], "name": "Champion\nof the\nThames", "labelPos": "N" },
       { "coords": [23, 10], "marker": "interchange", "name": "Brew House", "labelPos": "SW" },
       { "coords": [16, 10], "name": "Mitre", "labelPos": "N" },
-      { "coords": [14, 10], "name": "Baron of Beef", "labelPos": "S" },
+      { "coords": [14, 10], "name": "Baron of\nBeef", "labelPos": "S" },
       { "coords": [12, 10] },
       { "coords": [11, 9], "dir": "W" },
       { "coords": [11, -3] },
@@ -32,14 +32,14 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [-4, 18], "name": "Carlton Arms", "labelPos": "NE" },
-      { "coords": [-2, 16], "name": "Carpenters Arms", "labelPos": "NE" },
-      { "coords": [0, 14], "name": "Grapes", "labelPos": "NE" },
-      { "coords": [2, 12], "name": "Sir Isaac Newton", "labelPos": "NE" },
-      { "coords": [4, 10], "name": "Architect", "labelPos": "SW" },
-      { "coords": [6, 8], "name": "Castle Inn", "labelPos": "SW" },
-      { "coords": [8, 6], "name": "Punter", "labelPos": "SW" },
-      { "coords": [10, 4], "name": "Pickeral", "labelPos": "SW" }
+      { "coords": [-6, 28], "name": "Carlton Arms", "labelPos": "NE" },
+      { "coords": [-4, 26], "name": "Carpenters Arms", "labelPos": "NE" },
+      { "coords": [-2, 24], "name": "Grapes", "labelPos": "NE" },
+      { "coords": [0, 22], "name": "Sir Isaac\nNewton", "labelPos": "SW" },
+      { "coords": [4, 18], "name": "Architect", "labelPos": "SW" },
+      { "coords": [6, 16], "name": "Castle Inn", "labelPos": "SW" },
+      { "coords": [8, 14], "name": "Punter", "labelPos": "SW" },
+      { "coords": [10, 12], "name": "Pickeral", "labelPos": "SW" }
     ]
   },
   {
@@ -62,17 +62,17 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [10, 4], "name": "Eagle", "labelPos": "S" },
-      { "coords": [14, 4], "name": "Bath House", "labelPos": "S" },
-      { "coords": [16, 4], "name": "Pint Shop", "labelPos": "N" },
-      { "coords": [31, 4], "marker": "interchange", "name": "Clarendon Arms", "labelPos": "N" },
-      { "coords": [36, 4], "name": "Elm Tree", "labelPos": "S" },
-      { "coords": [38, 4], "name": "Cricketers", "labelPos": "N" },
-      { "coords": [40, 4], "name": "Free Press", "labelPos": "S" },
-      { "coords": [42, 4], "name": "Tram Depot", "labelPos": "N" },
-      { "coords": [48, 4], "name": "Duke of Cambridge", "labelPos": "S" },
-      { "coords": [52, 4], "name": "Alexandra Arms", "labelPos": "N" },
-      { "coords": [56, 4], "name": "Geldart", "labelPos": "S" }
+      { "coords": [10, 2], "name": "Eagle", "labelPos": "S" },
+      { "coords": [14, 2], "name": "Bath House", "labelPos": "S" },
+      { "coords": [16, 2], "name": "Pint Shop", "labelPos": "N" },
+      { "coords": [31, 2], "marker": "interchange", "name": "Clarendon\nArms", "labelPos": "NW" },
+      { "coords": [36, 2], "name": "Elm Tree", "labelPos": "S" },
+      { "coords": [38, 2], "name": "Cricketers", "labelPos": "N" },
+      { "coords": [41, 2], "name": "Free Press", "labelPos": "S" },
+      { "coords": [44, 2], "name": "Tram Depot", "labelPos": "N" },
+      { "coords": [48, 2], "name": "Duke of\nCambridge", "labelPos": "S" },
+      { "coords": [52, 2], "name": "Alexandra\nArms", "labelPos": "N" },
+      { "coords": [56, 2], "name": "Geldart", "labelPos": "S" }
     ]
   },
   {
@@ -94,17 +94,19 @@
       { "coords": [29, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
       { "coords": [30, -4] },
       { "coords": [31, -3], "dir": "E" },
-      { "coords": [31, -2], "name": "Clarendon Arms", "labelPos": "E", "shiftCoords": [1, 0] },
+      { "coords": [31, 2], "name": "Clarendon Arms", "labelPos": "E", "shiftCoords": [1, 0], "hide": true },
       { "coords": [31, 6], "name": "St Radegund", "labelPos": "E", "shiftCoords": [1, 0] },
-      { "coords": [31, 8] },
-      { "coords": [32, 9], "dir": "N" },
-      { "coords": [36, 9], "name": "Hopbine", "labelPos": "S" },
-      { "coords": [38, 9], "name": "Burleigh\nArms", "labelPos": "N" },
-      { "coords": [48, 9], "name": "Corner House", "labelPos": "S" },
-      { "coords": [50, 9], "name": "Wrestlers", "labelPos": "N" },
-      { "coords": [76, 9], "name": "Ancient\nShepherds", "labelPos": "S" },
-      { "coords": [78, 9], "name": "King's Head", "labelPos": "N" },
-      { "coords": [80, 9], "name": "Plough", "labelPos": "S" }
+      { "coords": [31, 7] },
+      { "coords": [32, 9] },
+      { "coords": [34, 11] },
+      { "coords": [36, 12] },
+      { "coords": [38, 12], "name": "Hopbine", "labelPos": "S" },
+      { "coords": [40, 12], "name": "Burleigh\nArms", "labelPos": "N" },
+      { "coords": [48, 12], "name": "Corner House", "labelPos": "S" },
+      { "coords": [50, 12], "name": "Wrestlers", "labelPos": "N" },
+      { "coords": [76, 12], "name": "Ancient\nShepherds", "labelPos": "S" },
+      { "coords": [78, 12], "name": "King's Head", "labelPos": "N" },
+      { "coords": [80, 12], "name": "Plough", "labelPos": "S" }
     ]
   },
   {
