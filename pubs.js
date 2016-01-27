@@ -1,4 +1,4 @@
-var log = log4javascript.getDefaultLogger();
+var log = log4javascript.getLogger("main");
 consoleAppender = new log4javascript.BrowserConsoleAppender();
 log.addAppender(consoleAppender);
 
