@@ -52,7 +52,7 @@
         { "coords": [-8, 32], "name": "Carlton Arms", "labelPos": "NE" },
         { "coords": [-6, 30], "name": "Carpenters Arms", "labelPos": "NE" },
         { "coords": [-4, 28], "name": "Grapes", "labelPos": "NE" },
-        { "coords": [-2, 26], "name": "Sir Isaac\nNewton", "labelPos": "SW" },
+        { "coords": [-2, 26], "name": "Sir Isaac Newton", "labelPos": "SW" },
         { "coords": [0, 24], "name": "Architect", "labelPos": "SW" },
         { "coords": [2, 22], "name": "Castle Inn", "labelPos": "SW" },
         { "coords": [4, 20], "name": "Punter", "labelPos": "SW" },

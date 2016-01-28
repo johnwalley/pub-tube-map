@@ -485,11 +485,11 @@ function textPos(data) {
 
   switch (data.labelPos.toLowerCase()) {
     case "n":
-      pos = [0, offset * numLines];
+      pos = [0, offset * numLines *0.8];
       textAnchor = "middle";
       break;
     case "ne":
-      pos = [offset / Math.sqrt(2), offset * numLines / Math.sqrt(2)];
+      pos = [offset / Math.sqrt(2), 0.8*offset * numLines / Math.sqrt(2)];
       textAnchor = "start";
       break;
     case "e":
@@ -505,15 +505,15 @@ function textPos(data) {
       textAnchor = "middle";
       break;
     case "sw":
-      pos = [-offset*0.7, -offset];
+      pos = [-offset/Math.sqrt(2), -offset/Math.sqrt(2)];
       textAnchor = "end";
       break;
     case "w":
-      pos = [-1.2*offset, 0];
+      pos = [-offset, 0];
       textAnchor = "end";
       break;
     case "nw":
-      pos = [-1.2*offset, offset];
+      pos = [-1.2*offset/Math.sqrt(2), offset*numLines/Math.sqrt(2)];
       textAnchor = "end";
       break;
     default:
