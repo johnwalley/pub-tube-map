@@ -593,30 +593,16 @@ function tubeLine(data) {
       else if (((Math.abs(xDiff) == 1) && (Math.abs(yDiff) == 2)) || ((Math.abs(xDiff) == 2) && (Math.abs(yDiff) == 1))) {
         var controlPoints;
         if (xDiff == 1) {
-          if (yDiff == 1) {
-            if (lastSectionType == "udlr") {
-              controlPoints = [
-                points[0][0],
-                points[0][1] + (points[1][1] - points[0][1]) / 2
-              ];
-            } else if (lastSectionType == "diagonal") {
-              controlPoints = [
-                points[1][0],
-                points[0][1] + (points[1][1] - points[0][1]) / 2
-              ];
-            }
-          } else {
-            if (lastSectionType == "udlr") {
-              controlPoints = [
-                points[0][0],
-                points[0][1] + (points[1][1] - points[0][1]) / 2
-              ];
-            } else if (lastSectionType == "diagonal") {
-              controlPoints = [
-                points[1][0],
-                points[0][1] + (points[1][1] - points[0][1]) / 2
-              ];
-            }
+          if (lastSectionType == "udlr") {
+            controlPoints = [
+              points[0][0],
+              points[0][1] + (points[1][1] - points[0][1]) / 2
+            ];
+          } else if (lastSectionType == "diagonal") {
+            controlPoints = [
+              points[1][0],
+              points[0][1] + (points[1][1] - points[0][1]) / 2
+            ];
           }
         } else if (xDiff == -1) {
           if (lastSectionType == "udlr") {
@@ -633,8 +619,8 @@ function tubeLine(data) {
         } else if (xDiff == -2) {
           if (lastSectionType == "udlr") {
             controlPoints = [
-              points[0][0],
-              points[0][1] + (points[1][1] - points[0][1]) / 2
+              points[0][0] + (points[1][0] - points[0][0]) / 2,
+              points[0][1]
             ];
           } else if (lastSectionType == "diagonal") {
             controlPoints = [
