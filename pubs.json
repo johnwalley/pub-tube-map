@@ -1,4 +1,18 @@
 {
+  "pubs":
+  [
+    { "name": "Mill", "title": "Mill" },
+    { "name": "Anchor", "title": "Anchor" },
+    { "name": "Regal", "title": "Regal" },
+    { "name": "ClarendonArms", "title": "Clarendon Arms" },
+    { "name": "StRadegund", "title": "St Radegund" },
+    { "name": "KingStreetRun", "title": "King Street Run" },
+    { "name": "ChampionOfTheThames", "title": "Champion of the Thames" },
+    { "name": "BrewHouse", "title": "Brew House" },
+    { "name": "Mitre", "title": "Mitre" },
+    { "name": "BaronOfBeef", "title": "Baron of Beef" },
+    { "name": "Eagle", "title": "Eagle" }
+  ],
   "lines":
   [
     {

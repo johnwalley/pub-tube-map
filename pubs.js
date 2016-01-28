@@ -26,6 +26,21 @@ var maxY = -Infinity;
 d3.json("pubs.json", function(d) {
   log.info("Successfully loaded pubs.json");
 
+  var startPos;
+  var geoSuccess = function(position) {
+    startPos = position;
+    log.info("lat: " + startPos.coords.latitude + "," + "long: " + startPos.coords.longitude);
+  };
+  var geoError = function(error) {
+    console.log('Error occurred. Error code: ' + error.code);
+    // error.code can be:
+    //   0: unknown error
+    //   1: permission denied
+    //   2: position unavailable (error response from location provider)
+    //   3: timed out
+  };
+  navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+
   d.lines.forEach(function(line) {
     line.nodes.forEach(function(node) {
       if (node.coords[0] < minX)
@@ -48,6 +63,17 @@ d3.json("pubs.json", function(d) {
   data.river = d.river;
   data.pubs = extractPubs(d.lines);
   data.lines = extractLines(d.lines);
+
+  if (localStorage.getItem("visitedPubs")) {
+    log.info("Visited pubs found in local storage");
+    visitedPubs = d3.set(JSON.parse(localStorage.getItem("visitedPubs")));
+
+    data.pubs.forEach(function (pub) {
+      if (visitedPubs.values().indexOf(pub.name) > -1) {
+        pub.visited = true;
+      }
+    });
+  }
 
   d3.select("#visited").select("p").on("click", function() {
     toggle(d3.select("#visited").select("ul"));
@@ -86,6 +112,8 @@ function drawPubLists(data) {
 }
 
 function update(data) {
+  var t0 = performance.now();
+
   var w = parseInt(d3.select("#map").style("width"));
   var h = parseInt(d3.select("#map").style("height"));
 
@@ -97,8 +125,8 @@ function update(data) {
   var desiredAspectRatio = (maxX - minX) / (maxY - minY);
   var actualAspectRatio = (w - 2*xMargin)/(h - 2*yMargin);
 
-  log.debug("desiredAspectRatio: " + desiredAspectRatio);
-  log.debug("actualAspectRatio: " + actualAspectRatio);
+  log.debug("desiredAspectRatio: " + desiredAspectRatio.toFixed(2));
+  log.debug("actualAspectRatio: " + actualAspectRatio.toFixed(2));
 
   // Note that we flip the sense of the y-axis here
   if (desiredAspectRatio > actualAspectRatio) {
@@ -113,12 +141,18 @@ function update(data) {
 
   options.lineWidth = (options.xScale(1) - options.xScale(0))/1.2;
 
+  log.info("Writing visited pubs to local storage");
+  localStorage.setItem("visitedPubs", JSON.stringify(visitedPubs.values()));
+
   drawRiver(data.river);
   drawLines(data.raw);
   drawMarkers(data);
   drawLabels(data);
   drawPubLists(data);
   drawLegend(data);
+
+  var t1 = performance.now();
+  log.info("Update took " + (t1 - t0).toFixed(0) + " ms")
 }
 
 function score(visited, lines) {
