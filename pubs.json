@@ -26,7 +26,7 @@
         { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
         { "coords": [30, -4] },
         { "coords": [31, -3], "dir": "E" },
-        { "coords": [31, 2], "marker": "interchange", "name": "Clarendon Arms", "labelPos": "E", "hide": true },
+        { "coords": [31, 2], "marker": "interchange", "name": "Clarendon\nArms", "labelPos": "E", "hide": true },
         { "coords": [31, 6], "name": "St Radegund", "labelPos": "E", "hide": true },
         { "coords": [31, 9] },
         { "coords": [30, 10], "dir": "N" },
@@ -117,7 +117,7 @@
         { "coords": [29, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
         { "coords": [30, -4] },
         { "coords": [31, -3], "dir": "E" },
-        { "coords": [31, 2], "marker": "interchange", "name": "Clarendon Arms", "labelPos": "E", "shiftCoords": [1, 0], "hide": true },
+        { "coords": [31, 2], "marker": "interchange", "name": "Clarendon\nArms", "labelPos": "E", "shiftCoords": [1, 0], "hide": true },
         { "coords": [31, 6], "name": "St Radegund", "labelPos": "E", "shiftCoords": [1, 0] },
         { "coords": [31, 7] },
         { "coords": [32, 9] },
@@ -154,8 +154,8 @@
         { "coords": [23, 24] },
         { "coords": [24, 26] },
         { "coords": [26, 28], "name": "Milton Arms", "labelPos": "NW" },
-        { "coords": [28, 30], "name": "Golden Hind", "labelPos": "NW" },
-        { "coords": [30, 32], "name": "Jenny Wren", "labelPos": "NW" }
+        { "coords": [28, 30], "name": "Jenny Wren", "labelPos": "NW" },
+        { "coords": [30, 32], "name": "Golden Hind", "labelPos": "NW" }
       ]
     },
     {
