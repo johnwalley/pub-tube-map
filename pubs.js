@@ -340,9 +340,6 @@ function drawMarkers(data) {
 
   // UPDATE
   // Update old elements as needed
-  interchangePubs
-    .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
-    .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; });
 
   // ENTER
   // Create new elements as needed
@@ -359,7 +356,9 @@ function drawMarkers(data) {
   // the enter selection will apply to both entering and updating nodes
   interchangePubs.attr("transform", function(d) { return "translate(" + options.xScale(d.x + d.shiftX*options.lineWidth/unitLength) + "," + options.yScale(d.y + d.shiftY*options.lineWidth/unitLength) + ")" })
     .attr("d", markerFunction)
-    .attr("stroke-width", options.lineWidth/4);
+    .attr("stroke-width", options.lineWidth/4)
+    .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
+    .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; });
 
 
   // EXIT
@@ -550,12 +549,14 @@ function tubeLine(data) {
 
   var shiftCoords = [data.shiftCoords[0]*options.lineWidth/unitLength, data.shiftCoords[1]*options.lineWidth/unitLength];
 
-  var lastSectionType = "";
+  var lastSectionType = "diagonal"; // TODO: HACK
+
   var nextNode, currNode, xDiff, yDiff;
   var points;
 
   for (var lineNode = 0; lineNode < lineNodes.length; lineNode++) {
     if (lineNode > 0) {
+
       nextNode = lineNodes[lineNode];
       currNode = lineNodes[lineNode - 1];
 
