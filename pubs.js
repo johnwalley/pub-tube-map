@@ -253,10 +253,10 @@ function drawRiver(data) {
 
   g.enter().append("path")
       .attr("stroke", "#C4E8F8")
-      .attr("fill", "#ffffff") //"#C4E8F8")
-      .attr("stroke-width", 150/unitLength);
+      .attr("fill", "#ffffff"); //"#C4E8F8")
 
-  g.attr("d", function(d) { return tubeLine(d); });
+  g.attr("d", function(d) { return tubeLine(d); })
+    .attr("stroke-width", 2.0*unitLength);
 }
 
 function drawLines(data) {
