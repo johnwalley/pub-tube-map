@@ -8,6 +8,7 @@ var visitedPubs = d3.set();
 
 // Set up svg elements
 var svg = d3.select("#map");
+var river = svg.append("g").attr("id", "river");
 var linesElement = svg.append("g").attr("id", "lines");
 var interchangeMarkers = svg.append("g").attr("id", "interchanges");
 var markers = svg.append("g").attr("id", "stations");
@@ -25,7 +26,7 @@ var maxY = -Infinity;
 d3.json("pubs.json", function(d) {
   log.info("Successfully loaded pubs.json");
 
-  d.forEach(function(line) {
+  d.lines.forEach(function(line) {
     line.nodes.forEach(function(node) {
       if (node.coords[0] < minX)
         minX = node.coords[0];
@@ -41,11 +42,12 @@ d3.json("pubs.json", function(d) {
     })
   });
 
-  var data = { "raw": d };
+  var data = { "raw": d.lines };
 
   // Data manipulation
-  data.pubs = extractPubs(d);
-  data.lines = extractLines(d);
+  data.river = d.river;
+  data.pubs = extractPubs(d.lines);
+  data.lines = extractLines(d.lines);
 
   d3.select("#visited").select("p").on("click", function() {
     toggle(d3.select("#visited").select("ul"));
@@ -111,6 +113,7 @@ function update(data) {
 
   options.lineWidth = (options.xScale(1) - options.xScale(0))/1.2;
 
+  drawRiver(data.river);
   drawLines(data.raw);
   drawMarkers(data);
   drawLabels(data);
@@ -241,6 +244,17 @@ function extractPubs(data) {
   });
 
   return pubs;
+}
+
+function drawRiver(data) {
+  var g = river.selectAll("path").data([data]);
+
+  g.enter().append("path")
+      .attr("stroke", "#C4E8F8")
+      .attr("fill", "#ffffff") //"#C4E8F8")
+      .attr("stroke-width", 30);
+
+  g.attr("d", function(d) { return tubeLine(d); });
 }
 
 function drawLines(data) {
