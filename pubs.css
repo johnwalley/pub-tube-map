@@ -26,15 +26,6 @@ h1 {
   list-style: none;
 }
 
-#awards li {
-  /*display: inline;*/
-}
-
-#awards {
-  display: inline;
-  list-style: none;
-}
-
 text {
   font-family: 'Hammersmith One', sans-serif;
   fill: #0019A8;

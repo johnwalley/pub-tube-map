@@ -1,4 +1,18 @@
 {
+  "pubs":
+  [
+    { "name": "Mill", "title": "Mill" },
+    { "name": "Anchor", "title": "Anchor" },
+    { "name": "Regal", "title": "Regal" },
+    { "name": "ClarendonArms", "title": "Clarendon Arms" },
+    { "name": "StRadegund", "title": "St Radegund" },
+    { "name": "KingStreetRun", "title": "King Street Run" },
+    { "name": "ChampionOfTheThames", "title": "Champion of the Thames" },
+    { "name": "BrewHouse", "title": "Brew House" },
+    { "name": "Mitre", "title": "Mitre" },
+    { "name": "BaronOfBeef", "title": "Baron of Beef" },
+    { "name": "Eagle", "title": "Eagle" }
+  ],
   "lines":
   [
     {
@@ -76,7 +90,12 @@
         { "coords": [44, 2], "name": "Tram Depot", "labelPos": "N" },
         { "coords": [48, 2], "name": "Duke of\nCambridge", "labelPos": "S" },
         { "coords": [52, 2], "name": "Alexandra\nArms", "labelPos": "N" },
-        { "coords": [56, 2], "name": "Geldart", "labelPos": "S" }
+        { "coords": [56, 2], "name": "Geldart", "labelPos": "S" },
+        { "coords": [57, 2] },
+        { "coords": [59, 1] },
+        { "coords": [61, -1] },
+        { "coords": [63, -3], "name": "Cambridge Blue", "labelPos": "NE" },
+        { "coords": [65, -5], "name": "Kingston Arms", "labelPos": "NE" }
       ]
     },
     {
@@ -108,9 +127,12 @@
         { "coords": [40, 12], "name": "Burleigh\nArms", "labelPos": "N" },
         { "coords": [48, 12], "name": "Corner House", "labelPos": "S" },
         { "coords": [50, 12], "name": "Wrestlers", "labelPos": "N" },
-        { "coords": [76, 12], "name": "Ancient\nShepherds", "labelPos": "S" },
-        { "coords": [78, 12], "name": "King's Head", "labelPos": "N" },
-        { "coords": [80, 12], "name": "Plough", "labelPos": "S" }
+        { "coords": [55, 12] },
+        { "coords": [57, 13] },
+        { "coords": [59, 15] },
+        { "coords": [63, 19], "name": "Ancient Shepherds", "labelPos": "SE" },
+        { "coords": [65, 21], "name": "King's Head", "labelPos": "SE" },
+        { "coords": [67, 23], "name": "Plough", "labelPos": "SE" }
       ]
     },
     {
