@@ -247,12 +247,14 @@ function extractPubs(data) {
 }
 
 function drawRiver(data) {
+  var unitLength = (options.xScale(1) - options.xScale(0));
+
   var g = river.selectAll("path").data([data]);
 
   g.enter().append("path")
       .attr("stroke", "#C4E8F8")
       .attr("fill", "#ffffff") //"#C4E8F8")
-      .attr("stroke-width", 30);
+      .attr("stroke-width", 150/unitLength);
 
   g.attr("d", function(d) { return tubeLine(d); });
 }
