@@ -154,8 +154,8 @@
         { "coords": [23, 24] },
         { "coords": [24, 26] },
         { "coords": [26, 28], "name": "Milton Arms", "labelPos": "NW" },
-        { "coords": [28, 30], "name": "Golden Hind", "labelPos": "NW" },
-        { "coords": [30, 32], "name": "Jenny Wren", "labelPos": "NW" }
+        { "coords": [28, 30], "name": "Jenny Wren", "labelPos": "NW" },
+        { "coords": [30, 32], "name": "Golden Hind", "labelPos": "NW" }
       ]
     },
     {
