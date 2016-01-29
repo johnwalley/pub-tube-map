@@ -57,11 +57,14 @@ d3.json("pubs.json", function(d) {
     })
   });
 
-  var data = { "raw": d.lines };
+  var data = {
+    "raw": d.lines,
+    "rawPubs": d.pubs
+  };
 
   // Data manipulation
   data.river = d.river;
-  data.pubs = extractPubs(d.lines);
+  data.pubs = extractPubs(d);
   data.lines = extractLines(d.lines);
 
   if (localStorage.getItem("visitedPubs")) {
@@ -255,24 +258,27 @@ function extractLines(data) {
 function extractPubs(data) {
   var pubs = [];
 
-  data.forEach(function(line) {
+  data.lines.forEach(function(line) {
     for (var node = 0; node < line.nodes.length; node++) {
-      var data = line.nodes[node];
+      var d = line.nodes[node];
 
-      if (!data.hasOwnProperty("name"))
+      if (!d.hasOwnProperty("name"))
         continue;
 
+      if (!data.pubs.hasOwnProperty(d.name))
+        log.error("Cannot find pub with key: " + d.name);
+
       pubs.push({
-        "x": data.coords[0],
-        "y": data.coords[1],
-        "shiftX": data.hasOwnProperty("shiftCoords") ? data.shiftCoords[0] : line.shiftCoords[0],
-        "shiftY": data.hasOwnProperty("shiftCoords") ? data.shiftCoords[1] : line.shiftCoords[1],
-        "name": data.name,
-        "labelPos": data.labelPos,
+        "x": d.coords[0],
+        "y": d.coords[1],
+        "shiftX": d.hasOwnProperty("shiftCoords") ? d.shiftCoords[0] : line.shiftCoords[0],
+        "shiftY": d.hasOwnProperty("shiftCoords") ? d.shiftCoords[1] : line.shiftCoords[1],
+        "name": data.pubs[d.name].title,
+        "labelPos": d.labelPos,
         "visited": false,
         "color": line.color,
-        "marker": (data.hasOwnProperty("marker")) ? data.marker : "station",
-        "hide": data.hide
+        "marker": (d.hasOwnProperty("marker")) ? d.marker : "station",
+        "hide": d.hide
       });
     }
   });
