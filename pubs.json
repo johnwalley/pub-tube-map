@@ -118,14 +118,16 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [-8, 32], "name": "Carlton Arms", "labelPos": "NE" },
-        { "coords": [-6, 30], "name": "Carpenters Arms", "labelPos": "NE" },
-        { "coords": [-4, 28], "name": "Grapes", "labelPos": "NE" },
+        { "coords": [-1, 32], "name": "Carlton Arms", "labelPos": "N" },
+        { "coords": [-2, 32] },
+        { "coords": [-3, 31], "dir": "W" },
+        { "coords": [-3, 30], "name": "Carpenters Arms", "labelPos": "W" },
+        { "coords": [-3, 28], "name": "Grapes", "labelPos": "W" },
         { "coords": [-2, 26], "name": "Sir Isaac Newton", "labelPos": "SW" },
         { "coords": [0, 24], "name": "Architect", "labelPos": "SW" },
         { "coords": [2, 22], "name": "Castle Inn", "labelPos": "SW" },
-        { "coords": [4, 20], "name": "Punter", "labelPos": "SW" },
-        { "coords": [6, 18], "name": "Pickeral", "labelPos": "SW" },
+        { "coords": [4, 20], "marker": "interchange", "name": "Punter", "labelPos": "E" },
+        { "coords": [6, 18], "name": "Pickeral", "labelPos": "NE" },
         { "coords": [14, 10], "marker": "interchange", "name": "Baron\nof Beef", "labelPos": "NW", "hide": true }
       ]
     },
@@ -135,12 +137,18 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [10, 22], "name": "Boathouse", "labelPos": "S" },
-        { "coords": [13, 22], "name": "Portland\nArms", "labelPos": "N" },
-        { "coords": [16, 22], "name": "Waterman", "labelPos": "S" },
-        { "coords": [23, 22], "marker": "interchange", "name": "Old Spring", "labelPos": "S", "hide": true },
-        { "coords": [28, 22], "name": "Haymakers", "labelPos": "N" },
-        { "coords": [46, 22], "name": "Green\nDragon", "labelPos": "S" }
+        { "coords": [1, -4], "marker": "interchange", "name": "Granta", "labelPos": "SE", "shiftCoords": [0, -1] },
+        { "coords": [1, 16] },
+        { "coords": [2, 18] },
+        { "coords": [4, 20], "marker": "interchange", "name": "Punter", "labelPos": "SW", "hide": true },
+        { "coords": [6, 22] },
+        { "coords": [8, 23] },
+        { "coords": [10, 23], "name": "Boathouse", "labelPos": "S" },
+        { "coords": [13, 23], "name": "Portland\nArms", "labelPos": "N" },
+        { "coords": [16, 23], "name": "Waterman", "labelPos": "S" },
+        { "coords": [23, 23], "marker": "interchange", "name": "Old Spring", "labelPos": "S", "hide": true },
+        { "coords": [34, 23], "name": "Haymakers", "labelPos": "N" },
+        { "coords": [42, 23], "name": "Green\nDragon", "labelPos": "S" }
       ]
     },
     {
@@ -150,8 +158,8 @@
       "nodes":
       [
         { "coords": [11, 2], "marker": "interchange", "name": "Eagle", "labelPos": "NW" },
-        { "coords": [14, 2], "name": "Bath\nHouse", "labelPos": "S" },
-        { "coords": [16, 2], "name": "Pint Shop", "labelPos": "N" },
+        { "coords": [16, 2], "name": "Bath\nHouse", "labelPos": "S" },
+        { "coords": [20, 2], "name": "Pint Shop", "labelPos": "N" },
         { "coords": [31, 2], "marker": "interchange", "name": "Clarendon\nArms", "labelPos": "NW", "shiftCoords": [0.5, 0] },
         { "coords": [36, 2], "name": "Elm Tree", "labelPos": "S" },
         { "coords": [38, 2], "name": "Cricketers", "labelPos": "N" },
@@ -173,14 +181,15 @@
       "shiftCoords": [1, -1],
       "nodes":
       [
-        { "coords": [0, -18], "name": "Green Man", "labelPos": "W" },
-        { "coords": [0, -16], "name": "Red Lion", "labelPos": "W" },
-        { "coords": [0, -14], "name": "Rupert Brook", "labelPos": "W" },
-        { "coords": [0, -12], "name": "Blue Ball Inn", "labelPos": "W" },
-        { "coords": [0, -5] },
-        { "coords": [1, -4], "dir": "N" },
-        { "coords": [4, -4], "name": "Red Bull", "labelPos": "N" },
-        { "coords": [6, -4], "name": "Granta", "labelPos": "S" },
+        { "coords": [-8, -18], "name": "Green Man", "labelPos": "W" },
+        { "coords": [-8, -16], "name": "Red Lion", "labelPos": "W" },
+        { "coords": [-8, -14], "name": "Rupert Brook", "labelPos": "W" },
+        { "coords": [-8, -12], "name": "Blue Ball Inn", "labelPos": "W" },
+        { "coords": [-8, -9] },
+        { "coords": [-7, -7] },
+        { "coords": [-5, -5] },
+        { "coords": [-3, -4], "name": "Red Bull", "labelPos": "N" },
+        { "coords": [1, -4], "marker": "interchange", "name": "Granta", "labelPos": "S", "hide": true },
         { "coords": [16, -4], "name": "Mill", "labelPos": "N", "shiftCoords": [0, -1], "hide": true },
         { "coords": [18, -4], "name": "Anchor", "labelPos": "S", "shiftCoords": [0, -1] },
         { "coords": [29, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
@@ -196,12 +205,12 @@
         { "coords": [40, 12], "name": "Burleigh\nArms", "labelPos": "N" },
         { "coords": [48, 12], "name": "Corner House", "labelPos": "S" },
         { "coords": [50, 12], "name": "Wrestlers", "labelPos": "N" },
-        { "coords": [55, 12] },
-        { "coords": [57, 13] },
-        { "coords": [59, 15] },
-        { "coords": [63, 19], "name": "Ancient Shepherds", "labelPos": "SE" },
-        { "coords": [65, 21], "name": "King's Head", "labelPos": "SE" },
-        { "coords": [67, 23], "name": "Plough", "labelPos": "SE" }
+        { "coords": [52, 12] },
+        { "coords": [54, 13] },
+        { "coords": [56, 15] },
+        { "coords": [60, 19], "name": "Ancient Shepherds", "labelPos": "SE" },
+        { "coords": [62, 21], "name": "King's Head", "labelPos": "SE" },
+        { "coords": [64, 23], "name": "Plough", "labelPos": "SE" }
       ]
     },
     {
@@ -218,13 +227,13 @@
         { "coords": [23, -6] },
         { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "NE", "shiftCoords": [0, -0.5] },
         { "coords": [23, 10], "marker": "interchange", "name": "Brew House", "labelPos": "W", "hide": true },
-        { "coords": [23, 16], "name": "Fort\nSt George", "labelPos": "W" }  ,
-        { "coords": [23, 22], "marker": "interchange", "name": "Old Spring", "labelPos": "NW" },
-        { "coords": [23, 24] },
-        { "coords": [24, 26] },
-        { "coords": [26, 28], "name": "Milton Arms", "labelPos": "NW" },
-        { "coords": [28, 30], "name": "Jenny Wren", "labelPos": "NW" },
-        { "coords": [30, 32], "name": "Golden Hind", "labelPos": "NW" }
+        { "coords": [23, 14], "name": "Fort\nSt George", "labelPos": "W" }  ,
+        { "coords": [23, 23], "marker": "interchange", "name": "Old Spring", "labelPos": "NW" },
+        { "coords": [23, 25] },
+        { "coords": [24, 27] },
+        { "coords": [26, 29], "name": "Milton Arms", "labelPos": "NW" },
+        { "coords": [28, 31], "name": "Jenny Wren", "labelPos": "NW" },
+        { "coords": [30, 33], "name": "Golden Hind", "labelPos": "NW" }
       ]
     },
     {
@@ -275,9 +284,11 @@
       { "coords": [5, -10] },
       { "coords": [7, -8] },
       { "coords": [8, -6 ]},
-      { "coords": [8, 18] },
-      { "coords": [9, 19], "dir": "N" },
-      { "coords": [50, 19] }
+      { "coords": [8, 16] },
+      { "coords": [9, 17], "dir": "N" },
+      { "coords": [50, 17] },
+      { "coords": [52, 18] },
+      { "coords": [60, 26] }
     ]
   }
 }
