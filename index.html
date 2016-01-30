@@ -7,8 +7,10 @@
   <meta property="og:type"               content="website" />
   <meta property="og:title"              content="Cambridge Pub Map" />
   <meta property="og:description"        content="A Cambridge Pub Map in the Style of the Iconic London Underground" />
-  <script src="d3.v3.min.js" charset="utf-8"></script>
-  <script type="text/javascript" src="log4javascript.js"></script>
+  <meta property="og:image"              content="images/facebook.png" />
+
+  <script src="src/d3.v3.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="src/log4javascript.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="pubs.css">
 </head>
@@ -17,6 +19,10 @@
     <h1>Cambridge Pub Tube Map</h1>
   </header>
   <div class="container">
+    <div class="fb-share-button"
+         data-href="http://www.walley.org.uk/pub-tube-map/"
+         data-layout="button_count">
+    </div>
     <div id="map-container">
       <svg id="map" width="100%" height="1080"></svg>
     </div>
@@ -30,6 +36,25 @@
       </ul>
     </div>
   </div>
-  <script src="pubs.js"></script>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : 'your-app-id',
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script src="src/Pubs.js"></script>
+  <script src="src/Lines.js"></script>
+  <script src="src/main.js"></script>
 </body>
 </html>
