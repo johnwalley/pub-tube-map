@@ -85,7 +85,7 @@
       "nodes":
       [
         { "coords": [16, -4], "name": "Mill", "labelPos": "N" },
-        { "coords": [18, -4], "name": "Anchor", "labelPos": "S", "hide": true },
+        { "coords": [18, -4], "name": "Anchor", "labelPos": "S" },
         { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
         { "coords": [30, -4] },
         { "coords": [31, -3], "dir": "E" },
