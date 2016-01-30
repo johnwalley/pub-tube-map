@@ -84,7 +84,7 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [16, -4], "name": "Mill", "labelPos": "N" },
+        { "coords": [16, -4], "name": "Mill", "labelPos": "N", "canonical": true },
         { "coords": [18, -4], "name": "Anchor", "labelPos": "S" },
         { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
         { "coords": [30, -4] },
@@ -95,7 +95,7 @@
         { "coords": [30, 10], "dir": "N" },
         { "coords": [28, 10], "name": "KingStreetRun", "labelPos": "S" },
         { "coords": [26, 10], "name": "ChampionOfTheThames", "labelPos": "N" },
-        { "coords": [23, 10], "marker": "interchange", "name": "BrewHouse", "labelPos": "SW" },
+        { "coords": [23, 10], "marker": "interchange", "name": "BrewHouse", "labelPos": "SW", "canonical": true },
         { "coords": [16, 10], "name": "Mitre", "labelPos": "N" },
         { "coords": [14, 10], "marker": "interchange", "name": "BaronOfBeef", "labelPos": "S" },
         { "coords": [12, 10] },
@@ -120,7 +120,7 @@
         { "coords": [-2, 26], "name": "SirIsaacNewton", "labelPos": "SW" },
         { "coords": [0, 24], "name": "Architect", "labelPos": "SW" },
         { "coords": [2, 22], "name": "CastleInn", "labelPos": "SW" },
-        { "coords": [4, 20], "marker": "interchange", "name": "Punter", "labelPos": "E" },
+        { "coords": [4, 20], "marker": "interchange", "name": "Punter", "labelPos": "E", "canonical": true },
         { "coords": [6, 18], "name": "Pickeral", "labelPos": "NE" },
         { "coords": [14, 10], "marker": "interchange", "name": "BaronOfBeef", "labelPos": "NW", "hide": true }
       ]
@@ -131,7 +131,7 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [1, -4], "marker": "interchange", "name": "Granta", "labelPos": "SE", "shiftCoords": [0, -1] },
+        { "coords": [1, -4], "marker": "interchange", "name": "Granta", "labelPos": "SE", "shiftCoords": [0, -1], "canonical": true },
         { "coords": [1, 16] },
         { "coords": [2, 18] },
         { "coords": [4, 20], "marker": "interchange", "name": "Punter", "labelPos": "SW", "hide": true },
@@ -151,10 +151,10 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [11, 2], "marker": "interchange", "name": "Eagle", "labelPos": "NW" },
+        { "coords": [11, 2], "marker": "interchange", "name": "Eagle", "labelPos": "NW", "canonical": true },
         { "coords": [16, 2], "name": "BathHouse", "labelPos": "S" },
         { "coords": [20, 2], "name": "PintShop", "labelPos": "N" },
-        { "coords": [31, 2], "marker": "interchange", "name": "ClarendonArms", "labelPos": "NW", "shiftCoords": [0.5, 0] },
+        { "coords": [31, 2], "marker": "interchange", "name": "ClarendonArms", "labelPos": "NW", "shiftCoords": [0.5, 0], "canonical": true },
         { "coords": [36, 2], "name": "ElmTree", "labelPos": "S" },
         { "coords": [38, 2], "name": "Cricketers", "labelPos": "N" },
         { "coords": [41, 2], "name": "FreePress", "labelPos": "S" },
@@ -185,7 +185,7 @@
         { "coords": [-3, -4], "name": "RedBull", "labelPos": "N" },
         { "coords": [1, -4], "marker": "interchange", "name": "Granta", "labelPos": "S", "hide": true },
         { "coords": [16, -4], "name": "Mill", "labelPos": "N", "shiftCoords": [0, -1], "hide": true },
-        { "coords": [18, -4], "name": "Anchor", "labelPos": "S", "shiftCoords": [0, -1] },
+        { "coords": [18, -4], "name": "Anchor", "labelPos": "S", "shiftCoords": [0, -1], "canonical": true },
         { "coords": [29, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
         { "coords": [30, -4] },
         { "coords": [31, -3], "dir": "E" },
@@ -219,10 +219,10 @@
         { "coords": [20, -10], "name": "Alma", "labelPos": "SE"  },
         { "coords": [22, -8], "name": "PantonArms", "labelPos": "SE"  },
         { "coords": [23, -6] },
-        { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "NE", "shiftCoords": [0, -0.5] },
+        { "coords": [23, -4], "marker": "interchange", "name": "Regal", "labelPos": "NE", "shiftCoords": [0, -0.5], "canonical": true },
         { "coords": [23, 10], "marker": "interchange", "name": "BrewHouse", "labelPos": "W", "hide": true },
         { "coords": [23, 14], "name": "FortStGeorge", "labelPos": "W" }  ,
-        { "coords": [23, 23], "marker": "interchange", "name": "OldSpring", "labelPos": "NW" },
+        { "coords": [23, 23], "marker": "interchange", "name": "OldSpring", "labelPos": "NW", "canonical": true },
         { "coords": [23, 25] },
         { "coords": [24, 27] },
         { "coords": [26, 29], "name": "MiltonArms", "labelPos": "NW" },
