@@ -4,8 +4,6 @@ log.addAppender(consoleAppender);
 
 var options = {};
 
-var visitedPubs;
-
 // Set up svg elements
 var svg = d3.select("#map");
 var river = svg.append("g").attr("id", "river");
@@ -153,7 +151,7 @@ function update(data) {
   localStorage.setItem("visitedPubs", JSON.stringify(data.pubs.visited()));
 
   drawRiver(data.river);
-  drawLines(data.raw);
+  drawLines(data.lines);
   drawMarkers(data);
   drawLabels(data);
   drawPubLists(data);
@@ -194,7 +192,7 @@ function score(visited, lines) {
     awards.push(award);
 
     line.pubs.forEach(function(pub) {
-      if (visited.indexOf(pub) < 0) {
+      if (visited.map(function(p) { return p.name; }).indexOf(pub) < 0) {
         award.unlocked = false;
       }
     })
@@ -242,7 +240,9 @@ function extractLines(data) {
       "name": line.label,
       "pubs": [],
       "color": line.color,
-      "shiftCoords": line.shiftCoords
+      "shiftCoords": line.shiftCoords,
+      "nodes": line.nodes,
+      "highlighted": false
     };
 
     lines.push(lineObj);
@@ -326,7 +326,7 @@ function drawRiver(data) {
 function drawLines(data) {
   // DATA JOIN
   // Join new data with old elements, if any
-  var g = linesElement.selectAll("path").data(data);
+  var g = linesElement.selectAll("path").data(data.lines);
 
   // UPDATE
   // Update old elements as needed
@@ -343,7 +343,7 @@ function drawLines(data) {
   // entering elements; so, operations on the update selection after appending to
   // the enter selection will apply to both entering and updating nodes
   g.attr("d", function(d) { return tubeLine(d); })
-    .attr("stroke-width", options.lineWidth);
+    .attr("stroke-width", function(d) { return d.highlighted ? options.lineWidth * 1.3 : options.lineWidth; });
 
 }
 
@@ -693,6 +693,18 @@ function tubeLine(data) {
               points[1][1]
             ];
           }
+        } else if (xDiff == 2) {
+          if (lastSectionType == "udlr") {
+            controlPoints = [
+              points[0][0] + (points[1][0] - points[0][0]) / 2,
+              points[0][1]
+            ];
+          } else if (lastSectionType == "diagonal") {
+            controlPoints = [
+              points[0][0] + (points[1][0] - points[0][0]) / 2,
+              points[1][1]
+            ];
+          }
         }
 
         path += "C" + controlPoints[0] + "," + controlPoints[1] + "," + controlPoints[0] + "," + controlPoints[1] + "," + points[1][0] + "," + points[1][1];     
@@ -748,7 +760,7 @@ function drawLegend(data) {
   // DATA JOIN
   // Join new data with old elements, if any
   var lines = legend.selectAll("li")
-    .data(data.lines);
+    .data(data.lines.lines);
 
   // UPDATE
   // Update old elements as needed
@@ -758,7 +770,10 @@ function drawLegend(data) {
   lines.enter()
     .append("li")
     .text(function(d) { return d.name })
-    .style("color", function(d) { return d.color; });
+    .style("color", function(d) { return d.color; })
+    .style("cursor", "pointer")
+    .on("mouseover", function(d) { highlightLine(d, data); })
+    .on("mouseout", function(d) { unhighlightLine(d, data); });
 
   // ENTER + UPDATE
   // Appending to the enter selection expands the update selection to include
@@ -773,4 +788,14 @@ function drawLegend(data) {
   // EXIT
   // Remove old elements as needed.
   lines.exit().remove();
+}
+
+function highlightLine(d, data) {
+  data.lines.highlightLine(d.name);
+  update(data);
+}
+
+function unhighlightLine(d, data) {
+  data.lines.unhighlightLine(d.name);
+  update(data);
 }
