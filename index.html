@@ -2,72 +2,29 @@
 <html>
 <head>
   <title>Cambridge Pub Tube Map</title>
-
-  <meta name="viewport"                  content="width=device-width, initial-scale=1">
-  <meta property="og:url"                content="http://www.walley.org.uk/pub-tube-map/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:url"                content="http://www.pubmap.co.uk/" />
   <meta property="og:type"               content="website" />
   <meta property="og:title"              content="Cambridge Pub Map" />
   <meta property="og:description"        content="A Cambridge Pub Map in the Style of the Iconic London Underground" />
-  <meta property="og:image"              content="http://www.walley.org.uk/pub-tube-map/images/facebook.png" />
-  <meta property="fb:app_id"             content="1551289211778400" />
-
-  <script src="src/d3.v3.min.js" charset="utf-8"></script>
-  <script type="text/javascript" src="src/log4javascript.js"></script>
+  <script src="src/d3.min.js" charset="utf-8"></script>
+  <script src="../src/tube-map.js"></script>
+  <script src="../src/tube-map-model.js"></script>
+  <script src="../src/tube-map-presenter.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="pubs.css">
+  <link rel="stylesheet" type="text/css" href="tube-map.css">
 </head>
 <body>
-  <header>
-    <h1>Cambridge Pub Tube Map</h1>
-  </header>
-  <div class="container">
-    <div class="fb-share-button"
-         data-href="http://www.walley.org.uk/pub-tube-map/"
-         data-layout="button_count">
-    </div>
-    <div id="map-container">
-      <svg id="map" width="100%" height="1080"></svg>
-    </div>
-    <div id="legend">
-      <ul id="lines"></ul>
-      <ul>
-        <li id="visited">
-          <p></p>
-          <ul></ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+  <p id="map"></p>
+  <p id="score"></p>
   <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : 'your-app-id',
-        xfbml      : true,
-        version    : 'v2.5'
-      });
-    };
+d3.json("pubs.json", function(data) {
+  var model = tubeMapModel(data);
+  var mapView = d3.select("#map");
+  var scoreView = d3.select("#score");
 
-    (function(d, s, id){
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+  presenter(model, mapView, scoreView)();
+});
   </script>
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-73123785-1', 'auto');
-    ga('send', 'pageview');
-
-  </script>
-  <script src="src/Pubs.js"></script>
-  <script src="src/Lines.js"></script>
-  <script src="src/main.js"></script>
 </body>
 </html>
