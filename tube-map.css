@@ -36,11 +36,25 @@ text {
 }
 
 text.highlighted {
-  font-weight: bold;
+  text-decoration: underline;
 }
 
+.line {
+  transition-property: opacity;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
+}
 
-/* Bakerloo #b363305, District #00782a, Hammersmith and City #f3a9bb
- Jubilee #a0a5a9, Metropoliton #9b0056, Northern #000000
- Waterloo and City #95cdba, Victoria #0098D4
- DLR #00a4a7 */
+.line.translucent {
+  opacity: 0.3;
+}
+
+.station {
+  transition-property: opacity;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
+}
+
+.station.translucent {
+  opacity: 0.3;
+}

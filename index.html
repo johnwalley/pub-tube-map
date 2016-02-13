@@ -7,31 +7,24 @@
   <meta property="og:type"               content="website" />
   <meta property="og:title"              content="Cambridge Pub Map" />
   <meta property="og:description"        content="A Cambridge Pub Map in the Style of the Iconic London Underground" />
-  <script src="src/d3.v3.min.js" charset="utf-8"></script>
-  <script type="text/javascript" src="src/log4javascript.js"></script>
+  <script src="src/d3.min.js" charset="utf-8"></script>
+  <script src="../src/tube-map.js"></script>
+  <script src="../src/tube-map-model.js"></script>
+  <script src="../src/tube-map-presenter.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="pubs.css">
+  <link rel="stylesheet" type="text/css" href="tube-map.css">
 </head>
 <body>
-  <header>
-    <h1>Cambridge Pub Tube Map</h1>
-  </header>
-  <div class="container">
-    <div id="map-container">
-      <svg id="map" width="100%" height="1080"></svg>
-    </div>
-    <div id="legend">
-      <ul id="lines"></ul>
-      <ul>
-        <li id="visited">
-          <p></p>
-          <ul></ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <script src="src/Pubs.js"></script>
-  <script src="src/Lines.js"></script>
-  <script src="src/main.js"></script>
+  <p id="map"></p>
+  <p id="score"></p>
+  <script>
+d3.json("pubs.json", function(data) {
+  var model = tubeMapModel(data);
+  var mapView = d3.select("#map");
+  var scoreView = d3.select("#score");
+
+  presenter(model, mapView, scoreView)();
+});
+  </script>
 </body>
 </html>
