@@ -264,15 +264,15 @@
       "nodes":
       [
         { "coords": [23, -4] },
-        { "coords": [26, -7], "name": "GrainStore", "labelPos": "NE" },
-        { "coords": [28, -9], "name": "PrinceRegent", "labelPos": "NE" },
-        { "coords": [30, -11], "name": "FlyingPig", "labelPos": "NE" },
-        { "coords": [32, -13], "name": "EarlOfDerby", "labelPos": "SW" },
-        { "coords": [34, -15], "name": "Rock", "labelPos": "SW" },
-        { "coords": [36, -17], "name": "Med", "labelPos": "SW" },
-        { "coords": [38, -19] },
-        { "coords": [40, -20] },
-        { "coords": [41, -20], "name": "QueenEdith", "labelPos": "S" }
+        { "coords": [28, -9], "name": "GrainStore", "labelPos": "NE" },
+        { "coords": [30, -11], "name": "PrinceRegent", "labelPos": "NE" },
+        { "coords": [32, -13], "name": "FlyingPig", "labelPos": "NE" },
+        { "coords": [34, -15], "name": "EarlOfDerby", "labelPos": "SW" },
+        { "coords": [36, -17], "name": "Rock", "labelPos": "SW" },
+        { "coords": [38, -19], "name": "Med", "labelPos": "SW" },
+        { "coords": [40, -21] },
+        { "coords": [42, -22] },
+        { "coords": [43, -22], "name": "QueenEdith", "labelPos": "S" }
       ]
     }
   ],
