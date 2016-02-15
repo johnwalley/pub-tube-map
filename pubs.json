@@ -22,6 +22,7 @@
     "CornerHouse": { "title": "Corner House" },
     "Cricketers": { "title": "Cricketers" },
     "DevonshireArms": { "title": "Devonshire Arms" },
+    "Dobblers": { "title": "Dobblers" },
     "DukeOfCambridge": { "title": "Duke\nof Cambridge" },
     "Eagle": { "title": "Eagle" },
     "EarlOfBeaconsfield": { "title": "Earl of Beaconsfield" },
@@ -69,6 +70,7 @@
     "RoyalStandard": { "title": "Royal Standard" },
     "RupertBrook": { "title": "Rupert Brook" },
     "SalisburyArms": { "title": "Salisbury Arms" },
+    "Ship": { "title": "Ship" },
     "SirIsaacNewton": { "title": "Sir Isaac Newton" },
     "SixBells": { "title": "Six Bells" },
     "StRadegund": { "title": "St Radegund" },
@@ -113,7 +115,7 @@
       "shiftCoords": [0, 1],
       "nodes":
       [
-        { "coords": [-6, 32], "name": "CarltonArms", "labelPos": "N" },
+        { "coords": [-5, 32], "name": "CarltonArms", "labelPos": "N" },
         { "coords": [-7, 32] },
         { "coords": [-8, 31], "dir": "E" },
         { "coords": [-8, 30], "name": "CarpentersArms", "labelPos": "W" },
@@ -166,13 +168,14 @@
         { "coords": [41, 2], "name": "FreePress", "labelPos": "S" },
         { "coords": [44, 2], "name": "TramDepot", "labelPos": "N" },
         { "coords": [48, 2], "name": "DukeOfCambridge", "labelPos": "S" },
-        { "coords": [52, 2], "name": "AlexandraArms", "labelPos": "N" },
-        { "coords": [56, 2], "name": "Geldart", "labelPos": "S" },
-        { "coords": [57, 2] },
-        { "coords": [59, 1] },
-        { "coords": [61, -1] },
-        { "coords": [63, -3], "name": "CambridgeBlue", "labelPos": "NE" },
-        { "coords": [65, -5], "name": "KingstonArms", "labelPos": "NE" }
+        { "coords": [52, 2], "name": "Dobblers", "labelPos": "S" },
+        { "coords": [56, 2], "name": "AlexandraArms", "labelPos": "N" },
+        { "coords": [60, 2], "name": "Geldart", "labelPos": "S" },
+        { "coords": [61, 2] },
+        { "coords": [63, 1] },
+        { "coords": [65, -1] },
+        { "coords": [67, -3], "name": "CambridgeBlue", "labelPos": "NE" },
+        { "coords": [69, -5], "name": "KingstonArms", "labelPos": "NE" }
       ]
     },
     {
@@ -235,8 +238,11 @@
         { "coords": [26, 29] },
         { "coords": [28, 30] },
         { "coords": [30, 30], "name": "MiltonArms", "labelPos": "N" },
-        { "coords": [36, 30], "name": "JennyWren", "labelPos": "S" },
-        { "coords": [40, 30], "name": "GoldenHind", "labelPos": "N" }
+        { "coords": [36, 30], "name": "GoldenHind", "labelPos": "S" },
+        { "coords": [38, 30] },
+        { "coords": [39, 31], "dir": "E"  },
+        { "coords": [39, 33], "name": "JennyWren", "labelPos": "E" },
+        { "coords": [39, 35], "name": "Ship", "labelPos": "E" }
       ]
     },
     {
