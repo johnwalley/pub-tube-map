@@ -440,16 +440,18 @@ function tubeMap() {
           continue;
 
         if (!data.stations.hasOwnProperty(d.name))
-          log.error("Cannot find station with key: " + d.name);
+          console.log("Cannot find station with key: " + d.name);
 
         var station = data.stations[d.name];
 
         station.x = d.coords[0];
         station.y = d.coords[1];
 
-        station.labelPos = station.labelPos || d.labelPos;
-        station.labelShiftX = station.labelShiftX || (d.hasOwnProperty("shiftCoords") ? d.shiftCoords[0] : line.shiftCoords[0]);
-        station.labelShiftY = station.labelShiftY || (d.hasOwnProperty("shiftCoords") ? d.shiftCoords[1] : line.shiftCoords[1]);
+        if (station.labelPos===undefined) {
+          station.labelPos = d.labelPos;
+          station.labelShiftX = d.hasOwnProperty("shiftCoords") ? d.shiftCoords[0] : line.shiftCoords[0];
+          station.labelShiftY = d.hasOwnProperty("shiftCoords") ? d.shiftCoords[1] : line.shiftCoords[1];
+        }
 
         if (d.hasOwnProperty("canonical")) {
           station.labelShiftX = d.hasOwnProperty("shiftCoords") ? d.shiftCoords[0] : line.shiftCoords[0];
@@ -605,7 +607,7 @@ Stations.prototype.toArray = function() {
 Stations.prototype.interchanges = function () {
     var interchangeStations = this.toArray();
 
-    return interchangeStations.filter(function(station) { console.log(station); return station.marker[0].marker === "interchange" });
+    return interchangeStations.filter(function(station) { return station.marker[0].marker === "interchange" });
 };
 
 Stations.prototype.normalStations = function () {

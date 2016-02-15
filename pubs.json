@@ -129,7 +129,7 @@
         { "coords": [1, 11] },
         { "coords": [3, 10], "marker": "interchange", "name": "Pickeral", "labelPos": "SW" },
         { "coords": [14, 10], "marker": "interchange", "name": "BaronOfBeef", "labelPos": "NW" },
-        { "coords": [16, 10], "name": "Mitre", "labelPos": "N" },
+        { "coords": [16, 10], "name": "Mitre", "labelPos": "N", "canonical": true },
         { "coords": [23, 10], "marker": "interchange"}
       ]
     },
@@ -193,7 +193,7 @@
         { "coords": [-5, -5] },
         { "coords": [-3, -4], "name": "RedBull", "labelPos": "N" },
         { "coords": [3, -4], "marker": "interchange", "name": "Granta", "labelPos": "S", "hide": true },
-        { "coords": [16, -4], "name": "Mill", "labelPos": "N", "shiftCoords": [0, -1], "hide": true },
+        { "coords": [16, -4], "name": "Mill", "labelPos": "N", "shiftCoords": [0, -1] },
         { "coords": [18, -4], "name": "Anchor", "labelPos": "S", "shiftCoords": [0, -1], "canonical": true },
         { "coords": [29, -4], "marker": "interchange", "name": "Regal", "labelPos": "S", "hide": true },
         { "coords": [30, -4] },
