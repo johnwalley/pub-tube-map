@@ -45,6 +45,8 @@ function presenter(m, v, s) {
     labels.on("click", function() {
       var label = d3.select(this);
 
+      ga('send', 'event', 'Station', 'click');
+
       if (label.classed("highlighted")) {
         var index = model.visited.indexOf(label.attr("id"));
         if (index > -1) {
