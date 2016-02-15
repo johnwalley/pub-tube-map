@@ -115,11 +115,13 @@
       "shiftCoords": [0, 1],
       "nodes":
       [
-        { "coords": [-5, 32], "name": "CarltonArms", "labelPos": "N" },
-        { "coords": [-7, 32] },
-        { "coords": [-8, 31], "dir": "E" },
-        { "coords": [-8, 30], "name": "CarpentersArms", "labelPos": "W" },
-        { "coords": [-8, 28], "name": "Grapes", "labelPos": "W" },
+        { "coords": [10, 33], "name": "CarltonArms", "labelPos": "N" },
+        { "coords": [1, 33] },
+        { "coords": [-1, 32] },
+        { "coords": [-3, 30], "name": "CarpentersArms", "labelPos": "NW" },
+        { "coords": [-5, 28], "name": "Grapes", "labelPos": "NW" },
+        { "coords": [-7, 26] },
+        { "coords": [-8, 24] },
         { "coords": [-8, 22] },
         { "coords": [-8, 21] },
         { "coords": [-7, 19], "name": "SirIsaacNewton", "labelPos": "SW" },
@@ -237,7 +239,7 @@
         { "coords": [38, 30] },
         { "coords": [39, 31], "dir": "E"  },
         { "coords": [39, 33], "name": "JennyWren", "labelPos": "E" },
-        { "coords": [39, 35], "name": "Ship", "labelPos": "E" }
+        { "coords": [39, 36], "name": "Ship", "labelPos": "E" }
       ]
     },
     {
@@ -272,10 +274,10 @@
         { "coords": [32, -13], "name": "FlyingPig", "labelPos": "NE" },
         { "coords": [34, -15], "name": "EarlOfDerby", "labelPos": "SW" },
         { "coords": [36, -17], "name": "Rock", "labelPos": "SW" },
-        { "coords": [38, -19], "name": "Med", "labelPos": "SW" },
-        { "coords": [40, -21] },
-        { "coords": [42, -22] },
-        { "coords": [43, -22], "name": "QueenEdith", "labelPos": "S" }
+        { "coords": [42, -23], "name": "Med", "labelPos": "SW" },
+        { "coords": [44, -25] },
+        { "coords": [46, -26] },
+        { "coords": [47, -26], "name": "QueenEdith", "labelPos": "S" }
       ]
     }
   ],
