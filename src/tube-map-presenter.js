@@ -5,7 +5,7 @@ function presenter(m, v, s) {
 
   var numVisited = 0;
 
-  var width = 1280,
+  var width = 1600,
       height = 1024;
 
   var map = tubeMap()
@@ -32,14 +32,6 @@ function presenter(m, v, s) {
 
     lines.on("mouseout", function() {
       map.unhighlightLine()
-    });
-
-    labels.on("mouseover", function() {
-      map.highlightStation(d3.select(this).attr("id"));
-    });
-
-    labels.on("mouseout", function() {
-      map.unhighlightStation()
     });
 
     labels.on("click", function() {
