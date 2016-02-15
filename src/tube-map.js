@@ -117,7 +117,7 @@ function tubeMap() {
         .attr("d", markerFunction)
         .attr("transform", function(d) { return "translate(" + xScale(d.x + d.marker[0].shiftX*lineWidthMultiplier) + "," + yScale(d.y + d.marker[0].shiftY*lineWidthMultiplier) + ")" })
         .attr("id", function(d) { return d.name; })
-        .attr("stroke-width", lineWidth/4)
+        .attr("stroke-width", lineWidth/2)
         .attr("fill", bgColor)
         .attr("stroke", fgColor)
         .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
@@ -231,25 +231,9 @@ function tubeMap() {
     this.unhighlightAll();
   }
 
-  map.highlightStation = function(name) {
-    var lines = d3.select("#map").selectAll(".line");
-    var stations = d3.select("#map").selectAll(".station");
-
-    lines.classed("translucent", true);
-    stations.classed("translucent", true);
-
-    // Which lines contain this station?
-    var markers = model.stations.stations[name].marker;
-
-    markers.forEach(function(marker) {
-      var lineName = marker.line;
-      stations.filter("." + lineName).classed("translucent", false);
-      d3.select("#" + lineName).classed("translucent", false);
-    });
-  }
-
-  map.unhighlightStation = function() {
-    this.unhighlightAll();
+  map.highlightNearestStation = function(name) {
+    var station = model.stations.stations[name];
+    console.log(station.x + "," + station.y);
   }
 
   function drawLine(data) {
@@ -529,7 +513,7 @@ function tubeMap() {
   function textPos(data) {
     var pos;
     var textAnchor;
-    var offset = lineWidth * 2;
+    var offset = lineWidth * 1.8;
 
     var numLines = data.label.split(/\n/).length;
 
@@ -537,11 +521,11 @@ function tubeMap() {
 
     switch (data.labelPos.toLowerCase()) {
       case "n":
-        pos = [0, offset * numLines *0.8];
+        pos = [0, lineWidth*(numLines - 1) + offset];
         textAnchor = "middle";
         break;
       case "ne":
-        pos = [offset / sqrt2, 0.8*offset * numLines / sqrt2];
+        pos = [offset / sqrt2, (lineWidth*(numLines - 1) + offset) / sqrt2];
         textAnchor = "start";
         break;
       case "e":
@@ -565,7 +549,7 @@ function tubeMap() {
         textAnchor = "end";
         break;
       case "nw":
-        pos = [-lineWidthMultiplier*offset/sqrt2, offset*numLines/sqrt2];
+        pos = [-(lineWidth*(numLines - 1) + offset)/sqrt2, (lineWidth*(numLines - 1) + offset)/sqrt2];
         textAnchor = "end";
         break;
       default:
@@ -621,7 +605,7 @@ Stations.prototype.toArray = function() {
 Stations.prototype.interchanges = function () {
     var interchangeStations = this.toArray();
 
-    return interchangeStations.filter(function(station) { return station.marker[0].marker === "interchange" });
+    return interchangeStations.filter(function(station) { console.log(station); return station.marker[0].marker === "interchange" });
 };
 
 Stations.prototype.normalStations = function () {
