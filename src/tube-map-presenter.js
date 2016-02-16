@@ -24,6 +24,11 @@ function presenter(m, v, s) {
   var lines = d3.select("#map").selectAll(".line");
   var stations = d3.select("#map").selectAll(".station");
   var labels = d3.select("#map").selectAll(".label");
+  var button = d3.select("#debug");
+
+  button.on("click", function() {
+    map.toggleDeveloperMode();
+  });
 
   function p() {
     lines.on("mouseover", function() {

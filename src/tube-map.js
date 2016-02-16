@@ -9,6 +9,8 @@ function tubeMap() {
   var lineWidth;
   var lineWidthMultiplier = 1.2;
 
+  var developerMode = false;
+
   var model;
 
   function map(selection) {
@@ -93,10 +95,10 @@ function tubeMap() {
       var labels = gEnter.append("g").attr("class", "labels")
         .selectAll("text").data(function(d) { return d.stations.toArray(); });
 
-      var geoStations = gEnter.append("g").attr("class", "geoStations")
+      var geoStations = gEnter.append("g").attr("class", "geoStations").style("opacity", developerMode ? 1 : 0)
         .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
-      var discrepencies = gEnter.append("g").attr("class", "discrepencies")
+      var discrepencies = gEnter.append("g").attr("class", "discrepencies").style("opacity", developerMode ? 1 : 0)
         .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
       // Update the outer dimensions
@@ -273,6 +275,13 @@ function tubeMap() {
   map.highlightNearestStation = function(name) {
     var station = model.stations.stations[name];
     console.log(station.x + "," + station.y);
+  }
+
+  map.toggleDeveloperMode = function() {
+    developerMode = !developerMode;
+
+    d3.selectAll(".geoStations").style("opacity", developerMode ? 1 : 0);
+    d3.selectAll(".discrepencies").style("opacity", developerMode ? 1 : 0);
   }
 
   function drawLine(data) {
