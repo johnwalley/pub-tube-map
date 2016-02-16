@@ -186,10 +186,10 @@
       "shiftCoords": [1, -1],
       "nodes":
       [
-        { "coords": [-21, -22], "name": "GreenManGrantchester", "labelPos": "W" },
-        { "coords": [-21, -20], "name": "RedLion", "labelPos": "W" },
-        { "coords": [-21, -18], "name": "RupertBrook", "labelPos": "W" },
-        { "coords": [-21, -16], "name": "BlueBallInn", "labelPos": "W" },
+        { "coords": [-21, -28], "name": "GreenManGrantchester", "labelPos": "W" },
+        { "coords": [-21, -26], "name": "RedLion", "labelPos": "W" },
+        { "coords": [-21, -24], "name": "RupertBrook", "labelPos": "W" },
+        { "coords": [-21, -22], "name": "BlueBallInn", "labelPos": "W" },
         { "coords": [-21, -11] },
         { "coords": [-20, -9] },
         { "coords": [-18, -7] },
@@ -221,9 +221,9 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [1, -29], "name": "LordByronInn", "labelPos": "SE" },
-        { "coords": [3, -27], "name": "HudsonsAleHouse", "labelPos": "SE" },
-        { "coords": [5, -25], "name": "GreenManTrumpington", "labelPos": "SE" },
+        { "coords": [-6, -36], "name": "LordByronInn", "labelPos": "SE" },
+        { "coords": [-4, -34], "name": "HudsonsAleHouse", "labelPos": "SE" },
+        { "coords": [-2, -32], "name": "GreenManTrumpington", "labelPos": "SE" },
         { "coords": [19, -11], "name": "Alma", "labelPos": "SE"  },
         { "coords": [22, -8], "name": "PantonArms", "labelPos": "SE"  },
         { "coords": [23, -6] },
