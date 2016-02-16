@@ -59,14 +59,14 @@ function tubeMap() {
 
       // Update the x-geo-scale
       xGeoScale
-        .domain([d3.min(data.geo, function(station) { if (station.position !== undefined) { return station.position.lon; }}),
-                 d3.max(data.geo, function(station) { if (station.position !== undefined) { return station.position.lon; }})])
+        .domain([d3.min(data.stations.toArray(), function(station) { if (station.position !== undefined) { return station.position.lon; }}),
+                 d3.max(data.stations.toArray(), function(station) { if (station.position !== undefined) { return station.position.lon; }})])
         .range([0, maxXRange]);
 
       // Update the y--geo-scale
       yGeoScale
-      .domain([d3.min(data.geo, function(station) { if (station.position !== undefined) { return station.position.lat; }}),
-               d3.max(data.geo, function(station) { if (station.position !== undefined) { return station.position.lat; }})])
+      .domain([d3.min(data.stations.toArray(), function(station) { if (station.position !== undefined) { return station.position.lat; }}),
+               d3.max(data.stations.toArray(), function(station) { if (station.position !== undefined) { return station.position.lat; }})])
       .range([maxYRange, 0]);
 
       // Update line width
@@ -94,10 +94,10 @@ function tubeMap() {
         .selectAll("text").data(function(d) { return d.stations.toArray(); });
 
       var geoStations = gEnter.append("g").attr("class", "geoStations")
-        .selectAll("path").data(function(d) { return d.geo; });
+        .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
       var discrepencies = gEnter.append("g").attr("class", "discrepencies")
-        .selectAll("path").data(function(d) { return d.geo; });
+        .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
       // Update the outer dimensions
       svg.attr("width", width)
@@ -217,13 +217,15 @@ function tubeMap() {
             .attr("d", markerGeoFunction)
             .attr("transform", function(d) { return "translate(" + xGeoScale((d.position !== undefined) ? d.position.lon : NaN) + "," + yGeoScale(d.position !== undefined ? d.position.lat : NaN) + ")" })
             .attr("id", function(d) { return d.name; })
-            .attr("fill", '#ff0000');
+            .attr("fill", '#888888');
 
           // Update the geo stations
           discrepencies.enter().append("path")
-            .attr("d", d3.svg.line())
+            .attr("d", function(d) { return d3.svg.line()([[xScale(d.x), yScale(d.y)], [xGeoScale(d.position.lon), yGeoScale(d.position.lat)]]); })
             .attr("id", function(d) { return d.name; })
-            .attr("fill", '#ff0000');
+            .attr("stroke", '#AAAAAA')
+            .attr("stroke-width", lineWidth/4)
+            .style("stroke-dasharray", ("3, 3"));
     });
   }
 
@@ -461,10 +463,8 @@ function tubeMap() {
     // Data manipulation
     mangledData.raw =  data.lines;
     mangledData.river = data.river;
-    mangledData.geo = extractGeoStations(data.stations);
     mangledData.stations = extractStations(data);
     mangledData.lines = extractLines(data.lines);
-
 
     return mangledData;
   }
@@ -499,6 +499,7 @@ function tubeMap() {
         }
 
         station.label = data.stations[d.name].title;
+        station.position = data.stations[d.name].position;
         station.visited = false;
 
         if (!d.hide) {
@@ -520,26 +521,6 @@ function tubeMap() {
     });
 
     return new Stations(data.stations);
-  }
-
-  function extractGeoStations(data) {
-    var stations = [];
-
-    for (var name in data) {
-      if (data.hasOwnProperty(name)) {
-        var station = data[name];
-          if (station.position !== undefined) {
-            stations.push(
-              {
-                "name": name,
-                "position": station.position
-              }
-            )
-          }
-        }
-      }
-
-    return stations;
   }
 
   function extractLines(data) {
