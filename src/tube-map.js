@@ -4,6 +4,8 @@ function tubeMap() {
   var height = 640;
   var xScale = d3.scale.linear();
   var yScale = d3.scale.linear();
+  var xGeoScale = d3.scale.linear();
+  var yGeoScale = d3.scale.linear();
   var lineWidth;
   var lineWidthMultiplier = 1.2;
 
@@ -55,6 +57,18 @@ function tubeMap() {
         .domain([minY, maxY])
         .range([maxYRange, 0]);
 
+      // Update the x-geo-scale
+      xGeoScale
+        .domain([d3.min(data.geo, function(station) { if (station.position !== undefined) { return station.position.lon; }}),
+                 d3.max(data.geo, function(station) { if (station.position !== undefined) { return station.position.lon; }})])
+        .range([0, maxXRange]);
+
+      // Update the y--geo-scale
+      yGeoScale
+      .domain([d3.min(data.geo, function(station) { if (station.position !== undefined) { return station.position.lat; }}),
+               d3.max(data.geo, function(station) { if (station.position !== undefined) { return station.position.lat; }})])
+      .range([maxYRange, 0]);
+
       // Update line width
       lineWidth = lineWidthMultiplier*(xScale(1) - xScale(0));
 
@@ -78,6 +92,12 @@ function tubeMap() {
 
       var labels = gEnter.append("g").attr("class", "labels")
         .selectAll("text").data(function(d) { return d.stations.toArray(); });
+
+      var geoStations = gEnter.append("g").attr("class", "geoStations")
+        .selectAll("path").data(function(d) { return d.geo; });
+
+      var discrepencies = gEnter.append("g").attr("class", "discrepencies")
+        .selectAll("path").data(function(d) { return d.geo; });
 
       // Update the outer dimensions
       svg.attr("width", width)
@@ -118,8 +138,6 @@ function tubeMap() {
         .attr("transform", function(d) { return "translate(" + xScale(d.x + d.marker[0].shiftX*lineWidthMultiplier) + "," + yScale(d.y + d.marker[0].shiftY*lineWidthMultiplier) + ")" })
         .attr("id", function(d) { return d.name; })
         .attr("stroke-width", lineWidth/2)
-        .attr("fill", bgColor)
-        .attr("stroke", fgColor)
         .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
         .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
         .style("cursor", "pointer");
@@ -187,6 +205,25 @@ function tubeMap() {
           .classed("highlighted", function(d) { return d.visited; })
           .classed("label", true)
           .call(wrap);
+
+          var markerGeoFunction = d3.svg.arc()
+            .innerRadius(0)
+            .outerRadius(lineWidth/4)
+            .startAngle(0)
+            .endAngle(2*Math.PI);
+
+          // Update the geo stations
+          geoStations.enter().append("path")
+            .attr("d", markerGeoFunction)
+            .attr("transform", function(d) { return "translate(" + xGeoScale((d.position !== undefined) ? d.position.lon : NaN) + "," + yGeoScale(d.position !== undefined ? d.position.lat : NaN) + ")" })
+            .attr("id", function(d) { return d.name; })
+            .attr("fill", '#ff0000');
+
+          // Update the geo stations
+          discrepencies.enter().append("path")
+            .attr("d", d3.svg.line())
+            .attr("id", function(d) { return d.name; })
+            .attr("fill", '#ff0000');
     });
   }
 
@@ -424,8 +461,10 @@ function tubeMap() {
     // Data manipulation
     mangledData.raw =  data.lines;
     mangledData.river = data.river;
+    mangledData.geo = extractGeoStations(data.stations);
     mangledData.stations = extractStations(data);
     mangledData.lines = extractLines(data.lines);
+
 
     return mangledData;
   }
@@ -481,6 +520,26 @@ function tubeMap() {
     });
 
     return new Stations(data.stations);
+  }
+
+  function extractGeoStations(data) {
+    var stations = [];
+
+    for (var name in data) {
+      if (data.hasOwnProperty(name)) {
+        var station = data[name];
+          if (station.position !== undefined) {
+            stations.push(
+              {
+                "name": name,
+                "position": station.position
+              }
+            )
+          }
+        }
+      }
+
+    return stations;
   }
 
   function extractLines(data) {
