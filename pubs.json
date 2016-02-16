@@ -52,11 +52,11 @@
     "Maypole": { "title": "Maypole", "position": { "lat": 52.209671, "lon": 0.119232 } },
     "Med": { "title": "Med", "position": { "lat": 52.18913, "lon": 0.153427 } },
     "Mill": { "title": "Mill", "position": { "lat": 52.201552, "lon": 0.116128 } },
-    "MiltonArms": { "title": "Milton Arms", "position": { "lat": 52.20153, "lon": 0.11609 } },
+    "MiltonArms": { "title": "Milton Arms", "position": { "lat": 52.22268, "lon": 0.136693 } },
     "Mitre": { "title": "Mitre", "position": { "lat": 52.208852, "lon": 0.118185 } },
     "OldSpring": { "title": "Old Spring", "position": { "lat": 52.214393, "lon": 0.127719 } },
     "PantonArms": { "title": "Panton\nArms", "position": { "lat": 52.196491, "lon": 0.124987 } },
-    "Pickeral": { "title": "Pickeral", "position": { "lat": 52.217339, "lon": 0.116209 } },
+    "Pickeral": { "title": "Pickeral", "position": { "lat": 52.209955, "lon": 0.116209 } },
     "PintShop": { "title": "Pint Shop", "position": { "lat": 52.204194, "lon": 0.119142 } },
     "Plough": { "title": "Plough", "position": { "lat": 52.224075, "lon": 0.16823 } },
     "PortlandArms": { "title": "Portland Arms", "position": { "lat": 52.214426, "lon": 0.124525 } },
@@ -186,15 +186,15 @@
       "shiftCoords": [1, -1],
       "nodes":
       [
-        { "coords": [-21, -22], "name": "GreenManGrantchester", "labelPos": "W" },
-        { "coords": [-21, -20], "name": "RedLion", "labelPos": "W" },
-        { "coords": [-21, -18], "name": "RupertBrook", "labelPos": "W" },
-        { "coords": [-21, -16], "name": "BlueBallInn", "labelPos": "W" },
-        { "coords": [-21, -11] },
-        { "coords": [-20, -9] },
-        { "coords": [-18, -7] },
-        { "coords": [-16, -5] },
-        { "coords": [-14, -4] },
+        { "coords": [-27, -22], "name": "GreenManGrantchester", "labelPos": "W" },
+        { "coords": [-27, -20], "name": "RedLion", "labelPos": "W" },
+        { "coords": [-27, -18], "name": "RupertBrook", "labelPos": "W" },
+        { "coords": [-27, -16], "name": "BlueBallInn", "labelPos": "W" },
+        { "coords": [-27, -11] },
+        { "coords": [-26, -9] },
+        { "coords": [-24, -7] },
+        { "coords": [-22, -5] },
+        { "coords": [-20, -4] },
         { "coords": [-3, -4], "name": "RedBull", "labelPos": "N" },
         { "coords": [3, -4], "marker": "interchange", "name": "Granta", "labelPos": "S", "hide": true },
         { "coords": [16, -4], "name": "Mill", "labelPos": "N", "shiftCoords": [0, -1] },
@@ -207,12 +207,12 @@
         { "coords": [46, 10] },
         { "coords": [48, 10], "name": "CornerHouse", "labelPos": "S" },
         { "coords": [50, 10], "name": "Wrestlers", "labelPos": "N" },
-        { "coords": [52, 10] },
-        { "coords": [54, 11] },
-        { "coords": [56, 13] },
-        { "coords": [68, 25], "name": "AncientShepherds", "labelPos": "SE" },
-        { "coords": [70, 27], "name": "KingsHead", "labelPos": "SE" },
-        { "coords": [72, 29], "name": "Plough", "labelPos": "SE" }
+        { "coords": [60, 10] },
+        { "coords": [62, 11] },
+        { "coords": [64, 13] },
+        { "coords": [76, 25], "name": "AncientShepherds", "labelPos": "SE" },
+        { "coords": [78, 27], "name": "KingsHead", "labelPos": "SE" },
+        { "coords": [80, 29], "name": "Plough", "labelPos": "SE" }
       ]
     },
     {
@@ -221,9 +221,9 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [1, -29], "name": "LordByronInn", "labelPos": "SE" },
-        { "coords": [3, -27], "name": "HudsonsAleHouse", "labelPos": "SE" },
-        { "coords": [5, -25], "name": "GreenManTrumpington", "labelPos": "SE" },
+        { "coords": [-6, -36], "name": "LordByronInn", "labelPos": "SE" },
+        { "coords": [-3, -33], "name": "HudsonsAleHouse", "labelPos": "SE" },
+        { "coords": [-1, -31], "name": "GreenManTrumpington", "labelPos": "SE" },
         { "coords": [19, -11], "name": "Alma", "labelPos": "SE"  },
         { "coords": [22, -8], "name": "PantonArms", "labelPos": "SE"  },
         { "coords": [23, -6] },
@@ -241,7 +241,7 @@
         { "coords": [38, 30] },
         { "coords": [39, 31], "dir": "E"  },
         { "coords": [39, 33], "name": "JennyWren", "labelPos": "E" },
-        { "coords": [39, 36], "name": "Ship", "labelPos": "E" }
+        { "coords": [39, 42], "name": "Ship", "labelPos": "E" }
       ]
     },
     {
@@ -289,7 +289,7 @@
     "shiftCoords": [0, 0],
     "nodes":
     [
-      { "coords": [-7, -22] },
+      { "coords": [-13, -28] },
       { "coords": [5, -10] },
       { "coords": [7, -8] },
       { "coords": [8, -6 ]},
@@ -299,7 +299,7 @@
       { "coords": [13, 17] },
       { "coords": [50, 17] },
       { "coords": [52, 18] },
-      { "coords": [60, 26] }
+      { "coords": [66, 32] }
     ]
   }
 }
