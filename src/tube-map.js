@@ -529,7 +529,8 @@ function tubeMap() {
     data.forEach(function(line) {
 
       var lineObj = {
-        "name": line.label,
+        "name": line.name,
+        "title": line.label,
         "stations": [],
         "color": line.color,
         "shiftCoords": line.shiftCoords,

@@ -82,6 +82,7 @@
   "lines":
   [
     {
+      "name": "Town",
       "label": "Town",
       "color": "#ffd300",
       "shiftCoords": [0, 0],
@@ -110,6 +111,7 @@
       ]
     },
     {
+      "name": "Castle",
       "label": "Castle",
       "color": "#b36305",
       "shiftCoords": [0, 1],
@@ -136,6 +138,7 @@
       ]
     },
     {
+      "name": "Riverbank",
       "label": "Riverbank",
       "color": "#0098d4",
       "shiftCoords": [0, 0],
@@ -156,6 +159,7 @@
       ]
     },
     {
+      "name": "Backstreet",
       "label": "Backstreet",
       "color": "#e32017",
       "shiftCoords": [0, 0],
@@ -181,6 +185,7 @@
       ]
     },
     {
+      "name": "Grantchester",
       "label": "Grantchester",
       "color": "#00782a",
       "shiftCoords": [1, -1],
@@ -216,6 +221,7 @@
       ]
     },
     {
+      "name": "Northern",
       "label": "Northern",
       "color": "#000000",
       "shiftCoords": [0, 0],
@@ -245,6 +251,7 @@
       ]
     },
     {
+      "name": "MillRoad",
       "label": "Mill Road",
       "color": "#a0a5a9",
       "shiftCoords": [0, 0],
@@ -265,6 +272,7 @@
       ]
     },
     {
+      "name": "HillsRoad",
       "label": "Hills Road",
       "color": "#9b0056",
       "shiftCoords": [0, 0],
@@ -285,6 +293,7 @@
   ],
   "river":
   {
+    "name": "River",      
     "label": "River",
     "shiftCoords": [0, 0],
     "nodes":
