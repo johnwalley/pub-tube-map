@@ -16,6 +16,8 @@ angular
 
     $scope.visited = [];
     $scope.developerMode = false;
+    $scope.totalPubs;
+    $scope.numVisited = $scope.visited.length;
 
     var lines;
     var stations;
@@ -26,6 +28,8 @@ angular
     d3.json("pubs.json", function(data) {
       d3.select("#map").datum(data)
         .call(map);
+
+      $scope.totalPubs = Object.keys(data.stations).length;
 
       lines = d3.select("#map").selectAll(".line");
       stations = d3.select("#map").selectAll(".station");
@@ -94,69 +98,10 @@ angular
         label.classed("highlighted", true);
       }
 
-      $scope.numVisited = $scope.visited.length;
+      $scope.$parent.numVisited = $scope.visited.length;
     };
 
     $scope.close = function () {
       $mdSidenav('left').close();
     };
   });
-/*
-angular.module('pubMapApp', [])
-  .controller('PubMapController', function() {
-    var pubMap = this;
-
-    return;
-
-    pubMap.visited = [];
-
-    var width = 1600,
-        height = 1024;
-
-    var map = tubeMap()
-      .width(width)
-      .height(height)
-      .margin({
-        top: height / 10,
-        right: width / 7,
-        bottom: height / 10,
-        left: width / 7
-      });
-
-    d3.json("pubs.json", function(data) {
-      d3.select("#map").datum(data)
-        .call(map);
-
-      var lines = d3.select("#map").selectAll(".line");
-      var stations = d3.select("#map").selectAll(".station");
-      var labels = d3.select("#map").selectAll(".label");
-
-      lines.on("mouseover", function() {
-        map.highlightLine(d3.select(this).attr("id"))
-      });
-
-      lines.on("mouseout", function() {
-        map.unhighlightLine()
-      });
-
-      labels.on("click", function() {
-        var label = d3.select(this);
-
-        ga('send', 'event', 'Station', 'click');
-
-        if (label.classed("highlighted")) {
-          var index = pubMap.visited.indexOf(label.attr("id"));
-          if (index > -1) {
-            pubMap.visited.splice(index, 1);
-            label.classed("highlighted", false);
-          }
-        } else {
-          pubMap.visited.push(label.attr("id"));
-          label.classed("highlighted", true);
-        }
-
-        pubMap.numVisited = pubMap.visited.length;
-      });
-    });
-  });
-  */
