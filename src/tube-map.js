@@ -93,10 +93,10 @@ function tubeMap() {
       var labels = gEnter.append("g").attr("class", "labels")
         .selectAll("text").data(function(d) { return d.stations.toArray(); });
 
-      var geoStations = gEnter.append("g").attr("class", "geoStations")
+      var geoStations = gEnter.append("g").attr("class", "geoStations").style("display", "none")
         .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
-      var discrepencies = gEnter.append("g").attr("class", "discrepencies")
+      var discrepencies = gEnter.append("g").attr("class", "discrepencies").style("display", "none")
         .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
       // Update the outer dimensions

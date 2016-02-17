@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-  <title>Cambridge Pub Tube Map</title>
+  <title>Cambridge Pub Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:url"                content="http://www.pubmap.co.uk/" />
   <meta property="og:type"               content="website" />
@@ -9,23 +8,9 @@
   <meta property="og:description"        content="A Cambridge Pub Map in the Style of the Iconic London Underground" />
   <script src="src/d3.min.js" charset="utf-8"></script>
   <script src="../src/tube-map.js"></script>
-  <script src="../src/tube-map-model.js"></script>
-  <script src="../src/tube-map-presenter.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="tube-map.css">
-</head>
-<body>
-  <p id="map"></p>
-  <p id="score"></p>
-  <script>
-d3.json("pubs.json", function(data) {
-  var model = tubeMapModel(data);
-  var mapView = d3.select("#map");
-  var scoreView = d3.select("#score");
-
-  presenter(model, mapView, scoreView)();
-});
-  </script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+  <link rel="stylesheet" href="tube-map.css">
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -35,5 +20,43 @@ d3.json("pubs.json", function(data) {
     ga('create', 'UA-73123785-1', 'auto');
     ga('send', 'pageview');
   </script>
+</head>
+<body ng-app="pubMapApp" ng-cloak>
+  <div ng-controller="PubMapCtrl" layout="column" style="height:1200px;" ng-cloak>
+    <section layout="row" flex>
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+        <md-toolbar class="md-theme-light">
+          <h1 class="md-toolbar-tools">{{pub.title}}</h1>
+        </md-toolbar>
+        <md-content ng-controller="SideNavCtrl" layout-padding>
+          <md-button ng-click="addPub()" class="md-primary">
+            I've been here!
+          </md-button>
+          <p>lat: {{pub.position.lat}}, lon: {{pub.position.lon}}</p>
+          <md-button ng-click="close()" class="md-primary">
+            Close
+          </md-button>
+        </md-content>
+      </md-sidenav>
+      <md-content flex layout-padding>
+        <div layout="column" layout-fill layout-align="top center">
+          <div>
+            <md-switch ng-model="developerMode" ng-change="developerModeToggle()" aria-label="Developer Mode Switch">
+              Developer Mode
+            </md-switch>
+          </div>
+          <div id="map"></div>
+        </div>
+      </md-content>
+    </section>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+  <script src="../src/tube-map-controller.js"></script>
 </body>
 </html>
