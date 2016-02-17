@@ -15,14 +15,23 @@ angular
       });
 
     $scope.visited = [];
+    $scope.developerMode = false;
+
+    var lines;
+    var stations;
+    var labels;
+    var geoStations;
+    var discrepencies;
 
     d3.json("pubs.json", function(data) {
       d3.select("#map").datum(data)
         .call(map);
 
-      var lines = d3.select("#map").selectAll(".line");
-      var stations = d3.select("#map").selectAll(".station");
-      var labels = d3.select("#map").selectAll(".label");
+      lines = d3.select("#map").selectAll(".line");
+      stations = d3.select("#map").selectAll(".station");
+      labels = d3.select("#map").selectAll(".label");
+      geoStations = d3.select("#map").selectAll(".geoStations");
+      discrepencies = d3.select("#map").selectAll(".discrepencies");
 
       lines.on("mouseover", function() {
         map.highlightLine(d3.select(this).attr("id"))
@@ -35,26 +44,29 @@ angular
       labels.on("click", function() {
         var label = d3.select(this);
 
-        $scope.pub = { "title": label.attr("id") };
+        var pubName = label.attr("id");
+
+        $scope.pub = {
+          "title": data.stations[pubName].title,
+          "position": data.stations[pubName].position,
+          "element": label
+        };
 
         $scope.toggleLeft();
 
         ga('send', 'event', 'Station', 'click');
-
-        if (label.classed("highlighted")) {
-          var index = $scope.visited.indexOf(label.attr("id"));
-          if (index > -1) {
-            $scope.visited.splice(index, 1);
-            label.classed("highlighted", false);
-          }
-        } else {
-          $scope.visited.push(label.attr("id"));
-          label.classed("highlighted", true);
-        }
-
-        $scope.numVisited = $scope.visited.length;
       });
     });
+
+    $scope.developerModeToggle = function() {
+      if ($scope.developerMode) {
+        geoStations.style("display", "block");
+        discrepencies.style("display", "block");
+      } else {
+        geoStations.style("display", "none");
+        discrepencies.style("display", "none");
+      }
+    };
 
     $scope.toggleLeft = buildToggler('left');
 
@@ -66,6 +78,25 @@ angular
     }
   })
   .controller('SideNavCtrl', function ($scope, $mdSidenav) {
+    $scope.addPub = function() {
+      var label = $scope.pub.element;
+
+      var pubName = label.attr("id");
+
+      if (label.classed("highlighted")) {
+        var index = $scope.visited.indexOf(label.attr("id"));
+        if (index > -1) {
+          $scope.visited.splice(index, 1);
+          label.classed("highlighted", false);
+        }
+      } else {
+        $scope.visited.push(label.attr("id"));
+        label.classed("highlighted", true);
+      }
+
+      $scope.numVisited = $scope.visited.length;
+    };
+
     $scope.close = function () {
       $mdSidenav('left').close();
     };

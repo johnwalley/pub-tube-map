@@ -1,6 +1,6 @@
 <html lang="en" >
 <head>
-  <title>Cambridge Pub Tube Map</title>
+  <title>Cambridge Pub Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:url"                content="http://www.pubmap.co.uk/" />
   <meta property="og:type"               content="website" />
@@ -29,7 +29,10 @@
           <h1 class="md-toolbar-tools">{{pub.title}}</h1>
         </md-toolbar>
         <md-content ng-controller="SideNavCtrl" layout-padding>
-          <p>Content</p>
+          <md-button ng-click="addPub()" class="md-primary">
+            I've been here!
+          </md-button>
+          <p>lat: {{pub.position.lat}}, lon: {{pub.position.lon}}</p>
           <md-button ng-click="close()" class="md-primary">
             Close
           </md-button>
@@ -38,7 +41,7 @@
       <md-content flex layout-padding>
         <div layout="column" layout-fill layout-align="top center">
           <div>
-            <md-switch ng-model="developerMode" aria-label="Developer Mode Switch">
+            <md-switch ng-model="developerMode" ng-change="developerModeToggle()" aria-label="Developer Mode Switch">
               Developer Mode
             </md-switch>
           </div>
