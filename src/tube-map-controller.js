@@ -16,7 +16,7 @@ angular
 
     $scope.visited = [];
     $scope.developerMode = false;
-    $scope.totalPubs;
+    $scope.totalPubs = 77;
     $scope.numVisited = $scope.visited.length;
 
     var lines;
