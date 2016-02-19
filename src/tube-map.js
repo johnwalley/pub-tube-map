@@ -200,7 +200,7 @@ function tubeMap() {
           .attr("y", function(d) { return yScale(d.y + d.labelShiftY) - textPos(d).pos[1]; }) // Flip y-axis
           .attr("text-anchor", function(d) { return textPos(d).textAnchor })
           .style("display", function(d) { return d.hide != true ? "block" : "none"; })
-          .style("font-size", lineWidth/lineWidthMultiplier + "px")
+          .style("font-size", 1.2*lineWidth/lineWidthMultiplier + "px")
           .style("-webkit-user-select", "none")
           .classed("highlighted", function(d) { return d.visited; })
           .classed("label", true)
@@ -584,7 +584,7 @@ function tubeMap() {
         textAnchor = "middle";
         break;
       case "sw":
-        pos = [-offset/sqrt2, -offset/sqrt2];
+        pos = [-offset/sqrt2, -1.4*offset/sqrt2];
         textAnchor = "end";
         break;
       case "w":

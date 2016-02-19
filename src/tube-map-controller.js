@@ -87,6 +87,9 @@ angular
     }
   })
   .controller('SideNavCtrl', function ($scope, $mdSidenav) {
+    $scope.clickIcon = 'add';
+    $scope.backgroundColor = '#0098d4';
+
     $scope.addPub = function() {
       var label = $scope.pub.element;
 
@@ -103,20 +106,16 @@ angular
         label.classed("highlighted", true);
       }
 
-      $scope.$parent.numVisited = $scope.visited.length;
-    };
+      if ($scope.clickIcon === 'add') {
+          $scope.clickIcon = 'done';
+          $scope.backgroundColor = 'rgb(0, 222, 121)';
+      }
+      else {
+          $scope.clickIcon = 'add';
+          $scope.backgroundColor = '#0098d4';
+      }
 
-    $scope.clickIcon = 'add';
-    $scope.backgroundColor = 'rgb(68,100,255)';
-    $scope.clickIconMorph = function() {
-        if ($scope.clickIcon === 'add') {
-            $scope.clickIcon = 'done';
-            $scope.backgroundColor = 'rgb(0, 222, 121)';
-        }
-        else {
-            $scope.clickIcon = 'add';
-            $scope.backgroundColor = 'rgb(68,100,255)';
-        }
+      $scope.$parent.numVisited = $scope.visited.length;
     };
 
     $scope.close = function () {

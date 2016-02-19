@@ -144,7 +144,7 @@
       "shiftCoords": [0, 0],
       "nodes":
       [
-        { "coords": [3, -4], "marker": "interchange", "name": "Granta", "labelPos": "SE", "shiftCoords": [0, -1], "canonical": true },
+        { "coords": [3, -4], "marker": "interchange", "name": "Granta", "labelPos": "SW", "shiftCoords": [0, -1], "canonical": true },
         { "coords": [3, 10], "marker": "interchange", "name": "Pickeral", "labelPos": "SW", "hide": true },
         { "coords": [3, 18] },
         { "coords": [4, 20] },
@@ -293,7 +293,7 @@
   ],
   "river":
   {
-    "name": "River",      
+    "name": "River",
     "label": "River",
     "shiftCoords": [0, 0],
     "nodes":
