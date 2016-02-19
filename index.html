@@ -28,8 +28,14 @@
     <section layout="column" flex>
       <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
         <img ng-src="img/Haymakers.jpg"></img>
+        <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; float: right;">
+          <md-icon class="material-icons">add</md-icon>
+        </md-button>
         <md-content ng-controller="SideNavCtrl" layout-padding>
           <h2>{{pub.title}}</h2>
+          <md-button ng-click="addPub()" class="md-primary">
+            I've been here!
+          </md-button>
           <div layout="row">
             <md-button class="md-icon-button md-accent" aria-label="Favorite">
               <md-icon class="material-icons">star</md-icon>
@@ -44,20 +50,28 @@
               <md-icon class="material-icons">share</md-icon>
             </md-button>
           </div>
-          <div layout="column">
-            <div layout="row">
+          <md-list>
+            <md-list-item>
               <md-icon class="material-icons">location_on</md-icon>
-              <p>54, Hight Street, Cambridge, CB4 1NG</p>
-            </div>
-            <md-icon class="material-icons">link</md-icon>
-            <md-icon class="material-icons">phone</md-icon>
-            <md-icon class="material-icons">access_time</md-icon>
-            <md-icon class="material-icons">edit</md-icon>
-          </div>
-          <md-button ng-click="addPub()" class="md-primary">
-            I've been here!
-          </md-button>
-          <p>lat: {{pub.position.lat}}, lon: {{pub.position.lon}}</p>
+              <p>54, High Street, Cambridge, CB4 1NG</p>
+            </md-list-item>
+            <md-list-item>
+              <md-icon class="material-icons">link</md-icon>
+              <p><a ng-href="http://www.pubmap.co.uk">www.pubmap.co.uk</a></p>
+            </md-list-item>
+            <md-list-item>
+              <md-icon class="material-icons">phone</md-icon>
+              <p>0800 028 0309</p>
+            </md-list-item>
+            <md-list-item>
+              <md-icon class="material-icons">access_time</md-icon>
+              <p>Closed</p>
+            </md-list-item>
+            <md-list-item>
+              <md-icon class="material-icons">edit</md-icon>
+              <p>Edit...</p>
+            </md-list-item>
+          </md-list>
           <md-button ng-click="close()" class="md-primary">
             Close
           </md-button>
