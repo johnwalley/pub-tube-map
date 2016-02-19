@@ -1,5 +1,10 @@
 angular
   .module('pubMapApp', ['ngMaterial'])
+  .config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('light-blue')
+    .accentPalette('blue');
+  })
   .controller('PubMapCtrl', function ($scope, $mdSidenav) {
     var width = 1600,
         height = 1024;
@@ -8,7 +13,7 @@ angular
       .width(width)
       .height(height)
       .margin({
-        top: height / 10,
+        top: height / 50,
         right: width / 7,
         bottom: height / 10,
         left: width / 7
