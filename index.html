@@ -28,10 +28,13 @@
     <section ng-controller="SideNavCtrl" layout="column" flex>
       <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
         <img ng-src="img/Haymakers.jpg"></img>
-        <div layout-align="end" flex>
-          <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px;">
-            <md-icon class="material-icons" style="color: rgb(255, 255, 255)">add</md-icon>
+        <div layout="row" layout-align="end">
+          <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px;" md-sidenav-focus>
+            <ng-md-icon icon="{{clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}' ng-click="clickIconMorph()"></ng-md-icon>
           </md-button>
+          <!--<md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px;" md-sidenav-focus>
+            <md-icon class="material-icons" style="color: rgb(255, 255, 255)">add</md-icon>
+          </md-button>-->
         </div>
         <md-content layout-padding>
           <h2>{{pub.title}}</h2>
@@ -100,6 +103,9 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.6.0/angular-material-icons.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/SVG-Morpheus/0.1.8/svg-morpheus.js"></script>
 
   <script src="../src/tube-map-controller.js"></script>
 </body>

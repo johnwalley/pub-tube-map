@@ -1,5 +1,5 @@
 angular
-  .module('pubMapApp', ['ngMaterial'])
+  .module('pubMapApp', ['ngMaterial', 'ngMdIcons'])
   .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('light-blue')
@@ -104,6 +104,16 @@ angular
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
+    };
+
+    $scope.clickIcon = 'add';
+    $scope.clickIconMorph = function() {
+        if ($scope.clickIcon === 'add') {
+            $scope.clickIcon = 'done';
+        }
+        else {
+            $scope.clickIcon = 'add';
+        }
     };
 
     $scope.close = function () {
