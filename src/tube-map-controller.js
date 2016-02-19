@@ -1,5 +1,10 @@
 angular
-  .module('pubMapApp', ['ngMaterial'])
+  .module('pubMapApp', ['ngMaterial', 'ngMdIcons'])
+  .config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('light-blue')
+    .accentPalette('blue');
+  })
   .controller('PubMapCtrl', function ($scope, $mdSidenav) {
     var width = 1600,
         height = 1024;
@@ -8,7 +13,7 @@ angular
       .width(width)
       .height(height)
       .margin({
-        top: height / 10,
+        top: height / 50,
         right: width / 7,
         bottom: height / 10,
         left: width / 7
@@ -99,6 +104,16 @@ angular
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
+    };
+
+    $scope.clickIcon = 'add';
+    $scope.clickIconMorph = function() {
+        if ($scope.clickIcon === 'add') {
+            $scope.clickIcon = 'done';
+        }
+        else {
+            $scope.clickIcon = 'add';
+        }
     };
 
     $scope.close = function () {
