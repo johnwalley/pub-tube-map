@@ -107,12 +107,15 @@ angular
     };
 
     $scope.clickIcon = 'add';
+    $scope.backgroundColor = 'rgb(68,100,255)';
     $scope.clickIconMorph = function() {
         if ($scope.clickIcon === 'add') {
             $scope.clickIcon = 'done';
+            $scope.backgroundColor = 'rgb(0, 222, 121)';
         }
         else {
             $scope.clickIcon = 'add';
+            $scope.backgroundColor = 'rgb(68,100,255)';
         }
     };
 
