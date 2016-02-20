@@ -80,14 +80,14 @@
       <md-content flex layout-padding>
         <div layout="column" layout-fill layout-align="top center">
           <div>
+            <h1>{{numVisited}} of {{totalPubs}}</h1>
+          </div>
+          <div id="map"></div>
+          <div>
             <md-switch ng-model="developerMode" ng-change="developerModeToggle()" aria-label="Developer Mode Switch">
               Developer Mode
             </md-switch>
           </div>
-          <div>
-            <h2>{{numVisited}} of {{totalPubs}}</h2>
-          </div>
-          <div id="map"></div>
         </div>
       </md-content>
     </section>
