@@ -29,18 +29,13 @@
       <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
         <img ng-src="img/Haymakers.jpg"></img>
         <div layout="row" layout-align="end">
-          <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{backgroundColor}}" md-sidenav-focus>
-            <ng-md-icon icon="{{clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
+          <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus>
+            <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
           </md-button>
-          <!--<md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px;" md-sidenav-focus>
-            <md-icon class="material-icons" style="color: rgb(255, 255, 255)">add</md-icon>
-          </md-button>-->
         </div>
         <md-content layout-padding>
           <h2>{{pub.title}}</h2>
-          <md-button ng-click="addPub()" class="md-primary">
-            I've been here!
-          </md-button>
+          <p>{{pub.visited === true ? "You've been to this pub" : "You haven't been hear yet"}}</p>
           <div layout="row">
             <md-button class="md-icon-button md-accent" aria-label="Favorite">
               <md-icon class="material-icons">star</md-icon>

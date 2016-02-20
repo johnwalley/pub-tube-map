@@ -23,6 +23,10 @@ angular
     $scope.developerMode = false;
     $scope.totalPubs = 77;
     $scope.numVisited = $scope.visited.length;
+    $scope.pub = {
+      "title": "Default Pub",
+      "visited": false
+    };
 
     var lines;
     var stations;
@@ -33,6 +37,8 @@ angular
     d3.json("pubs.json", function(data) {
       d3.select("#map").datum(data)
         .call(map);
+
+      $scope.data = data;
 
       $scope.totalPubs = Object.keys(data.stations).length;
 
@@ -56,10 +62,19 @@ angular
         var pubName = label.attr("id");
 
         $scope.pub = {
-          "title": data.stations[pubName].title,
-          "position": data.stations[pubName].position,
-          "element": label
+          "title": $scope.data.stations[pubName].title,
+          "position": $scope.data.stations[pubName].position,
+          "element": label,
+          "visited": $scope.data.stations[pubName].visited
         };
+
+        if (!$scope.pub.visited) {
+          $scope.pub.clickIcon = 'add';
+          $scope.pub.backgroundColor = '#0098d4';
+        } else {
+          $scope.pub.clickIcon = 'done';
+          $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
+        }
 
         $scope.toggleLeft();
 
@@ -87,32 +102,18 @@ angular
     }
   })
   .controller('SideNavCtrl', function ($scope, $mdSidenav) {
-    $scope.clickIcon = 'add';
-    $scope.backgroundColor = '#0098d4';
-
     $scope.addPub = function() {
       var label = $scope.pub.element;
 
       var pubName = label.attr("id");
 
-      if (label.classed("highlighted")) {
-        var index = $scope.visited.indexOf(label.attr("id"));
-        if (index > -1) {
-          $scope.visited.splice(index, 1);
-          label.classed("highlighted", false);
-        }
-      } else {
-        $scope.visited.push(label.attr("id"));
+      if ($scope.visited.indexOf(pubName) == -1) {
+        $scope.data.stations[pubName].visited = true;
+        $scope.visited.push(pubName);
+        $scope.pub.visited = true;
         label.classed("highlighted", true);
-      }
-
-      if ($scope.clickIcon === 'add') {
-          $scope.clickIcon = 'done';
-          $scope.backgroundColor = 'rgb(0, 222, 121)';
-      }
-      else {
-          $scope.clickIcon = 'add';
-          $scope.backgroundColor = '#0098d4';
+        $scope.pub.clickIcon = 'done';
+        $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
