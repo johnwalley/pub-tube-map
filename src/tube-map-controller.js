@@ -78,7 +78,7 @@ angular
 
         $scope.toggleLeft();
 
-        ga('send', 'event', 'Station', 'click');
+        ga('send', 'event', 'Station', 'click', pubName);
       });
     });
 
