@@ -35,6 +35,10 @@ text {
   transition: font-weight 100ms;
 }
 
+text:hover {
+  opacity: 0.6;
+}
+
 text.highlighted {
   text-decoration: line-through;
 }
