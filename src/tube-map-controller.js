@@ -117,6 +117,8 @@ angular
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
+
+      ga('send', 'event', 'Station', 'addPub', pubName);
     };
 
     $scope.close = function () {
