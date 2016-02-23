@@ -75,8 +75,15 @@ function tubeMap() {
       // Select the svg element, if it exists
       var svg = d3.select(this).selectAll("svg").data([data]);
 
-      // Otherwise, create the skeletal map
-      var gEnter = svg.enter().append("svg").append("g");
+      var g = svg.enter().append("svg").append("g");
+      g.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr('fill', 'white');
+
+      var gEnter = g.call(d3.behavior.zoom().scaleExtent([1, 4]).on("zoom", function () {
+        gEnter.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")")
+      })).append("g");
 
       var river = gEnter.append("g").attr("class", "river")
         .selectAll("path").data(function(d) { return [d.river]; });
