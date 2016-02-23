@@ -9,8 +9,6 @@ function tubeMap() {
   var lineWidth;
   var lineWidthMultiplier = 1.2;
 
-  var developerMode = false;
-
   var model;
 
   function map(selection) {
@@ -95,10 +93,10 @@ function tubeMap() {
       var labels = gEnter.append("g").attr("class", "labels")
         .selectAll("text").data(function(d) { return d.stations.toArray(); });
 
-      var geoStations = gEnter.append("g").attr("class", "geoStations").style("opacity", developerMode ? 1 : 0)
+      var geoStations = gEnter.append("g").attr("class", "geoStations").style("display", "none")
         .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
-      var discrepencies = gEnter.append("g").attr("class", "discrepencies").style("opacity", developerMode ? 1 : 0)
+      var discrepencies = gEnter.append("g").attr("class", "discrepencies").style("display", "none")
         .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
       // Update the outer dimensions
@@ -202,7 +200,7 @@ function tubeMap() {
           .attr("y", function(d) { return yScale(d.y + d.labelShiftY) - textPos(d).pos[1]; }) // Flip y-axis
           .attr("text-anchor", function(d) { return textPos(d).textAnchor })
           .style("display", function(d) { return d.hide != true ? "block" : "none"; })
-          .style("font-size", lineWidth/lineWidthMultiplier + "px")
+          .style("font-size", 1.2*lineWidth/lineWidthMultiplier + "px")
           .style("-webkit-user-select", "none")
           .classed("highlighted", function(d) { return d.visited; })
           .classed("label", true)
@@ -275,13 +273,6 @@ function tubeMap() {
   map.highlightNearestStation = function(name) {
     var station = model.stations.stations[name];
     console.log(station.x + "," + station.y);
-  }
-
-  map.toggleDeveloperMode = function() {
-    developerMode = !developerMode;
-
-    d3.selectAll(".geoStations").style("opacity", developerMode ? 1 : 0);
-    d3.selectAll(".discrepencies").style("opacity", developerMode ? 1 : 0);
   }
 
   function drawLine(data) {
@@ -593,7 +584,7 @@ function tubeMap() {
         textAnchor = "middle";
         break;
       case "sw":
-        pos = [-offset/sqrt2, -offset/sqrt2];
+        pos = [-offset/sqrt2, -1.4*offset/sqrt2];
         textAnchor = "end";
         break;
       case "w":

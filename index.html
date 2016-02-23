@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-  <title>Cambridge Pub Tube Map</title>
+  <title>Cambridge Pub Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:url"                content="http://www.pubmap.co.uk/" />
   <meta property="og:type"               content="website" />
@@ -9,24 +8,11 @@
   <meta property="og:description"        content="A Cambridge Pub Map in the Style of the Iconic London Underground" />
   <script src="src/d3.min.js" charset="utf-8"></script>
   <script src="../src/tube-map.js"></script>
-  <script src="../src/tube-map-model.js"></script>
-  <script src="../src/tube-map-presenter.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="tube-map.css">
-</head>
-<body>
-  <button id="debug">Toggle developer mode</button>
-  <p id="map"></p>
-  <p id="score"></p>
-  <script>
-d3.json("pubs.json", function(data) {
-  var model = tubeMapModel(data);
-  var mapView = d3.select("#map");
-  var scoreView = d3.select("#score");
-
-  presenter(model, mapView, scoreView)();
-});
-  </script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+  <link rel="stylesheet" href="tube-map.css">
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -36,5 +22,88 @@ d3.json("pubs.json", function(data) {
     ga('create', 'UA-73123785-1', 'auto');
     ga('send', 'pageview');
   </script>
+</head>
+<body ng-app="pubMapApp" ng-cloak>
+  <div ng-controller="PubMapCtrl" layout="column" style="height:100%;" ng-cloak>
+    <section layout="row" flex>
+      <div ng-controller="SideNavCtrl">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+          <img ng-src="img/Haymakers.jpg"></img>
+          <div layout="row" layout-align="end">
+            <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
+              <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
+            </md-button>
+          </div>
+          <md-content layout-padding>
+            <h2>{{pub.title}}</h2>
+            <p>{{pub.visited === true ? "You've been to this pub" : "You haven't been here yet"}}</p>
+            <div layout="row">
+              <md-button class="md-icon-button md-accent" aria-label="Favorite">
+                <md-icon class="material-icons">star</md-icon>
+              </md-button>
+              <md-button class="md-icon-button md-accent" aria-label="Favorite">
+                <md-icon class="material-icons">location_on</md-icon>
+              </md-button>
+              <md-button class="md-icon-button md-accent" aria-label="Favorite">
+                <md-icon class="material-icons">phone</md-icon>
+              </md-button>
+              <md-button class="md-icon-button md-accent" aria-label="Favorite">
+                <md-icon class="material-icons">share</md-icon>
+              </md-button>
+            </div>
+            <md-list>
+              <md-list-item>
+                <md-icon class="material-icons">location_on</md-icon>
+                <p>54, High Street, Cambridge, CB4 1NG</p>
+              </md-list-item>
+              <md-list-item>
+                <md-icon class="material-icons">link</md-icon>
+                <p><a ng-href="http://www.pubmap.co.uk">www.pubmap.co.uk</a></p>
+              </md-list-item>
+              <md-list-item>
+                <md-icon class="material-icons">phone</md-icon>
+                <p>0800 028 0309</p>
+              </md-list-item>
+              <md-list-item>
+                <md-icon class="material-icons">access_time</md-icon>
+                <p>Closed</p>
+              </md-list-item>
+              <md-list-item>
+                <md-icon class="material-icons">edit</md-icon>
+                <p>Edit...</p>
+              </md-list-item>
+            </md-list>
+            <md-button ng-click="close()" class="md-primary">
+              Close
+            </md-button>
+          </md-content>
+        </md-sidenav>
+      </div>
+      <md-content flex layout-padding>
+        <div layout="column" layout-fill layout-align="top center">
+          <div>
+            <h1>{{numVisited}} of {{totalPubs}}</h1>
+          </div>
+          <div id="map"></div>
+          <div>
+            <md-switch ng-model="developerMode" ng-change="developerModeToggle()" aria-label="Developer Mode Switch">
+              Developer Mode
+            </md-switch>
+          </div>
+        </div>
+      </md-content>
+    </section>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.6.0/angular-material-icons.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/SVG-Morpheus/0.1.8/svg-morpheus.js"></script>
+
+  <script src="../src/tube-map-controller.js"></script>
 </body>
 </html>
