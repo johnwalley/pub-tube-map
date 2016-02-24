@@ -709,7 +709,10 @@
       "canonical": true
     }, {
       "coords": [23, 10],
-      "marker": "interchange"
+      "marker": "interchange",
+      "name": "BrewHouse",
+      "labelPos": "W",
+      "hide": true
     }]
   }, {
     "name": "Riverbank",
