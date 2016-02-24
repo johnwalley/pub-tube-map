@@ -77,8 +77,8 @@ function tubeMap() {
 
       var g = svg.enter().append("svg").append("g");
       g.append("rect")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", "100%")
+        .attr("height", "100%")
         .attr('fill', 'white');
 
       var gEnter = g.call(d3.behavior.zoom().scaleExtent([1, 4]).on("zoom", function () {
@@ -107,12 +107,8 @@ function tubeMap() {
         .selectAll("path").data(function(d) { return d.stations.toArray(); });
 
       // Update the outer dimensions
-      svg.attr("width", width)
-         .attr("height", height);
-
-      // Update the inner dimensions
-      var g = svg.select("g")
-         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      svg.attr("width", '100%')
+         .attr("height", '100%');
 
      // Update the river
      river.enter().append("path")
@@ -515,7 +511,7 @@ function tubeMap() {
 
           station.marker.push(
               {
-                "line": line.label,
+                "line": line.name,
                 "color": line.color,
                 "labelPos": d.labelPos,
                 "marker": (d.hasOwnProperty("marker")) ? d.marker : "station",
