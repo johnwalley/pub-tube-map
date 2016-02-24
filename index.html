@@ -22,7 +22,7 @@
     ga('send', 'pageview');
   </script>
 </head>
-<body ng-app="pubMapApp" ng-cloak>
+<body ng-app="pubMapApp" ng-cloak style="width:100%;height:100%;">
   <div ng-controller="PubMapCtrl" layout="column" style="height:100%;" ng-cloak>
     <section layout="row" flex>
       <div ng-controller="SideNavCtrl">
@@ -78,13 +78,13 @@
           </md-content>
         </md-sidenav>
       </div>
-      <md-content flex layout-padding>
-        <div layout="column" layout-fill layout-align="top center">
-          <div>
+      <md-content flex>
+        <div layout="column" layout-align="center stretch">
+          <div layout="row" layout-align="center">
             <h1>{{numVisited}} of {{totalPubs}}</h1>
           </div>
           <div id="map"></div>
-          <div>
+          <div layout="row" layout-align="center">
             <md-switch ng-model="developerMode" ng-change="developerModeToggle()" aria-label="Developer Mode Switch">
               Developer Mode
             </md-switch>
