@@ -515,7 +515,7 @@ function tubeMap() {
 
           station.marker.push(
               {
-                "line": line.label,
+                "line": line.name,
                 "color": line.color,
                 "labelPos": d.labelPos,
                 "marker": (d.hasOwnProperty("marker")) ? d.marker : "station",
