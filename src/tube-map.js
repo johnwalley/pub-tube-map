@@ -208,7 +208,7 @@ function tubeMap() {
           .style("font-size", 1.2*lineWidth/lineWidthMultiplier + "px")
           .style("-webkit-user-select", "none")
           .attr("class", function(d) {
-            // TODO: this is horrible and also ignore interchanges
+            // TODO: this is horrible and also ignores interchanges
             var str = "";
             d.marker.forEach(function(marker) {
               str = str + " " + marker.line;
