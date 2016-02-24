@@ -26,7 +26,7 @@
   <div ng-controller="PubMapCtrl" layout="column" style="height:100%;" ng-cloak>
     <section layout="row" flex>
       <div ng-controller="SideNavCtrl">
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden">
           <img ng-src="img/Haymakers.jpg"></img>
           <div layout="row" layout-align="end">
             <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
