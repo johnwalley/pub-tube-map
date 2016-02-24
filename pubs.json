@@ -11,7 +11,7 @@
     },
     "Alma": {
       "title": "Alma",
-      "address": "26 Russel Court, CB2 1HW",
+      "address": "26 Russel Court, Cambridge, CB2 1HW",
       "website": "http://www.thealmacambridge.co.uk/",
       "position": {
         "lat": 52.195982,
@@ -20,7 +20,7 @@
     },
     "Anchor": {
       "title": "Anchor",
-      "address": "Address",
+      "address": "Silver Street, Cambridge, CB3 9EL",
       "website": "http://www.metropolitanpubcompany.com/our-pubs/the-anchor/",
       "position": {
         "lat": 52.201999,
@@ -29,7 +29,7 @@
     },
     "AncientShepherds": {
       "title": "Ancient Shepherds",
-      "address": "Address",
+      "address": "5 High St, Fen Ditton, Cambridge, CB5 8ST",
       "website": "http://www.theancientshepherds.co.uk/",
       "position": {
         "lat": 52.220375,
@@ -38,7 +38,7 @@
     },
     "Architect": {
       "title": "Architect",
-      "address": "Address",
+      "address": "43 Castle St, Cambridge, CB3 0AH",
       "website": "http://www.thearchitectcambridge.co.uk/",
       "position": {
         "lat": 52.212078,
@@ -47,8 +47,9 @@
     },
     "BaronOfBeef": {
       "title": "Baron\nof Beef",
-      "address": "Address",
+      "address": "19 Bridge St, Cambridge CB2 1UF",
       "website": "http://www.baronofbeef-cambridge.co.uk/",
+      "phone": "01223 505022",
       "position": {
         "lat": 52.208893,
         "lon": 0.118118
@@ -56,8 +57,9 @@
     },
     "BathHouse": {
       "title": "Bath House",
-      "address": "Address",
+      "address": "3 Benet Street, Cambridge, CB2 3QN",
       "website": "http://www.bathhouse-cambridge.co.uk/",
+      "phone": "01223 350969",
       "position": {
         "lat": 52.204073,
         "lon": 0.118459
