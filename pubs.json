@@ -82,7 +82,7 @@
       }
     },
     "BrewHouse": {
-      "title": "Brew House",
+      "title": "Brew\nHouse",
       "address": "Address",
       "website": "http://www.thecambridgebrewhouse.com/",
       "position": {
@@ -129,7 +129,7 @@
       }
     },
     "CastleInn": {
-      "title": "Castle Inn",
+      "title": "Castle\nInn",
       "position": {
         "lat": 52.211945,
         "lon": 0.113552
@@ -576,7 +576,7 @@
       "coords": [23, -4],
       "marker": "interchange",
       "name": "Regal",
-      "labelPos": "NE",
+      "labelPos": "NW",
       "canonical": true
     }, {
       "coords": [30, -4]
@@ -685,7 +685,7 @@
     }, {
       "coords": [-3, 15],
       "name": "CastleInn",
-      "labelPos": "SW"
+      "labelPos": "NE"
     }, {
       "coords": [-1, 13],
       "name": "Punter",
@@ -746,7 +746,7 @@
       "name": "PortlandArms",
       "labelPos": "N"
     }, {
-      "coords": [16, 23],
+      "coords": [17, 23],
       "name": "Waterman",
       "labelPos": "S"
     }, {
