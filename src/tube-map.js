@@ -186,7 +186,7 @@ function tubeMap() {
                break;
            }
 
-           return lineFunction([[d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier/2*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier/2*dir[1]], [d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier*dir[1]]]);
+           return lineFunction([[d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier/2.05*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier/2.05*dir[1]], [d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier*dir[1]]]);
         })
         .attr("stroke", function(d) { return d.color; })
         .attr("stroke-width", lineWidth/2)
