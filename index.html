@@ -54,11 +54,11 @@
             <md-list>
               <md-list-item>
                 <md-icon class="material-icons">location_on</md-icon>
-                <p>54, High Street, Cambridge, CB4 1NG</p>
+                <p>{{pub.address}}</p>
               </md-list-item>
               <md-list-item>
                 <md-icon class="material-icons">link</md-icon>
-                <p><a ng-href="http://www.pubmap.co.uk">www.pubmap.co.uk</a></p>
+                <p><a ng-href="{{pub.website}}">{{pub.website}}</a></p>
               </md-list-item>
               <md-list-item>
                 <md-icon class="material-icons">phone</md-icon>
@@ -69,8 +69,8 @@
                 <p>Closed</p>
               </md-list-item>
               <md-list-item>
-                <md-icon class="material-icons">edit</md-icon>
-                <p>Edit...</p>
+                <md-icon class="material-icons">directions</md-icon>
+                <p><a href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}}">Directions</a></p>
               </md-list-item>
             </md-list>
             <md-button ng-click="close()" class="md-primary">

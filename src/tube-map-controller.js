@@ -64,6 +64,8 @@ angular
         $scope.pub = {
           "name": pubName,
           "title": $scope.data.stations[pubName].title,
+          "address": $scope.data.stations[pubName].address,
+          "website": $scope.data.stations[pubName].website,
           "position": $scope.data.stations[pubName].position,
           "element": label,
           "visited": $scope.data.stations[pubName].visited

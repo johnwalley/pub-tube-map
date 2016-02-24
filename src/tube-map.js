@@ -81,9 +81,13 @@ function tubeMap() {
         .attr("height", "100%")
         .attr('fill', 'white');
 
-      var gEnter = g.call(d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([1, 4]).on("zoom", function () {
-        gEnter.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
-      })).append("g");
+      var zoom = d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([2, 6]).on("zoom", function () {
+        var t = d3.event.translate,
+        s = d3.event.scale;
+        gEnter.attr("transform", "translate(" + t + ")scale(" + s + ")");
+      })
+
+      var gEnter = g.call(zoom).append("g");
 
       gEnter.attr("transform", "translate(-200,-300) scale(2)")
 
