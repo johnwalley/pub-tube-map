@@ -81,9 +81,11 @@ function tubeMap() {
         .attr("height", "100%")
         .attr('fill', 'white');
 
-      var gEnter = g.call(d3.behavior.zoom().scaleExtent([1, 4]).on("zoom", function () {
-        gEnter.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")")
+      var gEnter = g.call(d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([1, 4]).on("zoom", function () {
+        gEnter.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
       })).append("g");
+
+      gEnter.attr("transform", "translate(-200,-300) scale(2)")
 
       var river = gEnter.append("g").attr("class", "river")
         .selectAll("path").data(function(d) { return [d.river]; });
@@ -191,7 +193,7 @@ function tubeMap() {
         .attr("stroke", function(d) { return d.color; })
         .attr("stroke-width", lineWidth/2)
         .attr("fill", "none")
-        .attr("class", function(d) { return d3.select(this).attr("class") + " " + d.line; })
+        .attr("class", function(d) { return d.line; })
         .classed("station", true);
 
         // Update the label text
@@ -205,6 +207,14 @@ function tubeMap() {
           .style("display", function(d) { return d.hide != true ? "block" : "none"; })
           .style("font-size", 1.2*lineWidth/lineWidthMultiplier + "px")
           .style("-webkit-user-select", "none")
+          .attr("class", function(d) {
+            // TODO: this is horrible and also ignore interchanges
+            var str = "";
+            d.marker.forEach(function(marker) {
+              str = str + " " + marker.line;
+            });
+            return str;
+          })
           .classed("highlighted", function(d) { return d.visited; })
           .classed("label", true)
           .call(wrap);
@@ -253,20 +263,26 @@ function tubeMap() {
   map.highlightLine = function(name) {
     var lines = d3.select("#map").selectAll(".line");
     var stations = d3.select("#map").selectAll(".station");
+    var labels = d3.select("#map").selectAll(".label");
 
     lines.classed("translucent", true);
     stations.classed("translucent", true);
+    labels.classed("translucent", true);
 
     stations.filter("." + name).classed("translucent", false);
+    labels.filter("." + name).classed("translucent", false);
     d3.select("#" + name).classed("translucent", false);
+
   }
 
   map.unhighlightAll = function() {
     var lines = d3.select("#map").selectAll(".line");
     var stations = d3.select("#map").selectAll(".station");
+    var labels = d3.select("#map").selectAll(".label");
 
     lines.classed("translucent", false);
     stations.classed("translucent", false);
+    labels.classed("translucent", false);
   }
 
   map.unhighlightLine = function() {
