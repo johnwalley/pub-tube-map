@@ -62,6 +62,7 @@ angular
         var pubName = label.attr("id");
 
         $scope.pub = {
+          "name": pubName,
           "title": $scope.data.stations[pubName].title,
           "position": $scope.data.stations[pubName].position,
           "element": label,
@@ -124,4 +125,15 @@ angular
     $scope.close = function () {
       $mdSidenav('left').close();
     };
+  })
+  .directive('errSrc', function() {
+    return {
+      link: function(scope, element, attrs) {
+        element.bind('error', function() {
+          if (attrs.src != attrs.errSrc) {
+            attrs.$set('src', attrs.errSrc);
+          }
+        });
+      }
+    }
   });
