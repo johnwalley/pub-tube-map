@@ -3,17 +3,19 @@ html, body
   height: 100%;
 }
 
-h1 {
-  font-family: 'Hammersmith One', sans-serif;
-}
-
-#legend {
-  font-family: 'Hammersmith One', sans-serif;
-  flex-basis: 300px;
-}
-
-#legend li {
-  list-style: none;
+#score p {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  left: 50%;
+  right: auto;
+  color: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.7);
+  font-family: 'Hammersmith One',sans-serif;
+  fill: #0019A8;
+  font-size: 36px;
+  text-align: center;
 }
 
 h2.name {
