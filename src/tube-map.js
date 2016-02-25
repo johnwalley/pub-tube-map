@@ -81,7 +81,7 @@ function tubeMap() {
         .attr("height", "100%")
         .attr('fill', 'white');
 
-      var zoom = d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([2, 6]).on("zoom", function () {
+      var zoom = d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([1, 6]).on("zoom", function () {
         var t = d3.event.translate,
         s = d3.event.scale;
         gEnter.attr("transform", "translate(" + t + ")scale(" + s + ")");
