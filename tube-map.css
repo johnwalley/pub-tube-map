@@ -64,7 +64,7 @@ text.highlighted {
 }
 
 .line.translucent {
-  opacity: 0.3;
+  opacity: 0.1;
 }
 
 .station {
@@ -74,7 +74,7 @@ text.highlighted {
 }
 
 .station.translucent {
-  opacity: 0.3;
+  opacity: 0.1;
 }
 
 .interchange {
@@ -94,5 +94,5 @@ text.highlighted {
 }
 
 .label.translucent {
-  opacity: 0.3;
+  opacity: 0.1;
 }
