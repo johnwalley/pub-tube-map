@@ -149,6 +149,7 @@ function tubeMap() {
         .attr("stroke-width", lineWidth/2)
         .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
         .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
+        .classed("interchange", true)
         .style("cursor", "pointer");
 
       var lineFunction = d3.svg.line()
