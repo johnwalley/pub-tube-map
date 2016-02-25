@@ -59,58 +59,12 @@ angular
 
       interchanges.on("click", function() {
         var label = d3.select(this);
-
-        var pubName = label.attr("id");
-
-        $scope.pub = {
-          "name": pubName,
-          "title": $scope.data.stations[pubName].title,
-          "address": $scope.data.stations[pubName].address,
-          "website": $scope.data.stations[pubName].website,
-          "position": $scope.data.stations[pubName].position,
-          "element": label,
-          "visited": $scope.data.stations[pubName].visited
-        };
-
-        if (!$scope.pub.visited) {
-          $scope.pub.clickIcon = 'add';
-          $scope.pub.backgroundColor = '#0098d4';
-        } else {
-          $scope.pub.clickIcon = 'done';
-          $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
-        }
-
-        $scope.toggleLeft();
-
-        ga('send', 'event', 'Station', 'click', pubName);
+        selectPub(label);
       });
 
       labels.on("click", function() {
         var label = d3.select(this);
-
-        var pubName = label.attr("id");
-
-        $scope.pub = {
-          "name": pubName,
-          "title": $scope.data.stations[pubName].title,
-          "address": $scope.data.stations[pubName].address,
-          "website": $scope.data.stations[pubName].website,
-          "position": $scope.data.stations[pubName].position,
-          "element": label,
-          "visited": $scope.data.stations[pubName].visited
-        };
-
-        if (!$scope.pub.visited) {
-          $scope.pub.clickIcon = 'add';
-          $scope.pub.backgroundColor = '#0098d4';
-        } else {
-          $scope.pub.clickIcon = 'done';
-          $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
-        }
-
-        $scope.toggleLeft();
-
-        ga('send', 'event', 'Station', 'click', pubName);
+        selectPub(label);
       });
     });
 
@@ -131,6 +85,32 @@ angular
         $mdSidenav(navID)
           .toggle();
       }
+    }
+
+    function selectPub(label) {
+      var pubName = label.attr("id");
+
+      $scope.pub = {
+        "name": pubName,
+        "title": $scope.data.stations[pubName].title,
+        "address": $scope.data.stations[pubName].address,
+        "website": $scope.data.stations[pubName].website,
+        "position": $scope.data.stations[pubName].position,
+        "element": label,
+        "visited": $scope.data.stations[pubName].visited
+      };
+
+      if (!$scope.pub.visited) {
+        $scope.pub.clickIcon = 'add';
+        $scope.pub.backgroundColor = '#0098d4';
+      } else {
+        $scope.pub.clickIcon = 'done';
+        $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
+      }
+
+      $scope.toggleLeft();
+
+      ga('send', 'event', 'Station', 'click', pubName);
     }
   })
   .controller('SideNavCtrl', function ($scope, $mdSidenav) {
