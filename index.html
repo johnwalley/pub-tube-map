@@ -28,8 +28,12 @@
     <section layout="row" flex>
       <div layout="column" alyout-fill>
         <div ng-controller="SideNavCtrl" flex>
-          <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
-            <div layout-fill>
+          <md-sidenav ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
+            <div ng-switch-when="Default Pub">
+              <p>Click on a pub to get started</p>
+              <p>Go to your nearest pub</p>
+            </div>
+            <div ng-switch-default layout-fill>
               <img ng-src="img/{{pub.name}}.jpg" err-src="img/Haymakers.jpg" width="320px" height="240px"></img>
               <div layout="row" layout-align="end">
                 <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
@@ -87,6 +91,9 @@
         <div layout="column" layout-align="center stretch">
           <div id="score">
             <p>{{numVisited}} of 81</p>
+          </div>
+          <div id="lines">
+            <p ng-repeat="line in data.lines" style="color:{{line.color}}">{{line.label}}</p>
           </div>
           <div id="map"></div>
         </div>

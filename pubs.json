@@ -586,6 +586,7 @@
       "marker": "interchange",
       "name": "Regal",
       "labelPos": "NW",
+      "shiftCoords": [0, -1],
       "canonical": true
     }, {
       "coords": [30, -4]
