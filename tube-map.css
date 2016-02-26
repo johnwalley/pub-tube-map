@@ -6,31 +6,16 @@ html, body
 #score p {
   position: absolute;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 20px;
   margin-top: 20px;
-  left: 50%;
-  right: auto;
+  left: auto;
+  right: 1%;
   color: rgb(255, 255, 255);
   background: rgba(0, 0, 0, 0.7);
   font-family: 'Hammersmith One',sans-serif;
   fill: #0019A8;
   font-size: 36px;
   text-align: center;
-}
-
-#lines {
-  position: absolute;
-  margin-left: auto;
-  margin-right: 10px;
-  margin-top: 20px;
-  left: auto;
-  right: 2%;
-  color: rgb(255, 255, 255);
-  background: rgba(0, 0, 0, 0.7);
-  font-family: 'Hammersmith One',sans-serif;
-  fill: #0019A8;
-  font-size: 24px;
-  text-align: right;
 }
 
 h2.name {
