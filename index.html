@@ -91,8 +91,8 @@
       </div>
       <md-content flex>
         <div layout="column" layout-align="center stretch">
-          <div id="score">
-            <p>{{numVisited}} of 81</p>
+          <div id="score" ng-show="numVisited > 0">
+            <p>visited {{numVisited}}/{{totalPubs}}</p>
           </div>
           <div id="map"></div>
         </div>
