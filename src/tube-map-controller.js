@@ -5,7 +5,7 @@ angular
     .primaryPalette('light-blue')
     .accentPalette('blue');
   })
-  .controller('PubMapCtrl', function ($scope, $mdSidenav) {
+  .controller('PubMapCtrl', function ($scope, $mdSidenav, $mdBottomSheet) {
     var width = 1600,
         height = 1024;
 
@@ -84,6 +84,7 @@ angular
     $scope.selectPub = function(label) {
       var pubName = label.attr("id");
       $scope.selectPubByName(pubName);
+      $scope.showListBottomSheet();
     }
 
     $scope.selectPubByName = function(pubName) {
@@ -108,8 +109,27 @@ angular
 
       ga('send', 'event', 'Station', 'click', pubName);
     }
+
+    $scope.showListBottomSheet = function() {
+      $scope.alert = '';
+      $mdBottomSheet.show({
+        template: '<md-bottom-sheet ng-cloak>\
+        <div layout="row" layout-align="end">\
+          <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" aria-label="Add Pub">\
+            <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options=`{"duration": 375, "rotation": "clockwise"}`></ng-md-icon>\
+          </md-button>\
+        </div>\
+  <md-subheader>{{pub.name}}</md-subheader>\
+</md-bottom-sheet>',
+        controller: 'SideNavCtrl',
+        scope: $scope,
+        preserveScope: true // TODO: Surely this is a hack
+      }).then(function(clickedItem) {
+        $scope.alert = clickedItem['name'] + ' clicked!';
+      });
+    };
   })
-  .controller('SideNavCtrl', function ($scope, $mdSidenav) {
+  .controller('SideNavCtrl', function ($scope, $mdSidenav, $mdBottomSheet) {
     $scope.addPub = function() {
       var pubName = $scope.pub.name;
 
@@ -129,7 +149,6 @@ angular
       ga('send', 'event', 'Station', 'addPub', pubName);
     };
 
-
     function fetch_random(obj) {
       var temp_key, keys = [];
       for(temp_key in obj) {
@@ -148,12 +167,11 @@ angular
       var randomPubName = fetch_random($scope.data.stations);
       $scope.centerPub(randomPubName);
       $scope.$parent.selectPubByName(randomPubName)
-    };
-
+    }
 
     $scope.close = function () {
       $mdSidenav('left').close();
-    };
+    }
   })
   .directive('errSrc', function() {
     return {

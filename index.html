@@ -27,7 +27,7 @@
   <div ng-controller="PubMapCtrl" ng-cloak>
     <section layout="row" flex>
       <div layout="column" alyout-fill>
-        <div ng-controller="SideNavCtrl" flex>
+        <div ng-controller="SideNavCtrl" ng-switch="true" flex>
           <md-sidenav ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
             <div ng-switch-when="Default Pub">
               <md-content layout-padding>
