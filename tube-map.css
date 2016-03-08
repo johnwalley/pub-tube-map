@@ -3,6 +3,10 @@ html, body
   height: 100%;
 }
 
+.md-sidenav-left p {
+  font-size: 13px;
+}
+
 #score p {
   position: absolute;
   margin-left: auto;
