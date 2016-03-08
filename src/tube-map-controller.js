@@ -113,10 +113,13 @@ angular
     $scope.addPub = function() {
       var pubName = $scope.pub.name;
 
+      var label = d3.select("#" + pubName);
+
       if ($scope.visited.indexOf(pubName) == -1) {
         $scope.data.stations[pubName].visited = true;
         $scope.visited.push(pubName);
         $scope.pub.visited = true;
+        label.classed("highlighted", true);
         $scope.pub.clickIcon = 'done';
         $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
       }
