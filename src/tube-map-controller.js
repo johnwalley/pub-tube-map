@@ -21,12 +21,14 @@ angular
 
     $scope.visited = [];
     $scope.developerMode = false;
-    $scope.totalPubs = 77;
+    $scope.totalPubs = 81;
     $scope.numVisited = $scope.visited.length;
     $scope.pub = {
       "title": "Default Pub",
       "visited": false
     };
+
+    $scope.map = map;
 
     var lines;
     var stations;
@@ -49,22 +51,14 @@ angular
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
 
-      lines.on("mouseover", function() {
-        map.highlightLine(d3.select(this).attr("id"))
-      });
-
-      lines.on("mouseout", function() {
-        map.unhighlightLine()
-      });
-
       interchanges.on("click", function() {
         var label = d3.select(this);
-        selectPub(label);
+        $scope.selectPub(label);
       });
 
       labels.on("click", function() {
         var label = d3.select(this);
-        selectPub(label);
+        $scope.selectPub(label);
       });
     });
 
@@ -87,16 +81,18 @@ angular
       }
     }
 
-    function selectPub(label) {
+    $scope.selectPub = function(label) {
       var pubName = label.attr("id");
+      $scope.selectPubByName(pubName);
+    }
 
+    $scope.selectPubByName = function(pubName) {
       $scope.pub = {
         "name": pubName,
         "title": $scope.data.stations[pubName].title,
         "address": $scope.data.stations[pubName].address,
         "website": $scope.data.stations[pubName].website,
         "position": $scope.data.stations[pubName].position,
-        "element": label,
         "visited": $scope.data.stations[pubName].visited
       };
 
@@ -115,15 +111,12 @@ angular
   })
   .controller('SideNavCtrl', function ($scope, $mdSidenav) {
     $scope.addPub = function() {
-      var label = $scope.pub.element;
-
-      var pubName = label.attr("id");
+      var pubName = $scope.pub.name;
 
       if ($scope.visited.indexOf(pubName) == -1) {
         $scope.data.stations[pubName].visited = true;
         $scope.visited.push(pubName);
         $scope.pub.visited = true;
-        label.classed("highlighted", true);
         $scope.pub.clickIcon = 'done';
         $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
       }
@@ -132,6 +125,28 @@ angular
 
       ga('send', 'event', 'Station', 'addPub', pubName);
     };
+
+
+    function fetch_random(obj) {
+      var temp_key, keys = [];
+      for(temp_key in obj) {
+         if(obj.hasOwnProperty(temp_key)) {
+             keys.push(temp_key);
+         }
+      }
+      return keys[Math.floor(Math.random() * keys.length)];
+    }
+
+    $scope.centerPub = function(name) {
+      $scope.map.centerOnPub(name);
+    };
+
+    $scope.selectNearestPub = function() {
+      var randomPubName = fetch_random($scope.data.stations);
+      $scope.centerPub(randomPubName);
+      $scope.$parent.selectPubByName(randomPubName)
+    };
+
 
     $scope.close = function () {
       $mdSidenav('left').close();
