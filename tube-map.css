@@ -14,10 +14,8 @@ html, body
   margin-top: 20px;
   left: auto;
   right: 1%;
-  color: rgb(255, 255, 255);
-  background: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.8);
   font-family: 'Hammersmith One',sans-serif;
-  fill: #0019A8;
   font-size: 36px;
   text-align: center;
 }
