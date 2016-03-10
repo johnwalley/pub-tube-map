@@ -84,7 +84,9 @@ angular
     $scope.selectPub = function(label) {
       var pubName = label.attr("id");
       $scope.selectPubByName(pubName);
-      label.classed("pulse", true);
+      d3.select("#map").selectAll(".label").classed("bounce", false);
+
+      label.classed("bounce", true);
     }
 
     $scope.selectPubByName = function(pubName) {
