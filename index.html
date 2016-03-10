@@ -45,6 +45,9 @@
               <md-content layout-padding style="overflow-x: hidden; margin: -20px 0px">
                 <h2 class="name">{{pub.title}}</h2>
                 <p>{{pub.visited === true ? "You've been to this pub" : "You haven't been here yet"}}</p>
+                <md-button ng-click="removePub()" aria-label="Remove selected pub">
+                  <ng-md-icon icon="undo"></ng-md-icon>
+                </md-button>
                 <md-button ng-click="selectNearestPub()" aria-label="Select nearest pub">
                   <ng-md-icon icon="my_location"></ng-md-icon>
                 </md-button>

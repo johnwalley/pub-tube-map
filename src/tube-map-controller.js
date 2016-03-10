@@ -132,6 +132,26 @@ angular
       ga('send', 'event', 'Station', 'addPub', pubName);
     };
 
+    $scope.removePub = function() {
+      var pubName = $scope.pub.name;
+
+      var label = d3.select("#" + pubName);
+
+      var index = $scope.visited.indexOf(pubName);
+
+      if (index > -1) {
+        $scope.data.stations[pubName].visited = false;
+        $scope.visited.splice(index, 1);
+        $scope.pub.visited = false;
+        label.classed("highlighted", false);
+        $scope.pub.clickIcon = 'add';
+        $scope.pub.backgroundColor = '#0098d4';
+      }
+
+      $scope.$parent.numVisited = $scope.visited.length;
+
+      ga('send', 'event', 'Station', 'removePub', pubName);
+    };
 
     function fetch_random(obj) {
       var temp_key, keys = [];
