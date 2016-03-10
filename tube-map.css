@@ -33,12 +33,11 @@ text {
   font-size: 14px;
   cursor: pointer;
   font-weight: normal;
-  transition: font-weight 100ms;
 }
 
-text:hover {
+/*text:hover {
   opacity: 0.6;
-}
+}*/
 
 text.highlighted {
   text-decoration: line-through;
@@ -82,4 +81,18 @@ text.highlighted {
 
 .label.translucent {
   opacity: 0.1;
+}
+
+.pulse {
+  animation: pulseFrames 2s ease infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes pulseFrames {
+  0%, 100%   {
+  	transform: rotate(0deg);
+  }
+  50% {
+  	transform: rotate(360deg);
+  }
 }

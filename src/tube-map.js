@@ -218,9 +218,11 @@ function tubeMap() {
         .classed("station", true);
 
         // Update the label text
-        labels.enter().append("text")
-          .text(function(d) { return d.label })
+        labels.enter().append("g")
           .attr("id", function(d) { return d.name; })
+          .classed("label", true)
+          .append("text")
+          .text(function(d) { return d.label })
           .attr("dy", .1)
           .attr("x", function(d) { return xScale(d.x + d.labelShiftX) + textPos(d).pos[0]; })
           .attr("y", function(d) { return yScale(d.y + d.labelShiftY) - textPos(d).pos[1]; }) // Flip y-axis
@@ -229,7 +231,7 @@ function tubeMap() {
           .style("font-size", 1.2*lineWidth/lineWidthMultiplier + "px")
           .style("-webkit-user-select", "none")
           .attr("class", function(d) {
-            // TODO: this is horrible and also ignores interchanges
+            // TODO: this is horrible and also ignores interchanges. And inserts a space at the front!
             var str = "";
             d.marker.forEach(function(marker) {
               str = str + " " + marker.line;
@@ -237,7 +239,6 @@ function tubeMap() {
             return str;
           })
           .classed("highlighted", function(d) { return d.visited; })
-          .classed("label", true)
           .call(wrap);
 
           var markerGeoFunction = d3.svg.arc()
