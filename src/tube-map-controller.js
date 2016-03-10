@@ -84,6 +84,7 @@ angular
     $scope.selectPub = function(label) {
       var pubName = label.attr("id");
       $scope.selectPubByName(pubName);
+      label.classed("pulse", true);
     }
 
     $scope.selectPubByName = function(pubName) {
