@@ -72,11 +72,11 @@
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">link</md-icon>
-                    <p><a ng-href="{{pub.website}}">{{pub.website}}</a></p>
+                    <p><a ng-href="{{pub.website}}">{{pub.website | stripProtocol}}</a></p>
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
-                    <p>{{pub.phone}}</p>
+                    <p><a href="tel:{{pub.phone}}">{{pub.phone}}</a></p>
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">access_time</md-icon>
@@ -84,7 +84,7 @@
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
-                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}}">Directions</a></p>
+                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}} pub">Directions</a></p>
                   </md-list-item>
                 </md-list>
                 <md-button ng-click="close()" class="md-primary">
