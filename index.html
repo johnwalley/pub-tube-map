@@ -65,26 +65,26 @@
                     <md-icon class="material-icons">share</md-icon>
                   </md-button>
                 </div>
-                <md-list>
-                  <md-list-item>
-                    <md-icon class="material-icons">location_on</md-icon>
+                <md-list class="side-nav-info-list">
+                  <md-list-item class="side-nav-info-list">
+                    <md-icon class="material-icons side-nav-info-icon">location_on</md-icon>
                     <p>{{pub.address}}</p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">link</md-icon>
-                    <p><a ng-href="{{pub.website}}">{{pub.website}}</a></p>
+                    <md-icon class="material-icons side-nav-info-icon">link</md-icon>
+                    <p><a ng-href="{{pub.website}}">{{pub.website | stripProtocol}}</a></p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">phone</md-icon>
-                    <p>0800 028 0309</p>
+                    <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
+                    <p><a href="tel:{{pub.phone}}">{{pub.phone}}</a></p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">access_time</md-icon>
+                    <md-icon class="material-icons side-nav-info-icon">access_time</md-icon>
                     <p>Closed</p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">directions</md-icon>
-                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}}">Directions</a></p>
+                    <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
+                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}} pub">Directions</a></p>
                   </md-list-item>
                 </md-list>
                 <md-button ng-click="close()" class="md-primary">

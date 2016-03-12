@@ -95,6 +95,7 @@ angular
         "title": $scope.data.stations[pubName].title,
         "address": $scope.data.stations[pubName].address,
         "website": $scope.data.stations[pubName].website,
+        "phone": $scope.data.stations[pubName].phone,
         "position": $scope.data.stations[pubName].position,
         "visited": $scope.data.stations[pubName].visited
       };
@@ -188,4 +189,19 @@ angular
         });
       }
     }
-  });
+  })
+  .filter('stripProtocol', function() {
+  return function(input) {
+    input = input || '';
+    if(input.match(/http:\/\//))
+    {
+        input = input.substring(7);
+    }
+    if(input.match(/^www\./))
+    {
+        input = input.substring(4);
+    }
+
+    return input;
+  };
+});

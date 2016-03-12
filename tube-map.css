@@ -35,6 +35,15 @@ text {
   font-weight: normal;
 }
 
+.side-nav-info-icon {
+  margin: 0px 24px 0px 0px !important;
+}
+
+.side-nav-info-list md-list-item {
+  padding: 0px 24px 6px 0px;
+  min-height: 0px;
+}
+
 /*text:hover {
   opacity: 0.6;
 }*/
@@ -75,6 +84,7 @@ text.highlighted {
 
 .label {
   transition-property: opacity;
+  transform: scale3d(1, 1, 1);
   transition-duration: 0.5s;
   transition-timing-function: ease-out;
 }
