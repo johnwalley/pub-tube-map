@@ -95,6 +95,7 @@ angular
         "title": $scope.data.stations[pubName].title,
         "address": $scope.data.stations[pubName].address,
         "website": $scope.data.stations[pubName].website,
+        "phone": $scope.data.stations[pubName].phone,
         "position": $scope.data.stations[pubName].position,
         "visited": $scope.data.stations[pubName].visited
       };
