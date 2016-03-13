@@ -1,13 +1,13 @@
 angular
   .module('pubMapApp', ['ngMaterial', 'ngMdIcons'])
   .config(function($mdThemingProvider) {
-  $mdThemingProvider.theme('default')
-    .primaryPalette('light-blue')
-    .accentPalette('blue');
+    $mdThemingProvider.theme('default')
+      .primaryPalette('light-blue')
+      .accentPalette('blue');
   })
-  .controller('PubMapCtrl', function ($scope, $mdSidenav) {
+  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia) {
     var width = 1600,
-        height = 1024;
+      height = 1024;
 
     var map = tubeMap()
       .width(width)
@@ -90,14 +90,16 @@ angular
     }
 
     $scope.selectPubByName = function(pubName) {
+      var station = $scope.data.stations[pubName];
+
       $scope.pub = {
         "name": pubName,
-        "title": $scope.data.stations[pubName].title,
-        "address": $scope.data.stations[pubName].address,
-        "website": $scope.data.stations[pubName].website,
-        "phone": $scope.data.stations[pubName].phone,
-        "position": $scope.data.stations[pubName].position,
-        "visited": $scope.data.stations[pubName].visited
+        "title": station.title,
+        "address": station.address,
+        "website": station.website,
+        "phone": station.phone,
+        "position": station.position,
+        "visited": station.visited
       };
 
       if (!$scope.pub.visited) {
@@ -108,12 +110,39 @@ angular
         $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
       }
 
-      $scope.toggleLeft();
+      if ($mdMedia('gt-xs')) {
+        $scope.toggleLeft();
+      } else {
+        $scope.showListBottomSheet();
+      }
 
       ga('send', 'event', 'Station', 'click', pubName);
     }
+
+    $scope.showListBottomSheet = function() {
+      $scope.alert = '';
+      $mdBottomSheet.show({
+        templateUrl: 'src/bottomSheetTemplate.html',
+        controller: 'SideNavCtrl',
+        scope: $scope,
+        preserveScope: true // TODO: Surely this is a hack
+      });
+    };
   })
-  .controller('SideNavCtrl', function ($scope, $mdSidenav) {
+  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet) {
+    $scope.togglePub = function() {
+      var pubName = $scope.pub.name;
+
+      var index = $scope.visited.indexOf(pubName);
+
+      if (index == -1) {
+        $scope.addPub();
+      } else {
+        $scope.removePub();
+      }
+    }
+
+
     $scope.addPub = function() {
       var pubName = $scope.pub.name;
 
@@ -156,10 +185,10 @@ angular
 
     function fetch_random(obj) {
       var temp_key, keys = [];
-      for(temp_key in obj) {
-         if(obj.hasOwnProperty(temp_key)) {
-             keys.push(temp_key);
-         }
+      for (temp_key in obj) {
+        if (obj.hasOwnProperty(temp_key)) {
+          keys.push(temp_key);
+        }
       }
       return keys[Math.floor(Math.random() * keys.length)];
     }
@@ -172,12 +201,11 @@ angular
       var randomPubName = fetch_random($scope.data.stations);
       $scope.centerPub(randomPubName);
       $scope.$parent.selectPubByName(randomPubName)
-    };
+    }
 
-
-    $scope.close = function () {
+    $scope.close = function() {
       $mdSidenav('left').close();
-    };
+    }
   })
   .directive('errSrc', function() {
     return {
@@ -191,17 +219,15 @@ angular
     }
   })
   .filter('stripProtocol', function() {
-  return function(input) {
-    input = input || '';
-    if(input.match(/http:\/\//))
-    {
+    return function(input) {
+      input = input || '';
+      if (input.match(/http:\/\//)) {
         input = input.substring(7);
-    }
-    if(input.match(/^www\./))
-    {
+      }
+      if (input.match(/^www\./)) {
         input = input.substring(4);
-    }
+      }
 
-    return input;
-  };
-});
+      return input;
+    };
+  });

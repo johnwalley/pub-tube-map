@@ -93,8 +93,6 @@ function tubeMap() {
         t = d3.event.translate;
         s = d3.event.scale;
 
-        console.log(t);
-
         gEnter.attr("transform", "translate(" + t + ")scale(" + s + ")");
       };
 

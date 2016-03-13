@@ -27,8 +27,8 @@
   <div ng-controller="PubMapCtrl" ng-cloak>
     <section layout="row" flex>
       <div layout="column" alyout-fill>
-        <div ng-controller="SideNavCtrl" flex>
-          <md-sidenav ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
+        <div ng-controller="SideNavCtrl" ng-switch="true" flex>
+          <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" md-is-open="false" ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
             <div ng-switch-when="Default Pub">
               <md-content layout-padding>
                 <p>Click on a pub to get started</p>
@@ -38,7 +38,7 @@
             <div ng-switch-default layout-fill>
               <img ng-src="img/{{pub.name}}.jpg" err-src="img/Haymakers.jpg" width="320px" height="240px"></img>
               <div layout="row" layout-align="end">
-                <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
+                <md-button ng-click="togglePub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
                   <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
                 </md-button>
               </div>
