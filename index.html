@@ -28,7 +28,7 @@
     <section layout="row" flex>
       <div layout="column" alyout-fill>
         <div ng-controller="SideNavCtrl" ng-switch="true" flex>
-          <md-sidenav ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
+          <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" md-is-open="false" ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
             <div ng-switch-when="Default Pub">
               <md-content layout-padding>
                 <p>Click on a pub to get started</p>
@@ -42,9 +42,15 @@
                   <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
                 </md-button>
               </div>
-              <md-content layout-padding style="overflow-x:hidden;">
+              <md-content layout-padding style="overflow-x: hidden; margin: -20px 0px">
                 <h2 class="name">{{pub.title}}</h2>
                 <p>{{pub.visited === true ? "You've been to this pub" : "You haven't been here yet"}}</p>
+                <md-button ng-click="removePub()" aria-label="Remove selected pub">
+                  <ng-md-icon icon="undo"></ng-md-icon>
+                </md-button>
+                <md-button ng-click="selectNearestPub()" aria-label="Select nearest pub">
+                  <ng-md-icon icon="my_location"></ng-md-icon>
+                </md-button>
                 <div layout="row">
                   <md-button class="md-icon-button md-accent" aria-label="Favorite">
                     <md-icon class="material-icons">star</md-icon>
@@ -59,26 +65,26 @@
                     <md-icon class="material-icons">share</md-icon>
                   </md-button>
                 </div>
-                <md-list>
-                  <md-list-item>
-                    <md-icon class="material-icons">location_on</md-icon>
+                <md-list class="side-nav-info-list">
+                  <md-list-item class="side-nav-info-list">
+                    <md-icon class="material-icons side-nav-info-icon">location_on</md-icon>
                     <p>{{pub.address}}</p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">link</md-icon>
-                    <p><a ng-href="{{pub.website}}">{{pub.website}}</a></p>
+                    <md-icon class="material-icons side-nav-info-icon">link</md-icon>
+                    <p><a ng-href="{{pub.website}}">{{pub.website | stripProtocol}}</a></p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">phone</md-icon>
-                    <p>0800 028 0309</p>
+                    <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
+                    <p><a href="tel:{{pub.phone}}">{{pub.phone}}</a></p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">access_time</md-icon>
+                    <md-icon class="material-icons side-nav-info-icon">access_time</md-icon>
                     <p>Closed</p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons">directions</md-icon>
-                    <p><a href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}}">Directions</a></p>
+                    <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
+                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}} pub">Directions</a></p>
                   </md-list-item>
                 </md-list>
                 <md-button ng-click="close()" class="md-primary">
