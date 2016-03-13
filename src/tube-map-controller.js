@@ -119,6 +119,29 @@ angular
       ga('send', 'event', 'Station', 'click', pubName);
     }
 
+    $scope.centerPub = function(name) {
+      $scope.map.centerOnPub(name);
+    };
+
+    $scope.selectNearestPub = function() {
+      var randomPubName = fetch_random($scope.data.stations);
+      $scope.centerPub(randomPubName);
+      $scope.selectPubByName(randomPubName);
+      d3.select("#map").selectAll(".label").classed("bounce", false);
+
+      d3.select("#map").select(".labels").select("#" + randomPubName).classed("bounce", true);
+    }
+
+    function fetch_random(obj) {
+      var temp_key, keys = [];
+      for (temp_key in obj) {
+        if (obj.hasOwnProperty(temp_key)) {
+          keys.push(temp_key);
+        }
+      }
+      return keys[Math.floor(Math.random() * keys.length)];
+    }
+
     $scope.showListBottomSheet = function() {
       $scope.alert = '';
       $mdBottomSheet.show({
