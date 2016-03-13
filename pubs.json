@@ -142,7 +142,9 @@
     },
     "CarltonArms": {
       "title": "Carlton Arms",
-      "phone": "123456789",
+      "address": "Carlton Way, Cambridge CB4 2DF",
+      "website": "http://thecarltonarmscambridge.co.uk/",
+      "phone": "01223 367422",
       "position": {
         "lat": 52.222048,
         "lon": 0.114374
@@ -150,6 +152,9 @@
     },
     "CarpentersArms": {
       "title": "Carpenter's Arms",
+      "address": "184-186 Victoria Rd, Cambridge, CB4 3DZ",
+      "website": "http://www.carpentersarmscambridge.co.uk/",
+      "phone": "01223 367050",
       "position": {
         "lat": 52.21576,
         "lon": 0.114374
@@ -157,6 +162,9 @@
     },
     "CastleInn": {
       "title": "Castle\nInn",
+      "address": "38 Castle St, City Centre, Cambridge CB3 0AJ",
+      "website": "http://thecastleinncambridge.com/",
+      "phone": "01223 353194",
       "position": {
         "lat": 52.211945,
         "lon": 0.113552
@@ -164,6 +172,7 @@
     },
     "ChampionOfTheThames": {
       "title": "Champion\nof the\nThames",
+      "address": "68 King St, Cambridge CB1 1LN",
       "position": {
         "lat": 52.207328,
         "lon": 0.124451
@@ -171,6 +180,8 @@
     },
     "ClarendonArms": {
       "title": "Clarendon\nArms",
+      "address": "35-36 Clarendon St, Cambridge CB1 1JX",
+      "phone": "01223 778272",
       "position": {
         "lat": 52.20465,
         "lon": 0.127679
@@ -178,6 +189,8 @@
     },
     "CornerHouse": {
       "title": "Corner House",
+      "address": "231 Newmarket Rd, Cambridge CB5 8JE",
+      "phone": "01223 352047",
       "position": {
         "lat": 52.209485,
         "lon": 0.143369

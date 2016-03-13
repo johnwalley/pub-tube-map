@@ -31,26 +31,20 @@
           <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" md-is-open="false" ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
             <div ng-switch-when="Default Pub">
               <md-content layout-padding>
-                <p>Click on a pub to get started</p>
-                <p><md-button ng-click="selectNearestPub()">Go to your nearest pub</md-button></p>
-              </md-content>
+                <h2>Select a pub to get started</h2>
             </div>
             <div ng-switch-default layout-fill>
               <img ng-src="img/{{pub.name}}.jpg" err-src="img/Haymakers.jpg" width="320px" height="240px"></img>
               <div layout="row" layout-align="end">
                 <md-button ng-click="togglePub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
+                  <md-tooltip md-direction="left" md-delay="1000">
+                    I've been here!
+                  </md-tooltip>
                   <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
                 </md-button>
               </div>
               <md-content layout-padding style="overflow-x: hidden; margin: -20px 0px">
                 <h2 class="name">{{pub.title}}</h2>
-                <p>{{pub.visited === true ? "You've been to this pub" : "You haven't been here yet"}}</p>
-                <md-button ng-click="removePub()" aria-label="Remove selected pub">
-                  <ng-md-icon icon="undo"></ng-md-icon>
-                </md-button>
-                <md-button ng-click="selectNearestPub()" aria-label="Select nearest pub">
-                  <ng-md-icon icon="my_location"></ng-md-icon>
-                </md-button>
                 <div layout="row">
                   <md-button class="md-icon-button md-accent" aria-label="Favorite">
                     <md-icon class="material-icons">star</md-icon>
@@ -72,24 +66,17 @@
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">link</md-icon>
-                    <p><a ng-href="{{pub.website}}">{{pub.website | stripProtocol}}</a></p>
+                    <p><a target="_blank" ng-href="{{pub.website}}">{{pub.website | stripProtocol}}</a></p>
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
                     <p><a href="tel:{{pub.phone}}">{{pub.phone}}</a></p>
                   </md-list-item>
                   <md-list-item>
-                    <md-icon class="material-icons side-nav-info-icon">access_time</md-icon>
-                    <p>Closed</p>
-                  </md-list-item>
-                  <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
                     <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}} pub">Directions</a></p>
                   </md-list-item>
                 </md-list>
-                <md-button ng-click="close()" class="md-primary">
-                  Close
-                </md-button>
               </md-content>
             </div>
           </md-sidenav>
@@ -102,6 +89,12 @@
           </div>
           <div id="map"></div>
         </div>
+        <md-button ng-click="selectNearestPub()" class="md-fab md-primary md-fab-bottom-right" style="fill:#ffffff;" aria-label="Go to nearest pub">
+          <md-tooltip md-direction="left" md-delay="1000">
+            Go to nearest pub
+          </md-tooltip>
+          <ng-md-icon icon="my_location" size="32"></ng-md-icon>
+        </md-button>
       </md-content>
     </section>
   </div>

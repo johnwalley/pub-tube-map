@@ -5,7 +5,7 @@ angular
       .primaryPalette('light-blue')
       .accentPalette('blue');
   })
-  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia) {
+  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast) {
     var width = 1600,
       height = 1024;
 
@@ -119,6 +119,71 @@ angular
       ga('send', 'event', 'Station', 'click', pubName);
     }
 
+    $scope.centerPub = function(name) {
+      $scope.map.centerOnPub(name);
+    };
+
+    $scope.selectNearestPub = function() {
+      function success(position) {
+        var latitude  = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        console.log(latitude + " " + longitude)
+
+        var minDistance = 10000000;
+        var nearestPub;
+
+        var stations = $scope.data.stations;
+
+        for (var key in stations) {
+          if (!stations.hasOwnProperty(key)) continue;
+
+          var distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
+
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearestPub = key;
+          }
+        }
+
+        $scope.centerPub(nearestPub);
+        $scope.selectPubByName(nearestPub);
+        d3.select("#map").selectAll(".label").classed("bounce", false);
+
+        d3.select("#map").select(".labels").select("#" + nearestPub).classed("bounce", true);
+      };
+
+      function error() {
+        console.log("Unable to retrieve your location");
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Unable to retrieve your location')
+            .position('top right')
+            .hideDelay(3000)
+        );
+      };
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+
+    $scope.selectRandomPub = function() {
+      var randomPubName = fetch_random($scope.data.stations);
+      $scope.centerPub(randomPubName);
+      $scope.selectPubByName(randomPubName);
+      d3.select("#map").selectAll(".label").classed("bounce", false);
+
+      d3.select("#map").select(".labels").select("#" + randomPubName).classed("bounce", true);
+    }
+
+    function fetch_random(obj) {
+      var temp_key, keys = [];
+      for (temp_key in obj) {
+        if (obj.hasOwnProperty(temp_key)) {
+          keys.push(temp_key);
+        }
+      }
+      return keys[Math.floor(Math.random() * keys.length)];
+    }
+
     $scope.showListBottomSheet = function() {
       $scope.alert = '';
       $mdBottomSheet.show({
@@ -141,7 +206,6 @@ angular
         $scope.removePub();
       }
     }
-
 
     $scope.addPub = function() {
       var pubName = $scope.pub.name;
@@ -182,26 +246,6 @@ angular
 
       ga('send', 'event', 'Station', 'removePub', pubName);
     };
-
-    function fetch_random(obj) {
-      var temp_key, keys = [];
-      for (temp_key in obj) {
-        if (obj.hasOwnProperty(temp_key)) {
-          keys.push(temp_key);
-        }
-      }
-      return keys[Math.floor(Math.random() * keys.length)];
-    }
-
-    $scope.centerPub = function(name) {
-      $scope.map.centerOnPub(name);
-    };
-
-    $scope.selectNearestPub = function() {
-      var randomPubName = fetch_random($scope.data.stations);
-      $scope.centerPub(randomPubName);
-      $scope.$parent.selectPubByName(randomPubName)
-    }
 
     $scope.close = function() {
       $mdSidenav('left').close();
