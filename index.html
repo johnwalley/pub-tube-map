@@ -38,7 +38,7 @@
             <div ng-switch-default layout-fill>
               <img ng-src="img/{{pub.name}}.jpg" err-src="img/Haymakers.jpg" width="320px" height="240px"></img>
               <div layout="row" layout-align="end">
-                <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
+                <md-button ng-click="togglePub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
                   <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
                 </md-button>
               </div>

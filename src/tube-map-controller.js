@@ -1,13 +1,13 @@
 angular
   .module('pubMapApp', ['ngMaterial', 'ngMdIcons'])
   .config(function($mdThemingProvider) {
-  $mdThemingProvider.theme('default')
-    .primaryPalette('light-blue')
-    .accentPalette('blue');
+    $mdThemingProvider.theme('default')
+      .primaryPalette('light-blue')
+      .accentPalette('blue');
   })
-  .controller('PubMapCtrl', function ($scope, $mdSidenav, $mdBottomSheet, $mdMedia) {
+  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia) {
     var width = 1600,
-        height = 1024;
+      height = 1024;
 
     var map = tubeMap()
       .width(width)
@@ -90,14 +90,16 @@ angular
     }
 
     $scope.selectPubByName = function(pubName) {
+      var station = $scope.data.stations[pubName];
+
       $scope.pub = {
         "name": pubName,
-        "title": $scope.data.stations[pubName].title,
-        "address": $scope.data.stations[pubName].address,
-        "website": $scope.data.stations[pubName].website,
-        "phone": $scope.data.stations[pubName].phone,
-        "position": $scope.data.stations[pubName].position,
-        "visited": $scope.data.stations[pubName].visited
+        "title": station.title,
+        "address": station.address,
+        "website": station.website,
+        "phone": station.phone,
+        "position": station.position,
+        "visited": station.visited
       };
 
       if (!$scope.pub.visited) {
@@ -120,23 +122,27 @@ angular
     $scope.showListBottomSheet = function() {
       $scope.alert = '';
       $mdBottomSheet.show({
-        template: '<md-bottom-sheet ng-cloak>\
-        <div layout="row" layout-align="end">\
-          <md-button ng-click="addPub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" aria-label="Add Pub">\
-            <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options=`{"duration": 375, "rotation": "clockwise"}`></ng-md-icon>\
-          </md-button>\
-        </div>\
-  <md-subheader>{{pub.name}}</md-subheader>\
-</md-bottom-sheet>',
+        templateUrl: 'src/bottomSheetTemplate.html',
         controller: 'SideNavCtrl',
         scope: $scope,
         preserveScope: true // TODO: Surely this is a hack
-      }).then(function(clickedItem) {
-        $scope.alert = clickedItem['name'] + ' clicked!';
       });
     };
   })
-  .controller('SideNavCtrl', function ($scope, $mdSidenav, $mdBottomSheet) {
+  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet) {
+    $scope.togglePub = function() {
+      var pubName = $scope.pub.name;
+
+      var index = $scope.visited.indexOf(pubName);
+
+      if (index == -1) {
+        $scope.addPub();
+      } else {
+        $scope.removePub();
+      }
+    }
+
+
     $scope.addPub = function() {
       var pubName = $scope.pub.name;
 
@@ -179,10 +185,10 @@ angular
 
     function fetch_random(obj) {
       var temp_key, keys = [];
-      for(temp_key in obj) {
-         if(obj.hasOwnProperty(temp_key)) {
-             keys.push(temp_key);
-         }
+      for (temp_key in obj) {
+        if (obj.hasOwnProperty(temp_key)) {
+          keys.push(temp_key);
+        }
       }
       return keys[Math.floor(Math.random() * keys.length)];
     }
@@ -197,7 +203,7 @@ angular
       $scope.$parent.selectPubByName(randomPubName)
     }
 
-    $scope.close = function () {
+    $scope.close = function() {
       $mdSidenav('left').close();
     }
   })
@@ -213,17 +219,15 @@ angular
     }
   })
   .filter('stripProtocol', function() {
-  return function(input) {
-    input = input || '';
-    if(input.match(/http:\/\//))
-    {
+    return function(input) {
+      input = input || '';
+      if (input.match(/http:\/\//)) {
         input = input.substring(7);
-    }
-    if(input.match(/^www\./))
-    {
+      }
+      if (input.match(/^www\./)) {
         input = input.substring(4);
-    }
+      }
 
-    return input;
-  };
-});
+      return input;
+    };
+  });
