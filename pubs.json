@@ -4,6 +4,7 @@
       "title": "Alexandra\nArms",
       "address": "22 Gwydir St, Cambridge CB1 2LL",
       "website": "http://www.thealexcambridge.com/",
+      "phone": "01223 324441",
       "position": {
         "lat": 52.20386,
         "lon": 0.139356
@@ -13,6 +14,7 @@
       "title": "Alma",
       "address": "26 Russel Court, Cambridge, CB2 1HW",
       "website": "http://www.thealmacambridge.co.uk/",
+      "phone": "01223 316722",
       "position": {
         "lat": 52.195982,
         "lon": 0.125493
@@ -21,7 +23,8 @@
     "Anchor": {
       "title": "Anchor",
       "address": "Silver Street, Cambridge, CB3 9EL",
-      "website": "http://www.metropolitanpubcompany.com/our-pubs/the-anchor/",
+      "website": "http://www.anchorcambridge.com",
+      "phone": "01223 353554",
       "position": {
         "lat": 52.201999,
         "lon": 0.115758
@@ -31,6 +34,7 @@
       "title": "Ancient Shepherds",
       "address": "5 High St, Fen Ditton, Cambridge, CB5 8ST",
       "website": "http://www.theancientshepherds.co.uk/",
+      "phone": "01223 293280",
       "position": {
         "lat": 52.220375,
         "lon": 0.172721
@@ -68,8 +72,9 @@
     },
     "BlueBallInn": {
       "title": "Blue Ball Inn",
-      "address": "Address",
+      "address": "57 Broadway, Grantchester, Cambridge CB3 9NQ",
       "website": "http://www.blueballgrantchester.co.uk/",
+      "phone": "01223 846004",
       "position": {
         "lat": 52.183303,
         "lon": 0.09408
@@ -77,6 +82,9 @@
     },
     "BlueMoon": {
       "title": "Blue Moon",
+      "address": "2 Norfolk St, Cambridge CB1 2LF",
+      "website": "https://www.facebook.com/bluemooncambridge/",
+      "phone": "01223 500238",
       "position": {
         "lat": 52.204781,
         "lon": 0.136648
@@ -84,8 +92,9 @@
     },
     "Boathouse": {
       "title": "Boathouse",
-      "address": "Address",
+      "address": "14 Chesterton Rd, Cambridge CB4 3AX",
       "website": "http://www.boathouse-cambridge.co.uk/",
+      "phone": "01223 460905",
       "position": {
         "lat": 52.213719,
         "lon": 0.123523
@@ -93,8 +102,9 @@
     },
     "BrewHouse": {
       "title": "Brew\nHouse",
-      "address": "Address",
+      "address": "1 King St, Cambridge CB1 1LH",
       "website": "http://www.thecambridgebrewhouse.com/",
+      "phone": "01223 855185",
       "position": {
         "lat": 52.207412,
         "lon": 0.122225
@@ -102,7 +112,9 @@
     },
     "Brook": {
       "title": "Brook",
+      "address": "25 Brookfields, Cambridge CB1 3NW",
       "website": "http://www.thebrookpub.co.uk/",
+      "phone": "01223 566929",
       "position": {
         "lat": 52.196072,
         "lon": 0.155429
@@ -110,7 +122,9 @@
     },
     "BurleighArms": {
       "title": "Burleigh\nArms",
+      "address": "9-11 Newmarket Rd, Cambridge CB5 8EG",
       "website": "http://www.burleigharmscambridge.co.uk/",
+      "phone": "01223 301547",
       "position": {
         "lat": 52.208184,
         "lon": 0.132854
@@ -118,7 +132,9 @@
     },
     "CambridgeBlue": {
       "title": "Cambridge Blue",
+      "address": "85-87 Gwydir St, Cambridge CB1 2LG",
       "website": "http://www.the-cambridgeblue.co.uk/",
+      "phone": "01223 471680",
       "position": {
         "lat": 52.202328,
         "lon": 0.139173
@@ -126,6 +142,7 @@
     },
     "CarltonArms": {
       "title": "Carlton Arms",
+      "phone": "123456789",
       "position": {
         "lat": 52.222048,
         "lon": 0.114374
