@@ -142,7 +142,6 @@ angular
       }
     }
 
-
     $scope.addPub = function() {
       var pubName = $scope.pub.name;
 
