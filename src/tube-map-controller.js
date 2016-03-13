@@ -86,7 +86,7 @@ angular
       $scope.selectPubByName(pubName);
       d3.select("#map").selectAll(".label").classed("bounce", false);
 
-      label.classed("bounce", true);
+      d3.select("#map").select(".labels").select("#" + pubName).classed("bounce", true);
     }
 
     $scope.selectPubByName = function(pubName) {

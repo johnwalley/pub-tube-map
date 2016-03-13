@@ -156,7 +156,7 @@ function tubeMap() {
         .endAngle(2*Math.PI);
 
       // Update the interchanges
-      interchanges.enter().append("path")
+      interchanges.enter().append("g").append("path")
         .attr("d", markerFunction)
         .attr("transform", function(d) { return "translate(" + xScale(d.x + d.marker[0].shiftX*lineWidthMultiplier) + "," + yScale(d.y + d.marker[0].shiftY*lineWidthMultiplier) + ")" })
         .attr("id", function(d) { return d.name; })
