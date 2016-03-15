@@ -258,6 +258,9 @@
     },
     "EarlOfDerby": {
       "title": "Earl of Derby",
+      "address": "129 Hills Rd, Cambridge CB2 1PG",
+      "website": "http://www.theearlofderby.com/",
+      "phone": "01223 352785",
       "position": {
         "lat": 52.192092,
         "lon": 0.134079
@@ -265,6 +268,9 @@
     },
     "ElmTree": {
       "title": "Elm Tree",
+      "address": "16A Orchard St, Cambridge CB1 1JT",
+      "website": "http://www.theelmtreecambridge.co.uk/",
+      "phone": "01223 502632",
       "position": {
         "lat": 52.205124,
         "lon": 0.129503
@@ -272,6 +278,8 @@
     },
     "Empress": {
       "title": "Empress",
+      "address": "72 Thoday St, Cambridge, CB1 3AX",
+      "phone": "01223 247236",
       "position": {
         "lat": 52.199158,
         "lon": 0.147212
@@ -279,6 +287,8 @@
     },
     "FlyingPig": {
       "title": "Flying Pig",
+      "address": "106 Hills Rd, Cambridge, CB2 1LQ",
+      "phone": "01223 354623",
       "position": {
         "lat": 52.194474,
         "lon": 0.131747
@@ -286,6 +296,9 @@
     },
     "FortStGeorge": {
       "title": "Fort St George",
+      "address": "Cambridge CB4 1HA",
+      "website": "http://www.fortstgeorge-cambridge.co.uk/",
+      "phone": "01223 305523",
       "position": {
         "lat": 52.212511,
         "lon": 0.127802
@@ -293,6 +306,9 @@
     },
     "FreePress": {
       "title": "Free Press",
+      "address": "7 Prospect Row, Cambridge, CB1 1DU",
+      "website": "http://www.freepresspub.com/",
+      "phone": "01223 368337",
       "position": {
         "lat": 52.20474,
         "lon": 0.130385
@@ -300,6 +316,9 @@
     },
     "Geldart": {
       "title": "Geldart",
+      "address": "1 Ainsworth St, Cambridge, CB1 2PF",
+      "website": "http://www.the-geldart.co.uk/",
+      "phone": "01223 314264",
       "position": {
         "lat": 52.203696,
         "lon": 0.142231
@@ -307,6 +326,9 @@
     },
     "GoldenHind": {
       "title": "Golden Hind",
+      "address": "355 Milton Rd, Cambridge, CB4 1SP",
+      "website": "http://www.golden-hind-pub-cambridge.co.uk/",
+      "phone": "01223 420816",
       "position": {
         "lat": 52.227922,
         "lon": 0.145524
