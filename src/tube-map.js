@@ -325,6 +325,14 @@ function tubeMap() {
     gEnter.transition().duration(750).attr("transform", "translate(" + t[0] + "," + t[1] + ")scale(" + 2 + ")");
   }
 
+  map.addStation = function(name) {
+    visitStation(name, true);
+  }
+
+  map.removeStation = function(name) {
+    visitStation(name, false);
+  }
+
   map.registerStationCallback = function(cb) {
     var interchanges = d3.select("#map").selectAll(".interchange");
     var stations = d3.select("#map").selectAll(".station");
@@ -333,8 +341,7 @@ function tubeMap() {
     interchanges.on("click", function() {
       var interchange = d3.select(this);
       var name = interchange.attr("id");
-      d3.select("#map").selectAll(".label").classed("bounce", false);
-      d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
+      selectStation(name);
 
       cb(name);
     });
@@ -342,21 +349,29 @@ function tubeMap() {
     stations.on("click", function() {
       var station = d3.select(this);
       var name = station.attr("id");
-      d3.select("#map").selectAll(".label").classed("bounce", false);
-      d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
 
+      selectStation(name);
       cb(name);
     });
 
     labels.on("click", function() {
       var label = d3.select(this);
       var name = label.attr("id");
-      d3.select("#map").selectAll(".label").classed("bounce", false);
-      d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
 
+      selectStation(name);
       cb(name);
     });
   }
+
+  function selectStation(name) {
+    d3.select("#map").selectAll(".label").classed("bounce", false);
+    d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
+  }
+
+  function visitStation(name, highlighted) {
+    var labels = d3.select("#map").selectAll(".label");
+    d3.select("#map").select(".labels").select("#" + name).select("text").classed("highlighted", highlighted);
+  }  
 
   function drawLine(data) {
     var path = "";

@@ -195,9 +195,10 @@ angular
         $scope.data.stations[pubName].visited = true;
         $scope.visited.push(pubName);
         $scope.pub.visited = true;
-        label.classed("highlighted", true);
         $scope.pub.clickIcon = 'done';
         $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
+
+        $scope.map.addStation(pubName);
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
@@ -216,9 +217,10 @@ angular
         $scope.data.stations[pubName].visited = false;
         $scope.visited.splice(index, 1);
         $scope.pub.visited = false;
-        label.classed("highlighted", false);
         $scope.pub.clickIcon = 'add';
         $scope.pub.backgroundColor = '#0098d4';
+
+        $scope.map.removeStation(pubName);
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
