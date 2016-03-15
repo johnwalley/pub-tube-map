@@ -128,8 +128,6 @@ angular
         var latitude  = position.coords.latitude;
         var longitude = position.coords.longitude;
 
-        console.log(latitude + " " + longitude)
-
         var minDistance = 10000000;
         var nearestPub;
 
