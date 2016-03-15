@@ -104,7 +104,7 @@ angular
 
       if (!$scope.pub.visited) {
         $scope.pub.clickIcon = 'add';
-        $scope.pub.backgroundColor = '#0098d4';
+        $scope.pub.backgroundColor = 'rgb(0,152,212)'; // TODO: Change class and handle through css
       } else {
         $scope.pub.clickIcon = 'done';
         $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
