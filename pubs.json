@@ -559,6 +559,9 @@
     },
     "PintShop": {
       "title": "Pint Shop",
+      "address": "10 Peas Hill, Cambridge CB2 3PN",
+      "website": "http://pintshop.co.uk/",
+      "phone": "01223 352293",
       "position": {
         "lat": 52.204194,
         "lon": 0.119142
@@ -566,6 +569,9 @@
     },
     "Plough": {
       "title": "Plough",
+      "address": "Green End, Cambridge, Cambridgshire CB5 8SX",
+      "website": "http://www.theploughfenditton.co.uk/",
+      "phone": "01223 293264",
       "position": {
         "lat": 52.224075,
         "lon": 0.16823
@@ -573,6 +579,9 @@
     },
     "PortlandArms": {
       "title": "Portland Arms",
+      "address": "129 Chesterton Rd, Cambridge CB4 3BA",
+      "website": "http://www.theportlandarms.co.uk/",
+      "phone": "01223 357268",
       "position": {
         "lat": 52.214426,
         "lon": 0.124525
