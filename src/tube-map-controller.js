@@ -147,7 +147,7 @@ angular
     $scope.selectRandomPub = function() {
       var randomPubName = fetch_random($scope.data.stations);
       $scope.centerPub(randomPubName);
-      $scope.selectPubByName(randomPubName);
+      $scope.selectPub(randomPubName);
       d3.select("#map").selectAll(".label").classed("bounce", false);
 
       d3.select("#map").select(".labels").select("#" + randomPubName).classed("bounce", true);
@@ -224,7 +224,7 @@ angular
         $scope.visited.splice(index, 1);
         $scope.pub.visited = false;
         $scope.pub.clickIcon = 'add';
-        $scope.pub.backgroundColor = '#0098d4';
+        $scope.pub.backgroundColor = 'rgb(0,152,212)';
 
         $scope.map.removeStation(name);
       }
@@ -249,7 +249,7 @@ angular
       }
     }
   })
-  .filter('stripProtocol', function() {
+  .filter('minimizeUrl', function() {
     return function(input) {
       input = input || '';
 
