@@ -356,8 +356,6 @@ function tubeMap() {
 
       cb(name);
     });
-
-
   }
 
   function drawLine(data) {

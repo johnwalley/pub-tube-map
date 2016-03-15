@@ -69,14 +69,10 @@ angular
     }
 
     $scope.selectPub = function(name) {
-      $scope.selectPubByName(name);
-    }
-
-    $scope.selectPubByName = function(pubName) {
-      var station = $scope.data.stations[pubName];
+      var station = $scope.data.stations[name];
 
       $scope.pub = {
-        "name": pubName,
+        "name": name,
         "title": station.title,
         "address": station.address,
         "website": station.website,
@@ -99,7 +95,7 @@ angular
         $scope.showListBottomSheet();
       }
 
-      ga('send', 'event', 'Station', 'click', pubName);
+      ga('send', 'event', 'Station', 'click', name);
     }
 
     $scope.centerPub = function(name) {
@@ -128,9 +124,9 @@ angular
         }
 
         $scope.centerPub(nearestPub);
-        $scope.selectPubByName(nearestPub);
-        d3.select("#map").selectAll(".label").classed("bounce", false);
+        $scope.selectPub(nearestPub);
 
+        d3.select("#map").selectAll(".label").classed("bounce", false); // TODO: These lines need to go into the map
         d3.select("#map").select(".labels").select("#" + nearestPub).classed("bounce", true);
 
         ga('send', 'event', 'Nearest', 'click', nearestPub);
