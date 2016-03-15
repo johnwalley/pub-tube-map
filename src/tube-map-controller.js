@@ -151,6 +151,8 @@ angular
         d3.select("#map").selectAll(".label").classed("bounce", false);
 
         d3.select("#map").select(".labels").select("#" + nearestPub).classed("bounce", true);
+
+        ga('send', 'event', 'Nearest', 'click', pubName);
       };
 
       function error() {
