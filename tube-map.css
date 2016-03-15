@@ -40,6 +40,10 @@ text {
   cursor: pointer;
   font-weight: normal;
 }
+.side-nav-content {
+  overflow-x: hidden;
+  margin: -20px 0px;
+}
 .side-nav-info-icon {
   margin: 0px 24px 0px 0px !important;
   color: rgb(49, 133, 255);
