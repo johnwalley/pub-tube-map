@@ -21,18 +21,15 @@ angular
 
     $scope.visited = [];
     $scope.developerMode = false;
-    $scope.totalPubs = 81;
     $scope.numVisited = $scope.visited.length;
     $scope.pub = {
-      "title": "Default Pub",
-      "visited": false
+      "title": "Default Pub"
     };
 
     $scope.map = map;
 
-    var lines;
-    var stations;
-    var labels;
+    $scope.totalPubs;
+
     var geoStations;
     var discrepencies;
 
@@ -44,21 +41,11 @@ angular
 
       $scope.totalPubs = Object.keys(data.stations).length;
 
-      lines = d3.select("#map").selectAll(".line");
-      stations = d3.select("#map").selectAll(".station");
-      interchanges = d3.select("#map").selectAll(".interchange");
-      labels = d3.select("#map").selectAll(".label");
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
 
-      interchanges.on("click", function() {
-        var label = d3.select(this);
-        $scope.selectPub(label);
-      });
-
-      labels.on("click", function() {
-        var label = d3.select(this);
-        $scope.selectPub(label);
+      map.registerStationCallback(function(name) {
+        $scope.selectPub(name);
       });
     });
 
@@ -81,19 +68,11 @@ angular
       }
     }
 
-    $scope.selectPub = function(label) {
-      var pubName = label.attr("id");
-      $scope.selectPubByName(pubName);
-      d3.select("#map").selectAll(".label").classed("bounce", false);
-
-      d3.select("#map").select(".labels").select("#" + pubName).classed("bounce", true);
-    }
-
-    $scope.selectPubByName = function(pubName) {
-      var station = $scope.data.stations[pubName];
+    $scope.selectPub = function(name) {
+      var station = $scope.data.stations[name];
 
       $scope.pub = {
-        "name": pubName,
+        "name": name,
         "title": station.title,
         "address": station.address,
         "website": station.website,
@@ -104,7 +83,7 @@ angular
 
       if (!$scope.pub.visited) {
         $scope.pub.clickIcon = 'add';
-        $scope.pub.backgroundColor = '#0098d4';
+        $scope.pub.backgroundColor = 'rgb(0,152,212)'; // TODO: Change class and handle through css
       } else {
         $scope.pub.clickIcon = 'done';
         $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
@@ -116,7 +95,7 @@ angular
         $scope.showListBottomSheet();
       }
 
-      ga('send', 'event', 'Station', 'click', pubName);
+      ga('send', 'event', 'Station', 'click', name);
     }
 
     $scope.centerPub = function(name) {
@@ -127,8 +106,6 @@ angular
       function success(position) {
         var latitude  = position.coords.latitude;
         var longitude = position.coords.longitude;
-
-        console.log(latitude + " " + longitude)
 
         var minDistance = 10000000;
         var nearestPub;
@@ -147,9 +124,9 @@ angular
         }
 
         $scope.centerPub(nearestPub);
-        $scope.selectPubByName(nearestPub);
-        d3.select("#map").selectAll(".label").classed("bounce", false);
+        $scope.selectPub(nearestPub);
 
+        d3.select("#map").selectAll(".label").classed("bounce", false); // TODO: These lines need to go into the map
         d3.select("#map").select(".labels").select("#" + nearestPub).classed("bounce", true);
 
         ga('send', 'event', 'Nearest', 'click', nearestPub);

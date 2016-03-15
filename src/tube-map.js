@@ -172,7 +172,7 @@ function tubeMap() {
         .interpolate("linear");
 
       // Update the stations
-      stations.enter().append("path")
+      stations.enter().append("g").append("path")
         .attr("d", function(d) {
           var dir;
 
@@ -213,6 +213,7 @@ function tubeMap() {
         .attr("stroke-width", lineWidth/2)
         .attr("fill", "none")
         .attr("class", function(d) { return d.line; })
+        .attr("id", function(d) { return d.name; })
         .classed("station", true);
 
         // Update the label text
@@ -221,7 +222,7 @@ function tubeMap() {
           .classed("label", true)
           .append("text")
           .text(function(d) { return d.label })
-          .attr("dy", .1)
+          .attr("dy", 0.1)
           .attr("x", function(d) { return xScale(d.x + d.labelShiftX) + textPos(d).pos[0]; })
           .attr("y", function(d) { return yScale(d.y + d.labelShiftY) - textPos(d).pos[1]; }) // Flip y-axis
           .attr("text-anchor", function(d) { return textPos(d).textAnchor })
@@ -322,6 +323,39 @@ function tubeMap() {
 
     zoom.translate(t).scale(2);
     gEnter.transition().duration(750).attr("transform", "translate(" + t[0] + "," + t[1] + ")scale(" + 2 + ")");
+  }
+
+  map.registerStationCallback = function(cb) {
+    var interchanges = d3.select("#map").selectAll(".interchange");
+    var stations = d3.select("#map").selectAll(".station");
+    var labels = d3.select("#map").selectAll(".label");
+
+    interchanges.on("click", function() {
+      var interchange = d3.select(this);
+      var name = interchange.attr("id");
+      d3.select("#map").selectAll(".label").classed("bounce", false);
+      d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
+
+      cb(name);
+    });
+
+    stations.on("click", function() {
+      var station = d3.select(this);
+      var name = station.attr("id");
+      d3.select("#map").selectAll(".label").classed("bounce", false);
+      d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
+
+      cb(name);
+    });
+
+    labels.on("click", function() {
+      var label = d3.select(this);
+      var name = label.attr("id");
+      d3.select("#map").selectAll(".label").classed("bounce", false);
+      d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
+
+      cb(name);
+    });
   }
 
   function drawLine(data) {
@@ -711,6 +745,7 @@ Stations.prototype.normalStations = function () {
         station.marker.forEach(function(marker) {
            stationMarkers.push(
                {
+                   "name": station.name,
                    "line": marker.line,
                    "x": station.x,
                    "y": station.y,
