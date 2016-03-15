@@ -559,6 +559,9 @@
     },
     "PintShop": {
       "title": "Pint Shop",
+      "address": "10 Peas Hill, Cambridge CB2 3PN",
+      "website": "http://pintshop.co.uk/",
+      "phone": "01223 352293",
       "position": {
         "lat": 52.204194,
         "lon": 0.119142
@@ -566,6 +569,9 @@
     },
     "Plough": {
       "title": "Plough",
+      "address": "Green End, Cambridge, Cambridgshire CB5 8SX",
+      "website": "http://www.theploughfenditton.co.uk/",
+      "phone": "01223 293264",
       "position": {
         "lat": 52.224075,
         "lon": 0.16823
@@ -573,6 +579,9 @@
     },
     "PortlandArms": {
       "title": "Portland Arms",
+      "address": "129 Chesterton Rd, Cambridge CB4 3BA",
+      "website": "http://www.theportlandarms.co.uk/",
+      "phone": "01223 357268",
       "position": {
         "lat": 52.214426,
         "lon": 0.124525
@@ -580,6 +589,9 @@
     },
     "PrinceRegent": {
       "title": "Prince Regent",
+      "address": "91 Regent St, Cambridge, CB2 1AW",
+      "website": "http://www.princeregent-cambridge.co.uk/",
+      "phone": "01223 505030",
       "position": {
         "lat": 52.199934,
         "lon": 0.126909
@@ -587,6 +599,9 @@
     },
     "Punter": {
       "title": "Punter",
+      "address": "3 Pound Hill, Cambridge CB3 0AE",
+      "website": "http://www.thepuntercambridge.com/",
+      "phone": "01223 363322",
       "position": {
         "lat": 52.210552,
         "lon": 0.113281
@@ -594,6 +609,9 @@
     },
     "QueenEdith": {
       "title": "Queen Edith",
+      "address": "Wulfstan Way, Cambridge, CB1 8QN",
+      "website": "https://www.individualpubs.co.uk/queenedith/",
+      "phone": "01223 244536",
       "position": {
         "lat": 52.180264,
         "lon": 0.152927
@@ -635,7 +653,7 @@
       }
     },
     "RupertBrook": {
-      "title": "Rupert Brook",
+      "title": "Rupert Brooke",
       "position": {
         "lat": 52.181132,
         "lon": 0.093629
