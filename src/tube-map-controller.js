@@ -173,7 +173,7 @@ angular
       });
     };
   })
-  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet) {
+  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdToast) {
     $scope.togglePub = function() {
       var pubName = $scope.pub.name;
 
@@ -202,6 +202,12 @@ angular
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
+
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Progress saved')
+          .position('top')
+          .hideDelay(2000));
 
       ga('send', 'event', 'Station', 'addPub', pubName);
     };
