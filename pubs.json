@@ -396,6 +396,9 @@
     },
     "Haymakers": {
       "title": "Haymakers",
+      "address": "54 High St, Cambridge CB4 1NG",
+      "website": "https://www.facebook.com/cambridgehaymakers",
+      "phone": "01223 311077",
       "position": {
         "lat": 52.217339,
         "lon": 0.139439
@@ -403,6 +406,9 @@
     },
     "Hopbine": {
       "title": "Hopbine",
+      "address": "11-12 Fair St, Cambridge, CB1 1HA",
+      "website": "http://www.thehopbine.co.uk/",
+      "phone": "01223 367204",
       "position": {
         "lat": 52.207365,
         "lon": 0.12938
@@ -410,6 +416,9 @@
     },
     "HudsonsAleHouse": {
       "title": "Hudson's Ale House",
+      "address": "77 High St, Trumpington CB2 9HZ",
+      "website": "http://www.hudsonalehouse.co.uk/",
+      "phone": "01223 570042",
       "position": {
         "lat": 52.175125,
         "lon": 0.112693
@@ -417,6 +426,7 @@
     },
     "JennyWren": {
       "title": "Jenny Wren",
+      "address": "St Kilda Ave, Cambridge, CB4 2QA",
       "position": {
         "lat": 52.229577,
         "lon": 0.137331
@@ -424,6 +434,8 @@
     },
     "KingsHead": {
       "title": "King's Head",
+      "address": "50 High St, Fen Ditton, Cambridge CB5 8ST",
+      "phone": "01223 293861",
       "position": {
         "lat": 52.2214166,
         "lon": 0.169868
@@ -431,6 +443,9 @@
     },
     "KingstonArms": {
       "title": "Kingston Arms",
+      "address": "33 Kingston St, Cambridge CB1 2NU",
+      "website": "http://www.kingston-arms.co.uk/",
+      "phone": "01223 319414",
       "position": {
         "lat": 52.200351,
         "lon": 0.139764
@@ -438,6 +453,8 @@
     },
     "KingStreetRun": {
       "title": "King Street\nRun",
+      "address": "86 King St, Cambridge CB1 1LN",
+      "phone": "01223 328900",
       "position": {
         "lat": 52.20724,
         "lon": 0.125199
@@ -445,6 +462,8 @@
     },
     "LiveAndLetLive": {
       "title": "Live and Let Live",
+      "address": "40 Mawson Rd, Cambridge, CB1 2EA",
+      "phone": "01223 460261",
       "position": {
         "lat": 52.199411,
         "lon": 0.135038
@@ -452,6 +471,9 @@
     },
     "LordByronInn": {
       "title": "Lord Byron Inn",
+      "address": "22 Church Ln, Trumpington, Cambridge CB2 9LA",
+      "website": "http://www.lordbyroninn.co.uk/",
+      "phone": "01223 845102",
       "position": {
         "lat": 52.174461,
         "lon": 0.110456
@@ -459,6 +481,9 @@
     },
     "Maypole": {
       "title": "Maypole",
+      "address": "20A Portugal Pl, Cambridge CB5 8AF",
+      "website": "http://www.maypolefreehouse.co.uk/",
+      "phone": "01223 352999",
       "position": {
         "lat": 52.209671,
         "lon": 0.119232
