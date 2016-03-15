@@ -42,6 +42,7 @@ text {
 }
 .side-nav-info-icon {
   margin: 0px 24px 0px 0px !important;
+  color: rgb(49, 133, 255);
 }
 .side-nav-info-list md-list-item {
   padding: 0px 24px 6px 0px;
