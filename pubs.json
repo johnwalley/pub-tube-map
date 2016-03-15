@@ -589,6 +589,9 @@
     },
     "PrinceRegent": {
       "title": "Prince Regent",
+      "address": "91 Regent St, Cambridge, CB2 1AW",
+      "website": "http://www.princeregent-cambridge.co.uk/",
+      "phone": "01223 505030",
       "position": {
         "lat": 52.199934,
         "lon": 0.126909
@@ -596,6 +599,9 @@
     },
     "Punter": {
       "title": "Punter",
+      "address": "3 Pound Hill, Cambridge CB3 0AE",
+      "website": "http://www.thepuntercambridge.com/",
+      "phone": "01223 363322",
       "position": {
         "lat": 52.210552,
         "lon": 0.113281
@@ -603,6 +609,9 @@
     },
     "QueenEdith": {
       "title": "Queen Edith",
+      "address": "Wulfstan Way, Cambridge, CB1 8QN",
+      "website": "https://www.individualpubs.co.uk/queenedith/",
+      "phone": "01223 244536",
       "position": {
         "lat": 52.180264,
         "lon": 0.152927
