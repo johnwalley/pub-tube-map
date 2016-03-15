@@ -175,9 +175,9 @@ angular
   })
   .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdToast) {
     $scope.togglePub = function() {
-      var pubName = $scope.pub.name;
+      var name = $scope.pub.name;
 
-      var index = $scope.visited.indexOf(pubName);
+      var index = $scope.visited.indexOf(name);
 
       if (index == -1) {
         $scope.addPub();
@@ -187,18 +187,18 @@ angular
     }
 
     $scope.addPub = function() {
-      var pubName = $scope.pub.name;
+      var name = $scope.pub.name;
 
-      var label = d3.select("#" + pubName);
+      var label = d3.select("#" + name);
 
-      if ($scope.visited.indexOf(pubName) == -1) {
-        $scope.data.stations[pubName].visited = true;
-        $scope.visited.push(pubName);
+      if ($scope.visited.indexOf(name) == -1) {
+        $scope.data.stations[name].visited = true;
+        $scope.visited.push(name);
         $scope.pub.visited = true;
         $scope.pub.clickIcon = 'done';
         $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
 
-        $scope.map.addStation(pubName);
+        $scope.map.addStation(name);
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
@@ -209,29 +209,29 @@ angular
           .position('top')
           .hideDelay(2000));
 
-      ga('send', 'event', 'Station', 'addPub', pubName);
+      ga('send', 'event', 'Station', 'addPub', name);
     };
 
     $scope.removePub = function() {
-      var pubName = $scope.pub.name;
+      var name = $scope.pub.name;
 
-      var label = d3.select("#" + pubName);
+      var label = d3.select("#" + name);
 
-      var index = $scope.visited.indexOf(pubName);
+      var index = $scope.visited.indexOf(name);
 
       if (index > -1) {
-        $scope.data.stations[pubName].visited = false;
+        $scope.data.stations[name].visited = false;
         $scope.visited.splice(index, 1);
         $scope.pub.visited = false;
         $scope.pub.clickIcon = 'add';
         $scope.pub.backgroundColor = '#0098d4';
 
-        $scope.map.removeStation(pubName);
+        $scope.map.removeStation(name);
       }
 
       $scope.$parent.numVisited = $scope.visited.length;
 
-      ga('send', 'event', 'Station', 'removePub', pubName);
+      ga('send', 'event', 'Station', 'removePub', name);
     };
 
     $scope.close = function() {
