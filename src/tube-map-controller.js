@@ -21,14 +21,14 @@ angular
 
     $scope.visited = [];
     $scope.developerMode = false;
-    $scope.totalPubs = 81;
     $scope.numVisited = $scope.visited.length;
     $scope.pub = {
-      "title": "Default Pub",
-      "visited": false
+      "title": "Default Pub"
     };
 
     $scope.map = map;
+
+    $scope.totalPubs;
 
     var lines;
     var stations;
@@ -51,14 +51,8 @@ angular
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
 
-      interchanges.on("click", function() {
-        var label = d3.select(this);
-        $scope.selectPub(label);
-      });
-
-      labels.on("click", function() {
-        var label = d3.select(this);
-        $scope.selectPub(label);
+      map.registerStationCallback(function(name) {
+        $scope.selectPub(name);
       });
     });
 
@@ -81,12 +75,8 @@ angular
       }
     }
 
-    $scope.selectPub = function(label) {
-      var pubName = label.attr("id");
-      $scope.selectPubByName(pubName);
-      d3.select("#map").selectAll(".label").classed("bounce", false);
-
-      d3.select("#map").select(".labels").select("#" + pubName).classed("bounce", true);
+    $scope.selectPub = function(name) {
+      $scope.selectPubByName(name);
     }
 
     $scope.selectPubByName = function(pubName) {
