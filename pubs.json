@@ -198,6 +198,9 @@
     },
     "Cricketers": {
       "title": "Cricketers",
+      "address": "18 Melbourne Pl, Cambridge CB1 1EQ",
+      "website": "http://lukthai.com/",
+      "phone": "01223 778871",
       "position": {
         "lat": 52.204954,
         "lon": 0.129559
@@ -205,6 +208,9 @@
     },
     "DevonshireArms": {
       "title": "Devonshire Arms",
+      "address": "1B Devonshire Rd, Cambridge, CB1 2BH",
+      "website": "https://www.individualpubs.co.uk/devonshire/",
+      "phone": "01223 316610",
       "position": {
         "lat": 52.198924,
         "lon": 0.139079
@@ -212,6 +218,9 @@
     },
     "Dobblers": {
       "title": "Dobblers",
+      "address": "184 Sturton St, Cambridge, CB1 2QF",
+      "website": "http://www.thedobblers.com/",
+      "phone": "01223 576092",
       "position": {
         "lat": 52.205422,
         "lon": 0.140016
@@ -219,6 +228,9 @@
     },
     "DukeOfCambridge": {
       "title": "Duke\nof Cambridge",
+      "address": "176 East Rd, Cambridge CB1 1BG",
+      "website": "http://www.dukeofcambridge-cambridge.co.uk/",
+      "phone": "01223 304121",
       "position": {
         "lat": 52.204871,
         "lon": 0.133633
@@ -226,6 +238,9 @@
     },
     "Eagle": {
       "title": "Eagle",
+      "address": "8 Benet Street, Cambridge, CB2 3QN",
+      "website": "http://www.eagle-cambridge.co.uk/",
+      "phone": "01223 505020",
       "position": {
         "lat": 52.203974,
         "lon": 0.118044
@@ -233,6 +248,9 @@
     },
     "EarlOfBeaconsfield": {
       "title": "Earl of Beaconsfield",
+      "address": "133 Mill Rd, Cambridge CB1 3AA",
+      "website": "http://www.earlofbeaconsfield.co.uk/",
+      "phone": "01223 410703",
       "position": {
         "lat": 52.198414,
         "lon": 0.142186
