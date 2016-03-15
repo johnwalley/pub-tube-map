@@ -342,7 +342,6 @@ function tubeMap() {
     stations.on("click", function() {
       var station = d3.select(this);
       var name = station.attr("id");
-      console.log(name);
       d3.select("#map").selectAll(".label").classed("bounce", false);
       d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
 

@@ -30,9 +30,6 @@ angular
 
     $scope.totalPubs;
 
-    var lines;
-    var stations;
-    var labels;
     var geoStations;
     var discrepencies;
 
@@ -44,10 +41,6 @@ angular
 
       $scope.totalPubs = Object.keys(data.stations).length;
 
-      lines = d3.select("#map").selectAll(".line");
-      stations = d3.select("#map").selectAll(".station");
-      interchanges = d3.select("#map").selectAll(".interchange");
-      labels = d3.select("#map").selectAll(".label");
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
 
