@@ -257,6 +257,11 @@ angular
         input = input.substring(7);
       }
 
+      // TODO: Learn to write regular expressions
+      if (input.match(/https:\/\//)) {
+        input = input.substring(8);
+      }
+
       if (input.match(/^www\./)) {
         input = input.substring(4);
       }
