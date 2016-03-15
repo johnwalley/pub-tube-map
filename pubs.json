@@ -491,6 +491,8 @@
     },
     "Med": {
       "title": "Med",
+      "address": "Perne Rd, Cambridge, CB1 3RX",
+      "phone": "01223 240808",
       "position": {
         "lat": 52.18913,
         "lon": 0.153427
@@ -498,6 +500,9 @@
     },
     "Mill": {
       "title": "Mill",
+      "address": "14 Mill Ln, Cambridge CB2 1RX",
+      "website": "http://www.themillpubcambridge.com/",
+      "phone": "01223 311829",
       "position": {
         "lat": 52.201552,
         "lon": 0.116128
@@ -505,6 +510,9 @@
     },
     "MiltonArms": {
       "title": "Milton Arms",
+      "address": "205 Milton Rd, Cambridge, CB4 1XG",
+      "website": "http://www.hungryhorse.co.uk/locations/milton-arms",
+      "phone": "01223 505012",
       "position": {
         "lat": 52.22268,
         "lon": 0.136693
@@ -512,6 +520,9 @@
     },
     "Mitre": {
       "title": "Mitre",
+      "address": "17 Bridge St, Cambridge CB2 1UF",
+      "website": "http://www.nicholsonspubs.co.uk/restaurants/eastofengland/themitrecambridge",
+      "phone": "01223 358403",
       "position": {
         "lat": 52.208852,
         "lon": 0.118185
@@ -519,6 +530,9 @@
     },
     "OldSpring": {
       "title": "Old Spring",
+      "address": "1 Ferry Path, Cambridge CB4 1HB",
+      "website": "http://www.theoldspring.co.uk/",
+      "phone": "01223 357228",
       "position": {
         "lat": 52.214393,
         "lon": 0.127719
@@ -526,6 +540,8 @@
     },
     "PantonArms": {
       "title": "Panton\nArms",
+      "address": "43 Panton St, Cambridge CB2 1HL",
+      "phone": "01223 464351",
       "position": {
         "lat": 52.196491,
         "lon": 0.124987
@@ -533,6 +549,9 @@
     },
     "Pickeral": {
       "title": "Pickeral",
+      "address": "30 Magdalene St, Cambridge CB3 0AF",
+      "website": "http://www.taylor-walker.co.uk/pub/pickerel-cambridge",
+      "phone": "01223 355068",
       "position": {
         "lat": 52.209955,
         "lon": 0.116209
