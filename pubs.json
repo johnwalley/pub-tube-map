@@ -336,6 +336,9 @@
     },
     "GrainStore": {
       "title": "Grain Store",
+      "address": "69-76 Regent St, Cambridge CB2 1AA",
+      "website": "http://www.grainandhopstore-cambridge.co.uk/",
+      "phone": "01223 323405",
       "position": {
         "lat": 52.200689,
         "lon": 0.126622
@@ -343,6 +346,9 @@
     },
     "Granta": {
       "title": "Granta",
+      "address": "14 Newnham Rd, Cambridge, CB3 9EX",
+      "website": "http://www.granta-cambridge.co.uk/",
+      "phone": "01223 505016",
       "position": {
         "lat": 52.1997,
         "lon": 0.11373
@@ -350,6 +356,9 @@
     },
     "Grapes": {
       "title": "Grapes",
+      "address": "19 Histon Rd, Cambridge CB4 3JB",
+      "website": "http://www.thegrapescambridge.co.uk/",
+      "phone": "01223 511974",
       "position": {
         "lat": 52.214963,
         "lon": 0.110773
@@ -357,6 +366,9 @@
     },
     "GreenDragon": {
       "title": "Green Dragon",
+      "address": "5 Water St, Cambridge CB4 1NZ",
+      "website": "http://www.greendragon-cambridge.co.uk/",
+      "phone": "01223 505035",
       "position": {
         "lat": 52.217958,
         "lon": 0.145433
@@ -364,6 +376,9 @@
     },
     "GreenManGrantchester": {
       "title": "Green Man",
+      "address": "59 High St, Grantchester, Cambridge CB3 9NF",
+      "website": "http://www.thegreenmangrantchester.co.uk/",
+      "phone": "01223 844669",
       "position": {
         "lat": 52.18004,
         "lon": 0.095174
@@ -371,6 +386,9 @@
     },
     "GreenManTrumpington": {
       "title": "Green Man",
+      "address": "55 High St, Cambridge, Trumpington CB2 9HZ",
+      "website": "http://www.thegreenmantrumpington.com/",
+      "phone": "01223 844903",
       "position": {
         "lat": 52.176564,
         "lon": 0.113054
