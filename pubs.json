@@ -619,6 +619,8 @@
     },
     "RedBull": {
       "title": "Red Bull",
+      "address": "11 Barton Rd, Newnham, Cambridge CB3 9JZ",
+      "phone": "01223 300943",
       "position": {
         "lat": 52.196487,
         "lon": 0.108657
@@ -626,6 +628,9 @@
     },
     "RedLion": {
       "title": "Red Lion",
+      "address": "33 High St, Grantchester, Cambridge CB3 9NF",
+      "website": "http://www.redliongrantchester.co.uk/",
+      "phone": "01223 840121",
       "position": {
         "lat": 52.180343,
         "lon": 0.095603
@@ -633,6 +638,9 @@
     },
     "Regal": {
       "title": "Regal",
+      "address": "38-39 St Andrew's St, Cambridge, Cambridgeshire CB2 3AR",
+      "website": "https://www.jdwetherspoon.com/pubs/all-pubs/england/cambridgeshire/the-regal-cambridge",
+      "phone": "01223 366459",
       "position": {
         "lat": 52.202947,
         "lon": 0.123806
@@ -640,6 +648,9 @@
     },
     "Rock": {
       "title": "Rock",
+      "address": "200 Cherry Hinton Rd, Cambridge CB1 7AW",
+      "website": "http://www.rock-cambridge.co.uk/",
+      "phone": "01223 505005",
       "position": {
         "lat": 52.187503,
         "lon": 0.146716
@@ -647,6 +658,9 @@
     },
     "RoyalStandard": {
       "title": "Royal Standard",
+      "address": "292 Mill Rd, Cambridge CB1 3NL",
+      "website": "http://royalstandardcambridge.com/",
+      "phone": "01223 569065",
       "position": {
         "lat": 52.197,
         "lon": 0.149764
@@ -654,6 +668,9 @@
     },
     "RupertBrook": {
       "title": "Rupert Brooke",
+      "address": "2 Broadway, Grantchester CB3 9NQ",
+      "website": "http://www.therupertbrooke.com/",
+      "phone": "01223 841875",
       "position": {
         "lat": 52.181132,
         "lon": 0.093629
@@ -661,6 +678,9 @@
     },
     "SalisburyArms": {
       "title": "Salisbury Arms",
+      "address": "76 Tenison Rd, Cambridge, CB1 2DW",
+      "website": "http://www.salisburyarmscambridge.co.uk/",
+      "phone": "01223 576363",
       "position": {
         "lat": 52.198305,
         "lon": 0.135435
@@ -668,6 +688,8 @@
     },
     "Ship": {
       "title": "Ship",
+      "address": "Northfields Ave, Cambridge CB4 2LG",
+      "phone": "01223 314445",
       "position": {
         "lat": 52.231224,
         "lon": 0.128837
@@ -675,6 +697,9 @@
     },
     "SirIsaacNewton": {
       "title": "Sir Isaac Newton",
+      "address": "84 Castle St, Cambridge CB3 0AJ",
+      "website": "http://www.sirisaacnewton-cambridge.co.uk/",
+      "phone": "01223 305555",
       "position": {
         "lat": 52.213338,
         "lon": 0.112072
@@ -682,6 +707,9 @@
     },
     "SixBells": {
       "title": "Six Bells",
+      "address": "11 Covent Garden, Cambridge CB1 2HS",
+      "website": "http://sixbellspub.co.uk/",
+      "phone": "01223 355559",
       "position": {
         "lat": 52.200395,
         "lon": 0.134442
@@ -689,6 +717,8 @@
     },
     "StRadegund": {
       "title": "St Radegund",
+      "address": "129 King St, Cambridge, CB1 1LD",
+      "phone": "01223 311794",
       "position": {
         "lat": 52.207616,
         "lon": 0.126733
@@ -696,6 +726,9 @@
     },
     "TramDepot": {
       "title": "Tram Depot",
+      "address": "3-5 Dover St, Cambridge CB1 1DY",
+      "website": "https://sites.google.com/site/tramdepotcambs/",
+      "phone": "01223 324553",
       "position": {
         "lat": 52.204638,
         "lon": 0.132827
@@ -703,6 +736,9 @@
     },
     "Waterman": {
       "title": "Waterman",
+      "address": "32 Chesterton Rd, Cambridge CB4 3AX",
+      "website": "http://www.thewaterman-cambridge.co.uk/",
+      "phone": "01223 323813",
       "position": {
         "lat": 52.214166,
         "lon": 0.125526
@@ -710,6 +746,8 @@
     },
     "WhiteSwan": {
       "title": "White Swan",
+      "address": "109 Mill Rd, City Centre, Cambridge CB1 2AZ",
+      "website": "http://www.whiteswancambridge.co.uk/",
       "position": {
         "lat": 52.199318,
         "lon": 0.139278
@@ -717,6 +755,9 @@
     },
     "Wrestlers": {
       "title": "Wrestlers",
+      "address": "Newmarket Rd, Cambridge CB5 8JE",
+      "website": "http://www.thewrestlerscambridge.co.uk/",
+      "phone": "01223 566554",
       "position": {
         "lat": 52.210964,
         "lon": 0.146358
