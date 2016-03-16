@@ -1,6 +1,8 @@
 angular
   .module('pubMapApp', ['ngMaterial', 'ngMdIcons'])
-  .config(function($mdThemingProvider) {
+  .config(function($mdThemingProvider, $compileProvider) {
+    $compileProvider.debugInfoEnabled(false);
+
     $mdThemingProvider.theme('default')
       .primaryPalette('light-blue')
       .accentPalette('blue');
