@@ -547,8 +547,8 @@
         "lon": 0.124987
       }
     },
-    "Pickeral": {
-      "title": "Pickeral",
+    "Pickerel": {
+      "title": "Pickerel",
       "address": "30 Magdalene St, Cambridge CB3 0AF",
       "website": "http://www.taylor-walker.co.uk/pub/pickerel-cambridge",
       "phone": "01223 355068",
@@ -897,7 +897,7 @@
     }, {
       "coords": [3, 10],
       "marker": "interchange",
-      "name": "Pickeral",
+      "name": "Pickerel",
       "labelPos": "SW"
     }, {
       "coords": [12, 10],
@@ -931,7 +931,7 @@
     }, {
       "coords": [3, 10],
       "marker": "interchange",
-      "name": "Pickeral",
+      "name": "Pickerel",
       "labelPos": "SW",
       "hide": true
     }, {
