@@ -46,7 +46,7 @@ angular
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
 
-      map.registerStationCallback(function(name) {
+      map.on('click', function(name) {
         $scope.selectPub(name);
       });
     });

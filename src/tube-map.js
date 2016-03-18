@@ -9,6 +9,8 @@ function tubeMap() {
   var lineWidth;
   var lineWidthMultiplier = 1.2;
 
+  var dispatch = d3.dispatch("click");
+
   var model;
 
   var gEnter;
@@ -127,118 +129,121 @@ function tubeMap() {
       svg.attr("width", '100%')
          .attr("height", '100%');
 
-     width = svg.attr("width");
-     height = svg.attr("height");
+       width = svg.attr("width");
+       height = svg.attr("height");
 
-     // Update the river
-     river.enter().append("path")
-        .attr("d", drawLine)
-        .attr("stroke", "#C4E8F8")
-        .attr("fill", "none")
-        .attr("stroke-width", 1.8*lineWidth);
+       // Update the river
+       river.enter().append("path")
+          .attr("d", drawLine)
+          .attr("stroke", "#C4E8F8")
+          .attr("fill", "none")
+          .attr("stroke-width", 1.8*lineWidth);
 
-      // Update the lines
-      lines.enter().append("path")
-         .attr("d", drawLine)
-         .attr("id", function(d) { return d.name; })
-         .attr("stroke", function(d) { return d.color; })
-         .attr("fill", "none")
-         .attr("stroke-width", function(d) { return d.highlighted ? lineWidth * 1.3 : lineWidth; })
-         .classed("line", true);
+        // Update the lines
+        lines.enter().append("path")
+           .attr("d", drawLine)
+           .attr("id", function(d) { return d.name; })
+           .attr("stroke", function(d) { return d.color; })
+           .attr("fill", "none")
+           .attr("stroke-width", function(d) { return d.highlighted ? lineWidth * 1.3 : lineWidth; })
+           .classed("line", true);
 
-      var fgColor = "#000000";
-      var bgColor = "#ffffff";
+        var fgColor = "#000000";
+        var bgColor = "#ffffff";
 
-      var markerFunction = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(lineWidth)
-        .startAngle(0)
-        .endAngle(2*Math.PI);
+        var markerFunction = d3.svg.arc()
+          .innerRadius(0)
+          .outerRadius(lineWidth)
+          .startAngle(0)
+          .endAngle(2*Math.PI);
 
-      // Update the interchanges
-      interchanges.enter().append("g").append("path")
-        .attr("d", markerFunction)
-        .attr("transform", function(d) { return "translate(" + xScale(d.x + d.marker[0].shiftX*lineWidthMultiplier) + "," + yScale(d.y + d.marker[0].shiftY*lineWidthMultiplier) + ")" })
-        .attr("id", function(d) { return d.name; })
-        .attr("stroke-width", lineWidth/2)
-        .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
-        .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
-        .classed("interchange", true)
-        .style("cursor", "pointer");
-
-      var lineFunction = d3.svg.line()
-        .x(function(d) { return xScale(d[0]); })
-        .y(function(d) { return yScale(d[1]); })
-        .interpolate("linear");
-
-      // Update the stations
-      stations.enter().append("g").append("path")
-        .attr("d", function(d) {
-          var dir;
-
-          var sqrt2 = Math.sqrt(2);
-
-           switch (d.labelPos.toLowerCase()) {
-             case "n":
-               dir = [0, 1];
-               break;
-             case "ne":
-               dir = [1/sqrt2, 1/sqrt2];
-               break;
-             case "e":
-               dir = [1, 0];
-               break;
-             case "se":
-               dir = [1/sqrt2, -1/sqrt2];
-               break;
-             case "s":
-               dir = [0, -1];
-               break;
-             case "sw":
-               dir = [-1/sqrt2, -1/sqrt2];
-               break;
-             case "w":
-               dir = [-1, 0];
-               break;
-             case "nw":
-               dir = [-1/sqrt2, 1/sqrt2];
-               break;
-             default:
-               break;
-           }
-
-           return lineFunction([[d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier/2.05*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier/2.05*dir[1]], [d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier*dir[1]]]);
-        })
-        .attr("stroke", function(d) { return d.color; })
-        .attr("stroke-width", lineWidth/2)
-        .attr("fill", "none")
-        .attr("class", function(d) { return d.line; })
-        .attr("id", function(d) { return d.name; })
-        .classed("station", true);
-
-        // Update the label text
-        labels.enter().append("g")
+        // Update the interchanges
+        interchanges.enter().append("g")
           .attr("id", function(d) { return d.name; })
-          .classed("label", true)
-          .append("text")
-          .text(function(d) { return d.label })
-          .attr("dy", 0.1)
-          .attr("x", function(d) { return xScale(d.x + d.labelShiftX) + textPos(d).pos[0]; })
-          .attr("y", function(d) { return yScale(d.y + d.labelShiftY) - textPos(d).pos[1]; }) // Flip y-axis
-          .attr("text-anchor", function(d) { return textPos(d).textAnchor })
-          .style("display", function(d) { return d.hide != true ? "block" : "none"; })
-          .style("font-size", 1.2*lineWidth/lineWidthMultiplier + "px")
-          .style("-webkit-user-select", "none")
-          .attr("class", function(d) {
-            // TODO: this is horrible and also ignores interchanges. And inserts a space at the front!
-            var str = "";
-            d.marker.forEach(function(marker) {
-              str = str + " " + marker.line;
-            });
-            return str;
+          .append("path")
+          .attr("d", markerFunction)
+          .attr("transform", function(d) { return "translate(" + xScale(d.x + d.marker[0].shiftX*lineWidthMultiplier) + "," + yScale(d.y + d.marker[0].shiftY*lineWidthMultiplier) + ")" })
+          .attr("stroke-width", lineWidth/2)
+          .attr("fill", function(d) { return d.visited ? fgColor : bgColor; })
+          .attr("stroke", function(d) { return d.visited ? bgColor : fgColor; })
+          .classed("interchange", true)
+          .style("cursor", "pointer");
+
+        var lineFunction = d3.svg.line()
+          .x(function(d) { return xScale(d[0]); })
+          .y(function(d) { return yScale(d[1]); })
+          .interpolate("linear");
+
+        // Update the stations
+        stations.enter().append("g")
+          .attr("id", function(d) { return d.name; })
+          .append("path")
+          .attr("d", function(d) {
+            var dir;
+
+            var sqrt2 = Math.sqrt(2);
+
+             switch (d.labelPos.toLowerCase()) {
+               case "n":
+                 dir = [0, 1];
+                 break;
+               case "ne":
+                 dir = [1/sqrt2, 1/sqrt2];
+                 break;
+               case "e":
+                 dir = [1, 0];
+                 break;
+               case "se":
+                 dir = [1/sqrt2, -1/sqrt2];
+                 break;
+               case "s":
+                 dir = [0, -1];
+                 break;
+               case "sw":
+                 dir = [-1/sqrt2, -1/sqrt2];
+                 break;
+               case "w":
+                 dir = [-1, 0];
+                 break;
+               case "nw":
+                 dir = [-1/sqrt2, 1/sqrt2];
+                 break;
+               default:
+                 break;
+             }
+
+             return lineFunction([[d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier/2.05*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier/2.05*dir[1]], [d.x + (d.shiftX*lineWidthMultiplier) + lineWidthMultiplier*dir[0], d.y + (d.shiftY*lineWidthMultiplier) + lineWidthMultiplier*dir[1]]]);
           })
-          .classed("highlighted", function(d) { return d.visited; })
-          .call(wrap);
+          .attr("stroke", function(d) { return d.color; })
+          .attr("stroke-width", lineWidth/2)
+          .attr("fill", "none")
+          .attr("class", function(d) { return d.line; })
+          .attr("id", function(d) { return d.name; })
+          .classed("station", true);
+
+          // Update the label text
+          labels.enter().append("g")
+            .attr("id", function(d) { return d.name; })
+            .classed("label", true)
+            .append("text")
+            .text(function(d) { return d.label })
+            .attr("dy", 0.1)
+            .attr("x", function(d) { return xScale(d.x + d.labelShiftX) + textPos(d).pos[0]; })
+            .attr("y", function(d) { return yScale(d.y + d.labelShiftY) - textPos(d).pos[1]; }) // Flip y-axis
+            .attr("text-anchor", function(d) { return textPos(d).textAnchor })
+            .style("display", function(d) { return d.hide != true ? "block" : "none"; })
+            .style("font-size", 1.2*lineWidth/lineWidthMultiplier + "px")
+            .style("-webkit-user-select", "none")
+            .attr("class", function(d) {
+              // TODO: this is horrible and also ignores interchanges. And inserts a space at the front!
+              var str = "";
+              d.marker.forEach(function(marker) {
+                str = str + " " + marker.line;
+              });
+              return str;
+            })
+            .classed("highlighted", function(d) { return d.visited; })
+            .call(wrap);
 
           var markerGeoFunction = d3.svg.arc()
             .innerRadius(0)
@@ -260,6 +265,32 @@ function tubeMap() {
             .attr("stroke", '#AAAAAA')
             .attr("stroke-width", lineWidth/4)
             .style("stroke-dasharray", ("3, 3"));
+
+          interchanges.on("click", function() {
+            var interchange = d3.select(this);
+            var name = interchange.attr("id");
+            selectStation(name);
+
+            dispatch.click(name);
+          });
+
+          stations.on("click", function() {
+            var station = d3.select(this);
+            var name = station.attr("id");
+
+            selectStation(name);
+
+            dispatch.click(name);
+          });
+
+          labels.on("click", function() {
+            var label = d3.select(this);
+            var name = label.attr("id");
+
+            selectStation(name);
+
+            dispatch.click(name);
+          });
     });
   }
 
@@ -333,34 +364,8 @@ function tubeMap() {
     visitStation(name, false);
   }
 
-  map.registerStationCallback = function(cb) {
-    var interchanges = d3.select("#map").selectAll(".interchange");
-    var stations = d3.select("#map").selectAll(".station");
-    var labels = d3.select("#map").selectAll(".label");
-
-    interchanges.on("click", function() {
-      var interchange = d3.select(this);
-      var name = interchange.attr("id");
-      selectStation(name);
-
-      cb(name);
-    });
-
-    stations.on("click", function() {
-      var station = d3.select(this);
-      var name = station.attr("id");
-
-      selectStation(name);
-      cb(name);
-    });
-
-    labels.on("click", function() {
-      var label = d3.select(this);
-      var name = label.attr("id");
-
-      selectStation(name);
-      cb(name);
-    });
+  map.on = function(event, callback) {
+    dispatch.on(event, callback)
   }
 
   function selectStation(name) {
@@ -371,7 +376,7 @@ function tubeMap() {
   function visitStation(name, highlighted) {
     var labels = d3.select("#map").selectAll(".label");
     d3.select("#map").select(".labels").select("#" + name).select("text").classed("highlighted", highlighted);
-  }  
+  }
 
   function drawLine(data) {
     var path = "";
