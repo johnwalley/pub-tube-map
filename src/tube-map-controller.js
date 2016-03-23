@@ -1,9 +1,15 @@
 angular
   .module('pubMapApp', ['ngMaterial', 'ngMdIcons', 'uiGmapgoogle-maps'])
-  .config(function($mdThemingProvider) {
+  .config(function($mdThemingProvider, uiGmapGoogleMapApiProvider) {
     $mdThemingProvider.theme('default')
       .primaryPalette('light-blue')
       .accentPalette('blue');
+
+      uiGmapGoogleMapApiProvider.configure({
+          key: 'AIzaSyCHEhDFuNZE1-Se3x7aRHZLCHwMV2Xqhnc',
+          v: '3.22',
+          libraries: 'places'
+      });
   })
   .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast) {
     var width = 1600,
