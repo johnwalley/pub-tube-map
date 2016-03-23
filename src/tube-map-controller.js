@@ -160,8 +160,8 @@ angular
         $scope.centerPub(nearestPub);
         $scope.selectPub(nearestPub);
 
-        d3.select("#map").selectAll(".label").classed("bounce", false); // TODO: These lines need to go into the map
-        d3.select("#map").select(".labels").select("#" + nearestPub).classed("bounce", true);
+        d3.select("#map").selectAll(".label").classed("selected", false); // TODO: These lines need to go into the map
+        d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
 
         ga('send', 'event', 'Nearest', 'click', nearestPub);
       };
@@ -182,9 +182,9 @@ angular
       var randomPubName = fetch_random($scope.data.stations);
       $scope.centerPub(randomPubName);
       $scope.selectPub(randomPubName);
-      d3.select("#map").selectAll(".label").classed("bounce", false);
+      d3.select("#map").selectAll(".label").classed("selected", false);
 
-      d3.select("#map").select(".labels").select("#" + randomPubName).classed("bounce", true);
+      d3.select("#map").select(".labels").select("#" + randomPubName).classed("selected", true);
     }
 
     function fetch_random(obj) {

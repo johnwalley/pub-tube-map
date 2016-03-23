@@ -369,8 +369,8 @@ function tubeMap() {
   }
 
   function selectStation(name) {
-    d3.select("#map").selectAll(".label").classed("bounce", false);
-    d3.select("#map").select(".labels").select("#" + name).classed("bounce", true);
+    d3.select("#map").selectAll(".label").classed("selected", false);
+    d3.select("#map").select(".labels").select("#" + name).classed("selected", true);
   }
 
   function visitStation(name, highlighted) {
