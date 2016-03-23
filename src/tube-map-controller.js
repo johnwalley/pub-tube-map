@@ -226,8 +226,8 @@ angular
       $mdToast.show(
         $mdToast.simple()
           .textContent('Progress saved')
-          .position('top')
-          .hideDelay(2000));
+          .position('top left')
+          .hideDelay(1000));
 
       ga('send', 'event', 'Station', 'addPub', name);
     };
