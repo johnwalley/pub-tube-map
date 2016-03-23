@@ -34,7 +34,7 @@
                 <h2>Select a pub to get started</h2>
             </div>
             <div ng-switch-default layout-fill>
-              <img ng-src="img/{{pub.name}}.jpg" err-src="img/Haymakers.jpg" width="320px" height="240px"></img>
+              <img ng-src="img/{{pub.name}}.jpg" width="320px" height="240px"></img>
               <div layout="row" layout-align="end">
                 <md-button ng-click="togglePub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
                   <md-tooltip md-direction="left" md-delay="1000">
@@ -95,7 +95,6 @@
   <script src="bower_components/angular-messages/angular-messages.min.js"></script>
   <script src="bower_components/angular-material/angular-material.min.js"></script>
 
-  <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
   <script src='bower_components/lodash/dist/lodash.min.js'></script>
   <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.min.js'></script>

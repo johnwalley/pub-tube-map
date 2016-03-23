@@ -1,11 +1,17 @@
 angular
   .module('pubMapApp', ['ngMaterial', 'ngMdIcons', 'uiGmapgoogle-maps'])
-  .config(function($mdThemingProvider, $compileProvider) {
+  .config(function($mdThemingProvider, $compileProvider, uiGmapGoogleMapApiProvider) {
     $compileProvider.debugInfoEnabled(false);
 
     $mdThemingProvider.theme('default')
       .primaryPalette('light-blue')
       .accentPalette('blue');
+
+      uiGmapGoogleMapApiProvider.configure({
+          key: 'AIzaSyCHEhDFuNZE1-Se3x7aRHZLCHwMV2Xqhnc',
+          v: '3.22',
+          libraries: 'places'
+      });
   })
   .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast) {
     var width = 1600,
@@ -222,8 +228,8 @@ angular
       $mdToast.show(
         $mdToast.simple()
           .textContent('Progress saved')
-          .position('top')
-          .hideDelay(2000));
+          .position('top left')
+          .hideDelay(1000));
 
       ga('send', 'event', 'Station', 'addPub', name);
     };
@@ -252,17 +258,6 @@ angular
 
     $scope.close = function() {
       $mdSidenav('left').close();
-    }
-  })
-  .directive('errSrc', function() {
-    return {
-      link: function(scope, element, attrs) {
-        element.bind('error', function() {
-          if (attrs.src != attrs.errSrc) {
-            attrs.$set('src', attrs.errSrc);
-          }
-        });
-      }
     }
   })
   .filter('minimizeUrl', function() {
