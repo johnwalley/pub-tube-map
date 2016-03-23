@@ -13,7 +13,7 @@ angular
           libraries: 'places'
       });
   })
-  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast) {
+  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
     var width = 1600,
       height = 1024;
 
@@ -28,6 +28,7 @@ angular
       });
 
     $scope.visited = [];
+
     $scope.developerMode = false;
     $scope.numVisited = $scope.visited.length;
     $scope.pub = {
@@ -51,6 +52,19 @@ angular
 
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
+
+      var path = $location.path().replace(/^\//g, '');
+
+      if (path.length) {
+        $scope.visited = path.split(',');
+        $scope.visited.map(function(pub) {
+          $scope.map.addStation(pub);
+          $scope.data.stations[pub].visited = true;
+        });
+
+      } else {
+        $scope.visited = [];
+      }
 
       map.on('click', function(name) {
         $scope.selectPub(name);
@@ -148,8 +162,8 @@ angular
         $scope.centerPub(nearestPub);
         $scope.selectPub(nearestPub);
 
-        d3.select("#map").selectAll(".label").classed("bounce", false); // TODO: These lines need to go into the map
-        d3.select("#map").select(".labels").select("#" + nearestPub).classed("bounce", true);
+        d3.select("#map").selectAll(".label").classed("selected", false); // TODO: These lines need to go into the map
+        d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
 
         ga('send', 'event', 'Nearest', 'click', nearestPub);
       };
@@ -170,9 +184,9 @@ angular
       var randomPubName = fetch_random($scope.data.stations);
       $scope.centerPub(randomPubName);
       $scope.selectPub(randomPubName);
-      d3.select("#map").selectAll(".label").classed("bounce", false);
+      d3.select("#map").selectAll(".label").classed("selected", false);
 
-      d3.select("#map").select(".labels").select("#" + randomPubName).classed("bounce", true);
+      d3.select("#map").select(".labels").select("#" + randomPubName).classed("selected", true);
     }
 
     function fetch_random(obj) {
@@ -195,7 +209,7 @@ angular
       });
     };
   })
-  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdToast) {
+  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdToast, $location) {
     $scope.togglePub = function() {
       var name = $scope.pub.name;
 
@@ -206,6 +220,8 @@ angular
       } else {
         $scope.removePub();
       }
+
+      $location.path($scope.visited);
     }
 
     $scope.addPub = function() {
