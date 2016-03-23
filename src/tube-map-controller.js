@@ -1,5 +1,5 @@
 angular
-  .module('pubMapApp', ['ngMaterial', 'ngMdIcons'])
+  .module('pubMapApp', ['ngMaterial', 'ngMdIcons', 'uiGmapgoogle-maps'])
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
       .primaryPalette('light-blue')
@@ -78,7 +78,21 @@ angular
         "website": station.website,
         "phone": station.phone,
         "position": station.position,
-        "visited": station.visited
+        "visited": station.visited,
+        "googleMap": {
+          "center": {
+            "latitude": station.position.lat,
+            "longitude": station.position.lon
+          },
+          "zoom": 16,
+          "marker": {
+            "id": 0,
+            "coords": {
+              "latitude": station.position.lat,
+              "longitude": station.position.lon
+            }
+          }
+        }
       };
 
       if (!$scope.pub.visited) {
