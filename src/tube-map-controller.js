@@ -193,7 +193,7 @@ angular
       });
     };
   })
-  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdToast) {
+  .controller('SideNavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdToast, $location) {
     $scope.togglePub = function() {
       var name = $scope.pub.name;
 
@@ -204,6 +204,8 @@ angular
       } else {
         $scope.removePub();
       }
+
+      $location.path($scope.visited);
     }
 
     $scope.addPub = function() {
