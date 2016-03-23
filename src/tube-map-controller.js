@@ -11,7 +11,7 @@ angular
           libraries: 'places'
       });
   })
-  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast) {
+  .controller('PubMapCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
     var width = 1600,
       height = 1024;
 
@@ -26,6 +26,7 @@ angular
       });
 
     $scope.visited = [];
+
     $scope.developerMode = false;
     $scope.numVisited = $scope.visited.length;
     $scope.pub = {
@@ -49,6 +50,19 @@ angular
 
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
+
+      var path = $location.path().replace(/^\//g, '');
+
+      if (path.length) {
+        $scope.visited = path.split(',');
+        $scope.visited.map(function(pub) {
+          $scope.map.addStation(pub);
+          $scope.data.stations[pub].visited = true;
+        });
+
+      } else {
+        $scope.visited = [];
+      }
 
       map.on('click', function(name) {
         $scope.selectPub(name);
