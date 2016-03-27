@@ -350,8 +350,7 @@ function tubeMap() {
     var station = model.stations.stations[name];
 
     t = [-2*(xScale(station.x)-400), -2*(yScale(station.y)-200)]
-    console.log(name + ": " + t);
-
+    
     zoom.translate(t).scale(2);
     gEnter.transition().duration(750).attr("transform", "translate(" + t[0] + "," + t[1] + ")scale(" + 2 + ")");
   }
