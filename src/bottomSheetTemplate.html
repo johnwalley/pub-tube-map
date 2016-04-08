@@ -1,9 +1,9 @@
 <md-bottom-sheet ng-cloak>
 <div layout="row" layout-align="end">
-  <md-button ng-click="togglePub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pub.backgroundColor}}" aria-label="Add Pub">
-    <ng-md-icon icon="{{pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
+  <md-button ng-click="pubMap.togglePub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pubMap.pub.backgroundColor}}" aria-label="Add Pub">
+    <ng-md-icon icon="{{pubMap.pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
   </md-button>
 </div>
-<h2 class="name">{{pub.title}}</h2>
-<p>{{pub.address}}</p>
+<h2 class="name">{{pubMap.pub.title}}</h2>
+<p>{{pubMap.pub.address}}</p>
 </md-bottom-sheet>

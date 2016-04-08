@@ -202,11 +202,11 @@ export default class PubMapCtrl {
   }
 
   showListBottomSheet() {
-    this.alert = '';
-    $mdBottomSheet.show({
+    this.$mdBottomSheet.show({
       templateUrl: 'src/bottomSheetTemplate.html',
-      controller: 'SideNavCtrl',
-      scope: this,
+      controller: 'PubMapCtrl',
+      scope: this.$scope, // Needs a real scope object to call methods like $watch
+      disableParentScroll: false,
       preserveScope: true // TODO: Surely this is a hack
     });
   };
@@ -245,7 +245,7 @@ export default class PubMapCtrl {
     this.$mdToast.show(
       this.$mdToast.simple()
         .textContent('Progress saved')
-        .position('top left')
+        .position('top')
         .hideDelay(1000));
 
     ga('send', 'event', 'Station', 'addPub', name);
