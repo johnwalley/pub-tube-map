@@ -24,48 +24,49 @@
   </script>
 </head>
 <body ng-app="pubMapApp" ng-cloak>
-  <div ng-controller="PubMapCtrl" ng-cloak>
+  <div ng-controller="PubMapCtrl as pubMap" ng-cloak>
     <section layout="row" flex>
-      <div layout="column" alyout-fill>
-        <div ng-controller="SideNavCtrl" ng-switch="true" flex>
-          <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" md-is-open="false" ng-switch="pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
+      <div layout="column">
+        <div ng-switch="true" flex>
+          <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" md-is-open="false" ng-switch="pubMap.pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
             <div ng-switch-when="Default Pub">
               <md-content layout-padding>
                 <h2>Select a pub to get started</h2>
+              </md-content>
             </div>
             <div ng-switch-default layout-fill>
-              <img ng-src="img/{{pub.name}}.jpg" width="320px" height="240px"></img>
+              <img ng-src="img/{{pubMap.pub.name}}.jpg" width="320px" height="240px"></img>
               <div layout="row" layout-align="end">
-                <md-button ng-click="togglePub()" class="md-fab md-primary toggle-pub-button" style="background-color: {{pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
+                <md-button ng-click="pubMap.togglePub()" class="md-fab md-primary toggle-pub-button" style="background-color: {{pubMap.pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
                   <md-tooltip md-direction="left" md-delay="1000">
                     I've been here!
                   </md-tooltip>
-                  <ng-md-icon icon="{{pub.clickIcon}}" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
+                  <ng-md-icon icon="{{pubMap.pub.clickIcon}}" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
                 </md-button>
               </div>
               <md-content layout-padding class="side-nav-content">
-                <h2 class="name">{{pub.title}}</h2>
+                <h2 class="name">{{pubMap.pub.title}}</h2>
                 <md-list class="side-nav-info-list">
                   <md-list-item class="side-nav-info-list">
                     <md-icon class="material-icons side-nav-info-icon">location_on</md-icon>
-                    <p>{{pub.address}}</p>
+                    <p>{{pubMap.pub.address}}</p>
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">link</md-icon>
-                    <p><a target="_blank" ng-href="{{pub.website}}">{{pub.website | minimizeUrl}}</a></p>
+                    <p><a target="_blank" ng-href="{{pubMap.pub.website}}">{{pubMap.pub.website | minimizeUrl}}</a></p>
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
-                    <p><a href="tel:{{pub.phone}}">{{pub.phone}}</a></p>
+                    <p><a href="tel:{{pubMap.pub.phone}}">{{pubMap.pub.phone}}</a></p>
                   </md-list-item>
                   <md-list-item>
                     <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
-                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pub.title}} pub">Directions</a></p>
+                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pubMap.pub.title}} pub">Directions</a></p>
                   </md-list-item>
                 </md-list>
               </md-content>
-              <ui-gmap-google-map center='pub.googleMap.center' zoom='pub.googleMap.zoom' pan="true">
-                <ui-gmap-marker coords="pub.googleMap.marker.coords" options="pub.googleMap.marker.options" events="pub.googleMap.marker.events" idkey="pub.googleMap.marker.id">
+              <ui-gmap-google-map center='pubMap.pub.googleMap.center' zoom='pubMap.pub.googleMap.zoom' pan="true">
+                <ui-gmap-marker coords="pubMap.pub.googleMap.marker.coords" options="pubMap.pub.googleMap.marker.options" events="pubMap.pub.googleMap.marker.events" idkey="pubMap.pub.googleMap.marker.id">
                 </ui-gmap-marker>
               </ui-gmap-google-map>
             </div>
@@ -74,12 +75,12 @@
       </div>
       <md-content flex>
         <div layout="column" layout-align="center stretch">
-          <div id="score" ng-show="numVisited > 0">
-            <p>visited {{numVisited}}/{{totalPubs}}</p>
+          <div id="pubMap.score" ng-show="numVisited > 0">
+            <p>visited {{pubMap.numVisited}}/{{pubMap.totalPubs}}</p>
           </div>
           <div id="map"></div>
         </div>
-        <md-button ng-click="selectNearestPub()" class="md-fab md-primary md-fab-bottom-right toggle-pub-button" aria-label="Go to nearest pub">
+        <md-button ng-click="pubMap.selectNearestPub()" class="md-fab md-primary md-fab-bottom-right toggle-pub-button" aria-label="Go to nearest pub">
           <md-tooltip md-direction="left" md-delay="1000">
             Go to nearest pub
           </md-tooltip>
@@ -89,23 +90,11 @@
     </section>
   </div>
 
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-  <script src="bower_components/angular-aria/angular-aria.min.js"></script>
-  <script src="bower_components/angular-messages/angular-messages.min.js"></script>
-  <script src="bower_components/angular-material/angular-material.min.js"></script>
-
-
-  <script src='bower_components/lodash/dist/lodash.min.js'></script>
-  <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
-  <script src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
-
-  <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
   <script src="bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
 
   <script src="bower_components/d3/d3.min.js"></script>
 
   <script src="src/tube-map.js"></script>
-  <script src="src/tube-map-controller.js"></script>
+  <script src="bundle.js"></script>
 </body>
 </html>
