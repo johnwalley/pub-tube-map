@@ -1,6 +1,7 @@
 export default class PubMapCtrl {
-  constructor($mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
+  constructor($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
 
+    this.$scope = $scope;
     this.$mdSidenav = $mdSidenav;
     this.$mdBottomSheet = $mdBottomSheet;
     this.$mdMedia = $mdMedia;
@@ -62,6 +63,7 @@ export default class PubMapCtrl {
 
       _this.map.on('click', function(name) {
         _this.selectPub(name);
+        _this.$scope.$apply();
       });
     });
   };
