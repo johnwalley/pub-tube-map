@@ -68,37 +68,17 @@
 	
 	var _pubMapController2 = _interopRequireDefault(_pubMapController);
 	
-	var _sideNavController = __webpack_require__(19);
-	
-	var _sideNavController2 = _interopRequireDefault(_sideNavController);
-	
-	var _minimizeUrl = __webpack_require__(20);
+	var _minimizeUrl = __webpack_require__(19);
 	
 	var _minimizeUrl2 = _interopRequireDefault(_minimizeUrl);
 	
-	var _config = __webpack_require__(21);
+	var _config = __webpack_require__(20);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).controller('SideNavCtrl', _sideNavController2.default).filter('minimizeUrl', _minimizeUrl2.default);
-	
-	/*'ngMaterial', 'ngMdIcons', 'uiGmapgoogle-maps'*/
-
-	/*
-
-
-	  <script src='bower_components/lodash/dist/lodash.min.js'></script>
-	  <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
-	  <script src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
-
-	  <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
-	  <script src="bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
-
-	  <script src="bower_components/d3/d3.min.js"></script>
-
-	  */
+	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).filter('minimizeUrl', _minimizeUrl2.default);
 
 /***/ },
 /* 1 */
@@ -92629,273 +92609,300 @@
 	  value: true
 	});
 	
-	exports.default = function ($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
-	  var width = 1600,
-	      height = 1024;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	  var map = tubeMap().width(width).height(height).margin({
-	    top: height / 50,
-	    right: width / 7,
-	    bottom: height / 10,
-	    left: width / 7
-	  });
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  $scope.visited = [];
+	var PubMapCtrl = function () {
+	  function PubMapCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
+	    _classCallCheck(this, PubMapCtrl);
 	
-	  $scope.developerMode = false;
-	  $scope.numVisited = $scope.visited.length;
-	  $scope.pub = {
-	    "title": "Default Pub"
-	  };
+	    this.$scope = $scope;
+	    this.$mdSidenav = $mdSidenav;
+	    this.$mdBottomSheet = $mdBottomSheet;
+	    this.$mdMedia = $mdMedia;
+	    this.$mdToast = $mdToast;
+	    this.$location = $location;
 	
-	  $scope.map = map;
+	    var width = 1600;
+	    var height = 1024;
 	
-	  $scope.totalPubs;
+	    this.visited = [];
 	
-	  var geoStations;
-	  var discrepencies;
-	
-	  d3.json("pubs.json", function (data) {
-	    d3.select("#map").datum(data).call(map);
-	
-	    $scope.data = data;
-	
-	    $scope.totalPubs = Object.keys(data.stations).length;
-	
-	    geoStations = d3.select("#map").selectAll(".geoStations");
-	    discrepencies = d3.select("#map").selectAll(".discrepencies");
-	
-	    var path = $location.path().replace(/^\//g, '');
-	
-	    if (path.length) {
-	      $scope.visited = path.split(',');
-	      $scope.visited.map(function (pub) {
-	        $scope.map.addStation(pub);
-	        $scope.data.stations[pub].visited = true;
-	      });
-	    } else {
-	      $scope.visited = [];
-	    }
-	
-	    map.on('click', function (name) {
-	      $scope.selectPub(name);
-	    });
-	  });
-	
-	  $scope.developerModeToggle = function () {
-	    if ($scope.developerMode) {
-	      geoStations.style("display", "block");
-	      discrepencies.style("display", "block");
-	    } else {
-	      geoStations.style("display", "none");
-	      discrepencies.style("display", "none");
-	    }
-	  };
-	
-	  $scope.toggleLeft = buildToggler('left');
-	
-	  function buildToggler(navID) {
-	    return function () {
-	      $mdSidenav(navID).toggle();
+	    this.developerMode = false;
+	    this.numVisited = this.visited.length;
+	    this.pub = {
+	      "title": "Default Pub"
 	    };
+	
+	    var map = tubeMap().width(width).height(height).margin({
+	      top: height / 50,
+	      right: width / 7,
+	      bottom: height / 10,
+	      left: width / 7
+	    });
+	
+	    this.map = map;
+	
+	    this.totalPubs;
+	
+	    var geoStations;
+	    var discrepencies;
+	
+	    var _this = this;
+	
+	    d3.json("pubs.json", function (data) {
+	      d3.select("#map").datum(data).call(map);
+	
+	      _this.data = data;
+	
+	      _this.totalPubs = Object.keys(data.stations).length;
+	
+	      geoStations = d3.select("#map").selectAll(".geoStations");
+	      discrepencies = d3.select("#map").selectAll(".discrepencies");
+	
+	      var path = _this.$location.path().replace(/^\//g, '');
+	
+	      if (path.length) {
+	        _this.visited = path.split(',');
+	        _this.visited.map(function (pub) {
+	          _this.map.addStation(pub);
+	          _this.data.stations[pub].visited = true;
+	        });
+	      } else {
+	        _this.visited = [];
+	      }
+	
+	      _this.map.on('click', function (name) {
+	        _this.selectPub(name);
+	        _this.$scope.$apply();
+	      });
+	    });
 	  }
 	
-	  $scope.selectPub = function (name) {
-	    var station = $scope.data.stations[name];
+	  _createClass(PubMapCtrl, [{
+	    key: "developerModeToggle",
+	    value: function developerModeToggle() {
+	      if (this.developerMode) {
+	        geoStations.style("display", "block");
+	        discrepencies.style("display", "block");
+	      } else {
+	        geoStations.style("display", "none");
+	        discrepencies.style("display", "none");
+	      }
+	    }
+	  }, {
+	    key: "toggleLeft",
+	    value: function toggleLeft() {
+	      this.buildToggler('left');
+	    }
+	  }, {
+	    key: "buildToggler",
+	    value: function buildToggler(navID) {
+	      return function () {
+	        $mdSidenav(navID).toggle();
+	      };
+	    }
+	  }, {
+	    key: "selectPub",
+	    value: function selectPub(name) {
+	      var station = this.data.stations[name];
 	
-	    $scope.pub = {
-	      "name": name,
-	      "title": station.title,
-	      "address": station.address,
-	      "website": station.website,
-	      "phone": station.phone,
-	      "position": station.position,
-	      "visited": station.visited,
-	      "googleMap": {
-	        "center": {
-	          "latitude": station.position.lat,
-	          "longitude": station.position.lon
-	        },
-	        "zoom": 16,
-	        "marker": {
-	          "id": 0,
-	          "coords": {
+	      this.pub = {
+	        "name": name,
+	        "title": station.title,
+	        "address": station.address,
+	        "website": station.website,
+	        "phone": station.phone,
+	        "position": station.position,
+	        "visited": station.visited,
+	        "googleMap": {
+	          "center": {
 	            "latitude": station.position.lat,
 	            "longitude": station.position.lon
+	          },
+	          "zoom": 16,
+	          "marker": {
+	            "id": 0,
+	            "coords": {
+	              "latitude": station.position.lat,
+	              "longitude": station.position.lon
+	            }
 	          }
 	        }
-	      }
-	    };
+	      };
 	
-	    if (!$scope.pub.visited) {
-	      $scope.pub.clickIcon = 'add';
-	      $scope.pub.backgroundColor = 'rgb(0,152,212)'; // TODO: Change class and handle through css
-	    } else {
-	        $scope.pub.clickIcon = 'done';
-	        $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
+	      if (!this.pub.visited) {
+	        this.pub.clickIcon = 'add';
+	        this.pub.backgroundColor = 'rgb(0,152,212)'; // TODO: Change class and handle through css
+	      } else {
+	          this.pub.clickIcon = 'done';
+	          this.pub.backgroundColor = 'rgb(0, 222, 121)';
+	        }
+	
+	      if (this.$mdMedia('gt-xs')) {
+	        this.toggleLeft();
+	      } else {
+	        this.showListBottomSheet();
 	      }
 	
-	    if ($mdMedia('gt-xs')) {
-	      $scope.toggleLeft();
-	    } else {
-	      $scope.showListBottomSheet();
+	      ga('send', 'event', 'Station', 'click', name);
 	    }
+	  }, {
+	    key: "centerPub",
+	    value: function centerPub(name) {
+	      this.map.centerOnPub(name);
+	    }
+	  }, {
+	    key: "selectNearestPub",
+	    value: function selectNearestPub() {
+	      var _this = this;
 	
-	    ga('send', 'event', 'Station', 'click', name);
-	  };
+	      function success(position) {
+	        var latitude = position.coords.latitude;
+	        var longitude = position.coords.longitude;
 	
-	  $scope.centerPub = function (name) {
-	    $scope.map.centerOnPub(name);
-	  };
+	        var minDistance = 10000000;
+	        var nearestPub;
 	
-	  $scope.selectNearestPub = function () {
-	    function success(position) {
-	      var latitude = position.coords.latitude;
-	      var longitude = position.coords.longitude;
+	        var stations = _this.data.stations;
 	
-	      var minDistance = 10000000;
-	      var nearestPub;
+	        for (var key in stations) {
+	          if (!stations.hasOwnProperty(key)) continue;
 	
-	      var stations = $scope.data.stations;
+	          var distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
 	
-	      for (var key in stations) {
-	        if (!stations.hasOwnProperty(key)) continue;
+	          if (distance < minDistance) {
+	            minDistance = distance;
+	            nearestPub = key;
+	          }
+	        }
 	
-	        var distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
+	        _this.centerPub(nearestPub);
+	        _this.selectPub(nearestPub);
 	
-	        if (distance < minDistance) {
-	          minDistance = distance;
-	          nearestPub = key;
+	        d3.select("#map").selectAll(".label").classed("selected", false); // TODO: These lines need to go into the map
+	        d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
+	
+	        ga('send', 'event', 'Nearest', 'click', nearestPub);
+	      };
+	
+	      function error() {
+	        console.log("Unable to retrieve your location");
+	        $mdToast.show($mdToast.simple().textContent('Unable to retrieve your location').position('top right').hideDelay(3000));
+	      };
+	
+	      navigator.geolocation.getCurrentPosition(success, error);
+	    }
+	  }, {
+	    key: "selectRandomPub",
+	    value: function selectRandomPub() {
+	      var randomPubName = fetch_random(this.data.stations);
+	      this.centerPub(randomPubName);
+	      this.selectPub(randomPubName);
+	      d3.select("#map").selectAll(".label").classed("selected", false);
+	
+	      d3.select("#map").select(".labels").select("#" + randomPubName).classed("selected", true);
+	    }
+	  }, {
+	    key: "fetch_random",
+	    value: function fetch_random(obj) {
+	      var temp_key,
+	          keys = [];
+	      for (temp_key in obj) {
+	        if (obj.hasOwnProperty(temp_key)) {
+	          keys.push(temp_key);
 	        }
 	      }
-	
-	      $scope.centerPub(nearestPub);
-	      $scope.selectPub(nearestPub);
-	
-	      d3.select("#map").selectAll(".label").classed("selected", false); // TODO: These lines need to go into the map
-	      d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
-	
-	      ga('send', 'event', 'Nearest', 'click', nearestPub);
-	    };
-	
-	    function error() {
-	      console.log("Unable to retrieve your location");
-	      $mdToast.show($mdToast.simple().textContent('Unable to retrieve your location').position('top right').hideDelay(3000));
-	    };
-	    navigator.geolocation.getCurrentPosition(success, error);
-	  };
-	
-	  $scope.selectRandomPub = function () {
-	    var randomPubName = fetch_random($scope.data.stations);
-	    $scope.centerPub(randomPubName);
-	    $scope.selectPub(randomPubName);
-	    d3.select("#map").selectAll(".label").classed("selected", false);
-	
-	    d3.select("#map").select(".labels").select("#" + randomPubName).classed("selected", true);
-	  };
-	
-	  function fetch_random(obj) {
-	    var temp_key,
-	        keys = [];
-	    for (temp_key in obj) {
-	      if (obj.hasOwnProperty(temp_key)) {
-	        keys.push(temp_key);
-	      }
+	      return keys[Math.floor(Math.random() * keys.length)];
 	    }
-	    return keys[Math.floor(Math.random() * keys.length)];
-	  }
+	  }, {
+	    key: "showListBottomSheet",
+	    value: function showListBottomSheet() {
+	      this.$mdBottomSheet.show({
+	        templateUrl: 'src/bottomSheetTemplate.html',
+	        controller: 'PubMapCtrl',
+	        scope: this.$scope, // Needs a real scope object to call methods like $watch
+	        disableParentScroll: false,
+	        preserveScope: true // TODO: Surely this is a hack
+	      });
+	    }
+	  }, {
+	    key: "togglePub",
+	    value: function togglePub() {
+	      var name = this.pub.name;
 	
-	  $scope.showListBottomSheet = function () {
-	    $scope.alert = '';
-	    $mdBottomSheet.show({
-	      templateUrl: 'src/bottomSheetTemplate.html',
-	      controller: 'SideNavCtrl',
-	      scope: $scope,
-	      preserveScope: true // TODO: Surely this is a hack
-	    });
-	  };
-	};
+	      var index = this.visited.indexOf(name);
 	
+	      if (index == -1) {
+	        this.addPub();
+	      } else {
+	        this.removePub();
+	      }
+	
+	      this.$location.path(this.visited);
+	    }
+	  }, {
+	    key: "addPub",
+	    value: function addPub() {
+	      var name = this.pub.name;
+	
+	      var label = d3.select("#" + name);
+	
+	      if (this.visited.indexOf(name) == -1) {
+	        this.data.stations[name].visited = true;
+	        this.visited.push(name);
+	        this.pub.visited = true;
+	        this.pub.clickIcon = 'done';
+	        this.pub.backgroundColor = 'rgb(0, 222, 121)';
+	
+	        this.map.addStation(name);
+	      }
+	
+	      this.numVisited = this.visited.length;
+	
+	      this.$mdToast.show(this.$mdToast.simple().textContent('Progress saved').position('top').hideDelay(1000));
+	
+	      ga('send', 'event', 'Station', 'addPub', name);
+	    }
+	  }, {
+	    key: "removePub",
+	    value: function removePub() {
+	      var name = this.pub.name;
+	
+	      var label = d3.select("#" + name);
+	
+	      var index = this.visited.indexOf(name);
+	
+	      if (index > -1) {
+	        this.data.stations[name].visited = false;
+	        this.visited.splice(index, 1);
+	        this.pub.visited = false;
+	        this.pub.clickIcon = 'add';
+	        this.pub.backgroundColor = 'rgb(0,152,212)';
+	
+	        this.map.removeStation(name);
+	      }
+	
+	      this.numVisited = this.visited.length;
+	
+	      ga('send', 'event', 'Station', 'removePub', name);
+	    }
+	  }, {
+	    key: "close",
+	    value: function close() {
+	      $mdSidenav('left').close();
+	    }
+	  }]);
+	
+	  return PubMapCtrl;
+	}();
+	
+	exports.default = PubMapCtrl;
 	;
 
 /***/ },
 /* 19 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function ($scope, $mdSidenav, $mdBottomSheet, $mdToast, $location) {
-	  $scope.togglePub = function () {
-	    var name = $scope.pub.name;
-	
-	    var index = $scope.visited.indexOf(name);
-	
-	    if (index == -1) {
-	      $scope.addPub();
-	    } else {
-	      $scope.removePub();
-	    }
-	
-	    $location.path($scope.visited);
-	  };
-	
-	  $scope.addPub = function () {
-	    var name = $scope.pub.name;
-	
-	    var label = d3.select("#" + name);
-	
-	    if ($scope.visited.indexOf(name) == -1) {
-	      $scope.data.stations[name].visited = true;
-	      $scope.visited.push(name);
-	      $scope.pub.visited = true;
-	      $scope.pub.clickIcon = 'done';
-	      $scope.pub.backgroundColor = 'rgb(0, 222, 121)';
-	
-	      $scope.map.addStation(name);
-	    }
-	
-	    $scope.$parent.numVisited = $scope.visited.length;
-	
-	    $mdToast.show($mdToast.simple().textContent('Progress saved').position('top left').hideDelay(1000));
-	
-	    ga('send', 'event', 'Station', 'addPub', name);
-	  };
-	
-	  $scope.removePub = function () {
-	    var name = $scope.pub.name;
-	
-	    var label = d3.select("#" + name);
-	
-	    var index = $scope.visited.indexOf(name);
-	
-	    if (index > -1) {
-	      $scope.data.stations[name].visited = false;
-	      $scope.visited.splice(index, 1);
-	      $scope.pub.visited = false;
-	      $scope.pub.clickIcon = 'add';
-	      $scope.pub.backgroundColor = 'rgb(0,152,212)';
-	
-	      $scope.map.removeStation(name);
-	    }
-	
-	    $scope.$parent.numVisited = $scope.visited.length;
-	
-	    ga('send', 'event', 'Station', 'removePub', name);
-	  };
-	
-	  $scope.close = function () {
-	    $mdSidenav('left').close();
-	  };
-	};
-	
-	;
-
-/***/ },
-/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -92932,7 +92939,7 @@
 	;
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
