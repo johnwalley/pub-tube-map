@@ -1,9 +1,29 @@
-<md-bottom-sheet ng-cloak>
-<div layout="row" layout-align="end">
-  <md-button ng-click="pubMap.togglePub()" class="md-fab md-primary" style="margin: -30px 8px 10px; background-color: {{pubMap.pub.backgroundColor}}" aria-label="Add Pub">
-    <ng-md-icon icon="{{pubMap.pub.clickIcon}}" style="fill: #ffffff;" ng-attr-style="fill: #ffffff;" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
-  </md-button>
-</div>
-<h2 class="name">{{pubMap.pub.title}}</h2>
-<p>{{pubMap.pub.address}}</p>
+<md-bottom-sheet ng-cloak layout-fill style="padding:0px;height=100%;">
+  <img ng-src="img/{{pubMap.pub.name}}.jpg" width="100%" height="240px"></img>
+  <div layout="row" layout-align="end">
+    <md-button ng-click="pubMap.togglePub()" class="md-fab md-primary toggle-pub-button" style="background-color: {{pubMap.pub.backgroundColor}}" aria-label="Add Pub">
+      <ng-md-icon icon="{{pubMap.pub.clickIcon}}" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
+    </md-button>
+  </div>
+  <md-content layout-padding class="side-nav-content">
+    <h2 class="name">{{pubMap.pub.title}}</h2>
+    <md-list class="side-nav-info-list">
+      <md-list-item class="side-nav-info-list">
+        <md-icon class="material-icons side-nav-info-icon">location_on</md-icon>
+        <p>{{pubMap.pub.address}}</p>
+      </md-list-item>
+      <md-list-item>
+        <md-icon class="material-icons side-nav-info-icon">link</md-icon>
+        <p><a target="_blank" ng-href="{{pubMap.pub.website}}">{{pubMap.pub.website | minimizeUrl}}</a></p>
+      </md-list-item>
+      <md-list-item>
+        <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
+        <p><a href="tel:{{pubMap.pub.phone}}">{{pubMap.pub.phone}}</a></p>
+      </md-list-item>
+      <md-list-item>
+        <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
+        <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pubMap.pub.title}} pub">Directions</a></p>
+      </md-list-item>
+    </md-list>
+  </md-content>
 </md-bottom-sheet>
