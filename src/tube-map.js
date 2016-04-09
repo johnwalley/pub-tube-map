@@ -346,10 +346,15 @@ function tubeMap() {
   map.centerOnPub = function(name) {
     var station = model.stations.stations[name];
 
-    t = [-2*(xScale(station.x)-400), -2*(yScale(station.y)-200)]
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+
+    var scale = 2;
+
+    t = [-scale*(xScale(station.x)) + width/2, -scale*(yScale(station.y)) + height/2]
 
     zoom.translate(t).scale(2);
-    gEnter.transition().duration(750).attr("transform", "translate(" + t[0] + "," + t[1] + ")scale(" + 2 + ")");
+    gEnter.transition().duration(750).attr("transform", "translate(" + t[0] + "," + t[1] + ")scale(" + scale + ")");
   }
 
   map.addStation = function(name) {
