@@ -6,6 +6,7 @@ export default class PubMapCtrl {
     $mdMedia,
     $mdToast,
     $location,
+    $log,
     uiGmapGoogleMapApi,
     uiGmapIsReady,
     pubs,
@@ -16,6 +17,7 @@ export default class PubMapCtrl {
     this.$mdMedia = $mdMedia;
     this.$mdToast = $mdToast;
     this.$location = $location;
+    this.$log = $log;
     this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
     this.uiGmapIsReady = uiGmapIsReady;
     this.pubs = pubs;
@@ -65,6 +67,8 @@ export default class PubMapCtrl {
       } else {
         _this.visited = [];
       }
+
+      _this.numVisited = _this.visited.length;
 
       _this.map.on('click', (name) => {
         _this.selectPub(name);
@@ -300,5 +304,38 @@ export default class PubMapCtrl {
         });
       });
     });
+  }
+
+  getMatches(query) {
+    let stations = this.data.stations;
+
+    let pubs = [];
+
+    for (let pub in stations) {
+      if (stations.hasOwnProperty(pub)) {
+        let searchPub = {
+          value: pub,
+          display: stations[pub].title,
+          address: stations[pub].address
+        }
+
+        pubs.push(searchPub);
+      }
+    }
+
+    let lowercaseQuery = angular.lowercase(query);
+
+    return pubs.filter((pub) => angular.lowercase(pub.display).indexOf(lowercaseQuery) !== -1);
+  }
+
+  selectedItemChange(item) {
+    if (typeof item !== 'undefined') {
+      this.selectPub(item.value);
+      this.centerPub(item.value);
+
+      // TODO: These lines need to go into the map
+      d3.select("#map").selectAll(".label").classed("selected", false);
+      d3.select("#map").select(".labels").select("#" + item.value).classed("selected", true);
+    }
   }
 }

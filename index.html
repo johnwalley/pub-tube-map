@@ -83,7 +83,25 @@
       </div>
       <md-content flex>
         <div layout="column" layout-align="center stretch">
-          <div id="pubMap.score" ng-show="numVisited > 0" ng-cloak>
+          <md-autocomplete
+            ng-cloak
+            class="autocomplete"
+            md-selected-item="pubMap.selectedItem"
+            md-search-text="pubMap.searchText"
+            md-items="item in pubMap.getMatches(pubMap.searchText)"
+            md-item-text="item.display"
+            md-selected-item-change="pubMap.selectedItemChange(item)"
+            placeholder="Find a pub in Cambridge">
+            <md-item-template>
+              <span class="item-title" md-highlight-text="pubMap.searchText">
+                {{item.display}}
+              </span>
+              <span class="item-address">
+                <em>{{item.address}}</em>
+              </span>
+            </md-item-template>
+          </md-autocomplete>
+          <div id="score" ng-show="pubMap.numVisited > 0" ng-cloak>
             <p>visited {{pubMap.numVisited}}/{{pubMap.totalPubs}}</p>
           </div>
           <p id='html_attributions' ng-show="false"></p>
