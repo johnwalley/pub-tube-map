@@ -29,27 +29,39 @@ a:hover {
 .angular-google-map-container { height: 300px; }
 
 .autocomplete {
-  width: 400px;
+  width: 200px;
   position: absolute;
   margin-left: auto;
-  margin-right: 20px;
+  margin-right: 60px;
   margin-top: 20px;
   left: auto;
   right: 20%;
 }
 
-#score p {
+.progress-wrapper {
   position: absolute;
   margin-left: auto;
-  margin-right: 20px;
-  margin-top: 20px;
+  margin-right: 5px;
+  margin-top: 5px;
   left: auto;
   right: 1%;
-  color: rgba(0, 0, 0, 0.8);
-  font-family: 'Hammersmith One', sans-serif;
-  font-size: 36px;
-  text-align: center;
 }
+
+.progress {
+    position: absolute;
+    font-weight: 100;
+    line-height: 1;
+    transform: translateY(-50%) translateX(-50%);
+    top: 50%;
+    bottom: auto;
+    left: 50%;
+    color: rgba(0, 0, 0, 0.9);
+    font-family: 'Hammersmith One', sans-serif;
+    font-size: 22px;
+    text-align: center;
+}
+
+
 h2.name {
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0.2em;

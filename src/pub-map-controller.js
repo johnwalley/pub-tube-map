@@ -69,6 +69,7 @@ export default class PubMapCtrl {
       }
 
       _this.numVisited = _this.visited.length;
+      _this.$scope.$apply(); // TODO: Fix these ugly hacks
 
       _this.map.on('click', (name) => {
         _this.selectPub(name);
