@@ -60,7 +60,7 @@
                 </md-list-item>
                 <md-list-item>
                   <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
-                  <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pubMap.pub.title}} pub">Directions</a></p>
+                  <p><a href="" ng-click="pubMap.displayDirections()">Get directions</a></p>
                 </md-list-item>
                 <md-list-item ng-if="pubMap.pub.hasOwnProperty('opening_hours')">
                   <md-icon class="material-icons side-nav-info-icon">access_time</md-icon>

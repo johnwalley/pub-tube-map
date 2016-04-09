@@ -6,7 +6,8 @@ export default class PubMapCtrl {
     $mdMedia,
     $mdToast,
     $location,
-    uiGmapGoogleMapApi) {
+    uiGmapGoogleMapApi,
+    uiGmapIsReady) {
     this.$scope = $scope;
     this.$mdSidenav = $mdSidenav;
     this.$mdBottomSheet = $mdBottomSheet;
@@ -14,6 +15,7 @@ export default class PubMapCtrl {
     this.$mdToast = $mdToast;
     this.$location = $location;
     this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
+    this.uiGmapIsReady = uiGmapIsReady;
 
     const width = 1600;
     const height = 1024;
@@ -281,5 +283,35 @@ export default class PubMapCtrl {
     this.numVisited = this.visited.length;
 
     ga('send', 'event', 'Station', 'removePub', name);
+  }
+
+  displayDirections() {
+    var directionsDisplay;
+    var directionsService;
+
+    this.uiGmapGoogleMapApi.then((maps) => {
+      directionsService = new maps.DirectionsService();
+
+      directionsDisplay = new maps.DirectionsRenderer();
+
+      return this.uiGmapIsReady.promise(1);
+    })
+    .then((instances) => {
+      directionsDisplay.setMap(instances[0].map);
+
+      var start = "Cambridge, UK";
+      var end = this.pub.address;
+      var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.WALKING
+      };
+
+      directionsService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(result);
+        }
+      });
+    });
   }
 }
