@@ -214,6 +214,7 @@ export default class PubMapCtrl {
 
   selectRandomPub() {
     const randomPubName = fetch_random(this.data.stations);
+
     this.centerPub(randomPubName);
     this.selectPub(randomPubName);
     d3.select("#map").selectAll(".label").classed("selected", false);
@@ -303,5 +304,4 @@ export default class PubMapCtrl {
   close() {
     $mdSidenav('left').close();
   }
-
 }
