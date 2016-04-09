@@ -62,23 +62,29 @@
 	
 	__webpack_require__(12);
 	
-	__webpack_require__(14);
+	__webpack_require__(13);
 	
-	var _pubMapController = __webpack_require__(18);
+	__webpack_require__(15);
+	
+	var _pubMapController = __webpack_require__(19);
 	
 	var _pubMapController2 = _interopRequireDefault(_pubMapController);
 	
-	var _minimizeUrl = __webpack_require__(19);
+	var _minimizeUrl = __webpack_require__(20);
 	
 	var _minimizeUrl2 = _interopRequireDefault(_minimizeUrl);
 	
-	var _config = __webpack_require__(20);
+	var _config = __webpack_require__(21);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
+	var _pubs = __webpack_require__(22);
+	
+	var _pubs2 = _interopRequireDefault(_pubs);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).filter('minimizeUrl', _minimizeUrl2.default);
+	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps', 'geolocation']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).service('pubs', _pubs2.default).filter('minimizeUrl', _minimizeUrl2.default);
 
 /***/ },
 /* 1 */
@@ -77157,6 +77163,61 @@
 
 /***/ },
 /* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	angular.module('geolocation',[]).constant('geolocation_msgs', {
+	        'errors.location.unsupportedBrowser':'Browser does not support location services',
+	        'errors.location.permissionDenied':'You have rejected access to your location',
+	        'errors.location.positionUnavailable':'Unable to determine your location',
+	        'errors.location.timeout':'Service timeout has been reached'
+	});
+	
+	angular.module('geolocation')
+	  .factory('geolocation', ['$q','$rootScope','$window','geolocation_msgs',function ($q,$rootScope,$window,geolocation_msgs) {
+	    return {
+	      getLocation: function (opts) {
+	        var deferred = $q.defer();
+	        if ($window.navigator && $window.navigator.geolocation) {
+	          $window.navigator.geolocation.getCurrentPosition(function(position){
+	            $rootScope.$apply(function(){deferred.resolve(position);});
+	          }, function(error) {
+	            switch (error.code) {
+	              case 1:
+	                $rootScope.$broadcast('error',geolocation_msgs['errors.location.permissionDenied']);
+	                $rootScope.$apply(function() {
+	                  deferred.reject(geolocation_msgs['errors.location.permissionDenied']);
+	                });
+	                break;
+	              case 2:
+	                $rootScope.$broadcast('error',geolocation_msgs['errors.location.positionUnavailable']);
+	                $rootScope.$apply(function() {
+	                  deferred.reject(geolocation_msgs['errors.location.positionUnavailable']);
+	                });
+	                break;
+	              case 3:
+	                $rootScope.$broadcast('error',geolocation_msgs['errors.location.timeout']);
+	                $rootScope.$apply(function() {
+	                  deferred.reject(geolocation_msgs['errors.location.timeout']);
+	                });
+	                break;
+	            }
+	          }, opts);
+	        }
+	        else
+	        {
+	          $rootScope.$broadcast('error',geolocation_msgs['errors.location.unsupportedBrowser']);
+	          $rootScope.$apply(function(){deferred.reject(geolocation_msgs['errors.location.unsupportedBrowser']);});
+	        }
+	        return deferred.promise;
+	      }
+	    };
+	}]);
+
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -93111,10 +93172,10 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module), (function() { return this; }())))
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -93130,7 +93191,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -93147,7 +93208,7 @@
 	
 	angular.module('nemLogging').provider('nemDebug', function (){
 	  var ourDebug = null;
-	  ourDebug = __webpack_require__(15);
+	  ourDebug = __webpack_require__(16);
 	
 	  this.$get =  function(){
 	    //avail as service
@@ -93282,7 +93343,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -93292,7 +93353,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(16);
+	exports = module.exports = __webpack_require__(17);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -93456,7 +93517,7 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -93472,7 +93533,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(17);
+	exports.humanize = __webpack_require__(18);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -93659,7 +93720,7 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	/**
@@ -93790,10 +93851,10 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -93804,7 +93865,7 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var PubMapCtrl = function () {
-	  function PubMapCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location, uiGmapGoogleMapApi) {
+	  function PubMapCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location, uiGmapGoogleMapApi, uiGmapIsReady, pubs, geolocation) {
 	    _classCallCheck(this, PubMapCtrl);
 	
 	    this.$scope = $scope;
@@ -93814,6 +93875,9 @@
 	    this.$mdToast = $mdToast;
 	    this.$location = $location;
 	    this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
+	    this.uiGmapIsReady = uiGmapIsReady;
+	    this.pubs = pubs;
+	    this.geolocation = geolocation;
 	
 	    var width = 1600;
 	    var height = 1024;
@@ -93823,7 +93887,7 @@
 	    this.developerMode = false;
 	    this.numVisited = this.visited.length;
 	    this.pub = {
-	      "title": "Default Pub"
+	      title: 'Default Pub'
 	    };
 	
 	    var map = tubeMap().width(width).height(height).margin({
@@ -93835,22 +93899,14 @@
 	
 	    this.map = map;
 	
-	    this.totalPubs;
-	
-	    var geoStations = void 0;
-	    var discrepencies = void 0;
-	
 	    var _this = this;
 	
-	    d3.json("pubs.json", function (data) {
+	    d3.json('pubs.json', function (data) {
 	      d3.select("#map").datum(data).call(map);
 	
 	      _this.data = data;
 	
 	      _this.totalPubs = Object.keys(data.stations).length;
-	
-	      geoStations = d3.select("#map").selectAll(".geoStations");
-	      discrepencies = d3.select("#map").selectAll(".discrepencies");
 	
 	      var path = _this.$location.path().replace(/^\//g, '');
 	
@@ -93872,52 +93928,43 @@
 	  }
 	
 	  _createClass(PubMapCtrl, [{
-	    key: "developerModeToggle",
-	    value: function developerModeToggle() {
-	      if (this.developerMode) {
-	        geoStations.style("display", "block");
-	        discrepencies.style("display", "block");
-	      } else {
-	        geoStations.style("display", "none");
-	        discrepencies.style("display", "none");
-	      }
-	    }
-	  }, {
-	    key: "toggleLeft",
+	    key: 'toggleLeft',
 	    value: function toggleLeft() {
 	      this.buildToggler('left');
 	    }
 	  }, {
-	    key: "buildToggler",
+	    key: 'buildToggler',
 	    value: function buildToggler(navID) {
+	      var _this2 = this;
+	
 	      return function () {
-	        $mdSidenav(navID).toggle();
+	        _this2.$mdSidenav(navID).toggle();
 	      };
 	    }
 	  }, {
-	    key: "selectPub",
-	    value: function selectPub(name) {
-	      var station = this.data.stations[name];
+	    key: 'selectPub',
+	    value: function selectPub(pubName) {
+	      var station = this.data.stations[pubName];
 	
 	      this.pub = {
-	        "name": name,
-	        "title": station.title,
-	        "address": station.address,
-	        "website": station.website,
-	        "phone": station.phone,
-	        "position": station.position,
-	        "visited": station.visited,
-	        "googleMap": {
-	          "center": {
-	            "latitude": station.position.lat,
-	            "longitude": station.position.lon
+	        name: pubName,
+	        title: station.title,
+	        address: station.address,
+	        website: station.website,
+	        phone: station.phone,
+	        position: station.position,
+	        visited: station.visited,
+	        googleMap: {
+	          center: {
+	            latitude: station.position.lat,
+	            longitude: station.position.lon
 	          },
-	          "zoom": 16,
-	          "marker": {
-	            "id": 0,
-	            "coords": {
-	              "latitude": station.position.lat,
-	              "longitude": station.position.lon
+	          zoom: 16,
+	          marker: {
+	            id: 0,
+	            coords: {
+	              latitude: station.position.lat,
+	              longitude: station.position.lon
 	            }
 	          }
 	        }
@@ -93933,11 +93980,11 @@
 	
 	          var service = new maps.places.PlacesService(document.getElementById('html_attributions'));
 	          service.getDetails(request, function (place, status) {
-	            if (status == google.maps.places.PlacesServiceStatus.OK) {
+	            if (status === maps.places.PlacesServiceStatus.OK) {
 	              if (place.hasOwnProperty('opening_hours')) {
 	                var now = new Date(Date.now());
 	                var dayOfWeek = (now.getDay() - 1) % 7;
-	                _this.pub['opening_hours'] = place.opening_hours.weekday_text[dayOfWeek];
+	                _this.pub.opening_hours = place.opening_hours.weekday_text[dayOfWeek];
 	                _this.$scope.$apply();
 	              }
 	            }
@@ -93962,55 +94009,43 @@
 	      ga('send', 'event', 'Station', 'click', name);
 	    }
 	  }, {
-	    key: "centerPub",
+	    key: 'centerPub',
 	    value: function centerPub(name) {
 	      this.map.centerOnPub(name);
 	    }
 	  }, {
-	    key: "selectNearestPub",
+	    key: 'selectNearestPub',
 	    value: function selectNearestPub() {
-	      var _this = this;
+	      var _this3 = this;
 	
-	      function success(position) {
+	      function error() {
+	        console.log("Unable to retrieve your location");
+	        this.$mdToast.show(this.$mdToast.simple().textContent('Unable to retrieve your location').position('top right').hideDelay(3000));
+	      }
+	
+	      this.geolocation.getLocation().then(function (position) {
 	        var latitude = position.coords.latitude;
 	        var longitude = position.coords.longitude;
 	
 	        var minDistance = 10000000;
 	        var nearestPub = void 0;
 	
-	        var stations = _this.data.stations;
+	        nearestPub = _this3.pubs.findNearestPub(_this3.data.stations, latitude, longitude);
 	
-	        for (var key in stations) {
-	          if (!stations.hasOwnProperty(key)) continue;
+	        _this3.centerPub(nearestPub);
+	        _this3.selectPub(nearestPub);
 	
-	          var distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
-	
-	          if (distance < minDistance) {
-	            minDistance = distance;
-	            nearestPub = key;
-	          }
-	        }
-	
-	        _this.centerPub(nearestPub);
-	        _this.selectPub(nearestPub);
-	
-	        d3.select("#map").selectAll(".label").classed("selected", false); // TODO: These lines need to go into the map
+	        // TODO: These lines need to go into the map
+	        d3.select("#map").selectAll(".label").classed("selected", false);
 	        d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
 	
 	        ga('send', 'event', 'Nearest', 'click', nearestPub);
-	      }
-	
-	      function error() {
-	        console.log("Unable to retrieve your location");
-	        $mdToast.show($mdToast.simple().textContent('Unable to retrieve your location').position('top right').hideDelay(3000));
-	      }
-	
-	      navigator.geolocation.getCurrentPosition(success, error);
+	      });
 	    }
 	  }, {
-	    key: "selectRandomPub",
+	    key: 'selectRandomPub',
 	    value: function selectRandomPub() {
-	      var randomPubName = fetch_random(this.data.stations);
+	      var randomPubName = this.pubs.findRandomPub(this.data.stations);
 	
 	      this.centerPub(randomPubName);
 	      this.selectPub(randomPubName);
@@ -94019,36 +94054,24 @@
 	      d3.select("#map").select(".labels").select("#" + randomPubName).classed("selected", true);
 	    }
 	  }, {
-	    key: "fetch_random",
-	    value: function fetch_random(obj) {
-	      var temp_key = void 0,
-	          keys = [];
-	      for (temp_key in obj) {
-	        if (obj.hasOwnProperty(temp_key)) {
-	          keys.push(temp_key);
-	        }
-	      }
-	      return keys[Math.floor(Math.random() * keys.length)];
-	    }
-	  }, {
-	    key: "showListBottomSheet",
+	    key: 'showListBottomSheet',
 	    value: function showListBottomSheet() {
 	      this.$mdBottomSheet.show({
 	        templateUrl: 'src/bottomSheetTemplate.html',
 	        controller: 'PubMapCtrl',
 	        scope: this.$scope, // Needs a real scope object to call methods like $watch
 	        disableParentScroll: false,
-	        preserveScope: true // TODO: Surely this is a hack
-	      });
+	        preserveScope: true });
 	    }
 	  }, {
-	    key: "togglePub",
+	    key: 'togglePub',
+	    // TODO: Surely this is a hack
 	    value: function togglePub() {
 	      var name = this.pub.name;
 	
 	      var index = this.visited.indexOf(name);
 	
-	      if (index == -1) {
+	      if (index === -1) {
 	        this.addPub();
 	      } else {
 	        this.removePub();
@@ -94057,12 +94080,11 @@
 	      this.$location.path(this.visited);
 	    }
 	  }, {
-	    key: "addPub",
+	    key: 'addPub',
 	    value: function addPub() {
 	      var name = this.pub.name;
-	      var label = d3.select("#" + name);
 	
-	      if (this.visited.indexOf(name) == -1) {
+	      if (this.visited.indexOf(name) === -1) {
 	        this.data.stations[name].visited = true;
 	        this.visited.push(name);
 	        this.pub.visited = true;
@@ -94079,7 +94101,7 @@
 	      ga('send', 'event', 'Station', 'addPub', name);
 	    }
 	  }, {
-	    key: "removePub",
+	    key: 'removePub',
 	    value: function removePub() {
 	      var name = this.pub.name;
 	      var label = d3.select("#" + name);
@@ -94100,9 +94122,40 @@
 	      ga('send', 'event', 'Station', 'removePub', name);
 	    }
 	  }, {
-	    key: "close",
-	    value: function close() {
-	      $mdSidenav('left').close();
+	    key: 'displayDirections',
+	    value: function displayDirections() {
+	      var _this4 = this;
+	
+	      var directionsDisplay = void 0;
+	      var directionsService = void 0;
+	
+	      this.uiGmapGoogleMapApi.then(function (maps) {
+	        directionsService = new maps.DirectionsService();
+	        directionsDisplay = new maps.DirectionsRenderer();
+	
+	        return _this4.uiGmapIsReady.promise(1);
+	      }).then(function (instances) {
+	        directionsDisplay.setMap(instances[0].map);
+	
+	        // TODO: Remove nested promises
+	        _this4.geolocation.getLocation().then(function (position) {
+	          var start = position.coords.latitude + ',' + position.coords.longitude;
+	          var end = _this4.pub.address;
+	          var request = {
+	            origin: start,
+	            destination: end,
+	            travelMode: google.maps.TravelMode.WALKING
+	          };
+	
+	          console.log(request);
+	
+	          directionsService.route(request, function (result, status) {
+	            if (status == google.maps.DirectionsStatus.OK) {
+	              directionsDisplay.setDirections(result);
+	            }
+	          });
+	        });
+	      });
 	    }
 	  }]);
 	
@@ -94112,7 +94165,7 @@
 	exports.default = PubMapCtrl;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -94149,7 +94202,7 @@
 	;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -94169,6 +94222,63 @@
 	};
 	
 	;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var pubs = function () {
+	  function pubs() {
+	    _classCallCheck(this, pubs);
+	  }
+	
+	  _createClass(pubs, [{
+	    key: "findNearestPub",
+	    value: function findNearestPub(stations, latitude, longitude) {
+	      var minDistance = 10000000;
+	      var nearestPub = void 0;
+	
+	      for (var key in stations) {
+	        if (!stations.hasOwnProperty(key)) continue;
+	
+	        var distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
+	
+	        if (distance < minDistance) {
+	          minDistance = distance;
+	          nearestPub = key;
+	        }
+	      }
+	
+	      return nearestPub;
+	    }
+	  }, {
+	    key: "findRandomPub",
+	    value: function findRandomPub(pubs) {
+	      var tempKey = void 0;
+	      var keys = [];
+	      for (tempKey in pubs) {
+	        if (pubs.hasOwnProperty(tempKey)) {
+	          keys.push(tempKey);
+	        }
+	      }
+	      return keys[Math.floor(Math.random() * keys.length)];
+	    }
+	  }]);
+	
+	  return pubs;
+	}();
+
+	exports.default = pubs;
 
 /***/ }
 /******/ ]);

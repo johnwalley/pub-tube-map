@@ -10,7 +10,7 @@
   <meta property="og:image" content="http://www.pubmap.co.uk/img/facebook.png" />
   <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   <link rel="stylesheet" href="tube-map.css">
   <script>
@@ -60,7 +60,7 @@
                 </md-list-item>
                 <md-list-item>
                   <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
-                  <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pubMap.pub.title}} pub">Directions</a></p>
+                  <p><a href="" ng-click="pubMap.displayDirections()">Get directions</a></p>
                 </md-list-item>
                 <md-list-item ng-if="pubMap.pub.hasOwnProperty('opening_hours')">
                   <md-icon class="material-icons side-nav-info-icon">access_time</md-icon>
