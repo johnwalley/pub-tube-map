@@ -9,8 +9,8 @@ export default class PubMapCtrl {
     this.$location = $location;
     this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
 
-    var width = 1600;
-    var height = 1024;
+    let width = 1600;
+    let height = 1024;
 
     this.visited = [];
 
@@ -20,7 +20,7 @@ export default class PubMapCtrl {
       "title": "Default Pub"
     };
 
-    var map = tubeMap()
+    let map = tubeMap()
       .width(width)
       .height(height)
       .margin({
@@ -34,8 +34,8 @@ export default class PubMapCtrl {
 
     this.totalPubs;
 
-    var geoStations;
-    var discrepencies;
+    let geoStations;
+    let discrepencies;
 
     let _this = this;
 
@@ -50,7 +50,7 @@ export default class PubMapCtrl {
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
 
-      var path = _this.$location.path().replace(/^\//g, '');
+      let path = _this.$location.path().replace(/^\//g, '');
 
       if (path.length) {
         _this.visited = path.split(',');
@@ -91,7 +91,7 @@ export default class PubMapCtrl {
   }
 
   selectPub (name) {
-    var station = this.data.stations[name];
+    let station = this.data.stations[name];
 
     this.pub = {
       "name": name,
@@ -117,15 +117,15 @@ export default class PubMapCtrl {
       }
     };
 
-    var _this = this;
+    let _this = this;
 
     if (station.hasOwnProperty('place_id')) {
       this.uiGmapGoogleMapApi.then(function(maps) {
-        var request = {
+        let request = {
           placeId: station.place_id
         };
 
-        var service = new maps.places.PlacesService(document.getElementById('html_attributions'));
+        let service = new maps.places.PlacesService(document.getElementById('html_attributions'));
         service.getDetails(request, function(place, status) {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
             if (place.hasOwnProperty('opening_hours')) {
@@ -164,18 +164,18 @@ export default class PubMapCtrl {
     let _this = this;
 
     function success(position) {
-      var latitude  = position.coords.latitude;
-      var longitude = position.coords.longitude;
+      let latitude  = position.coords.latitude;
+      let longitude = position.coords.longitude;
 
-      var minDistance = 10000000;
-      var nearestPub;
+      let minDistance = 10000000;
+      let nearestPub;
 
-      var stations = _this.data.stations;
+      let stations = _this.data.stations;
 
-      for (var key in stations) {
+      for (let key in stations) {
         if (!stations.hasOwnProperty(key)) continue;
 
-        var distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
+        let distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
 
         if (distance < minDistance) {
           minDistance = distance;
@@ -206,7 +206,7 @@ export default class PubMapCtrl {
   }
 
   selectRandomPub() {
-    var randomPubName = fetch_random(this.data.stations);
+    let randomPubName = fetch_random(this.data.stations);
     this.centerPub(randomPubName);
     this.selectPub(randomPubName);
     d3.select("#map").selectAll(".label").classed("selected", false);
@@ -215,7 +215,7 @@ export default class PubMapCtrl {
   }
 
   fetch_random(obj) {
-    var temp_key, keys = [];
+    let temp_key, keys = [];
     for (temp_key in obj) {
       if (obj.hasOwnProperty(temp_key)) {
         keys.push(temp_key);
@@ -249,9 +249,9 @@ export default class PubMapCtrl {
   }
 
   addPub() {
-    var name = this.pub.name;
+    let name = this.pub.name;
 
-    var label = d3.select("#" + name);
+    let label = d3.select("#" + name);
 
     if (this.visited.indexOf(name) == -1) {
       this.data.stations[name].visited = true;
@@ -275,11 +275,11 @@ export default class PubMapCtrl {
   };
 
   removePub() {
-    var name = this.pub.name;
+    let name = this.pub.name;
 
-    var label = d3.select("#" + name);
+    let label = d3.select("#" + name);
 
-    var index = this.visited.indexOf(name);
+    let index = this.visited.indexOf(name);
 
     if (index > -1) {
       this.data.stations[name].visited = false;
