@@ -23,59 +23,62 @@
     ga('send', 'pageview');
   </script>
 </head>
-<body ng-app="pubMapApp" ng-cloak>
-  <div ng-controller="PubMapCtrl as pubMap" ng-cloak>
+<body ng-app="pubMapApp">
+  <div ng-controller="PubMapCtrl as pubMap">
     <section layout="row" flex>
-      <div layout="column">
-        <div ng-switch="true" flex>
-          <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" md-is-open="false" ng-switch="pubMap.pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
-            <div ng-switch-when="Default Pub">
-              <md-content layout-padding>
-                <h2>Select a pub to get started</h2>
-              </md-content>
+      <div layout="column" ng-cloak>
+        <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" md-is-open="false" ng-switch="pubMap.pub.title" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="overflow-x:hidden;position:fixed;" md-is-locked-open="$mdMedia('gt-md')" flex>
+          <div ng-switch-when="Default Pub">
+            <md-content layout-padding>
+              <h2>Select a pub to get started</h2>
+            </md-content>
+          </div>
+          <div ng-switch-default layout-fill>
+            <img ng-src="img/{{pubMap.pub.name}}.jpg" width="320px" height="240px"></img>
+            <div layout="row" layout-align="end">
+              <md-button ng-click="pubMap.togglePub()" class="md-fab md-primary toggle-pub-button" style="background-color: {{pubMap.pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
+                <md-tooltip md-direction="left" md-delay="1000">
+                  I've been here!
+                </md-tooltip>
+                <ng-md-icon icon="{{pubMap.pub.clickIcon}}" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
+              </md-button>
             </div>
-            <div ng-switch-default layout-fill>
-              <img ng-src="img/{{pubMap.pub.name}}.jpg" width="320px" height="240px"></img>
-              <div layout="row" layout-align="end">
-                <md-button ng-click="pubMap.togglePub()" class="md-fab md-primary toggle-pub-button" style="background-color: {{pubMap.pub.backgroundColor}}" md-sidenav-focus aria-label="Add Pub">
-                  <md-tooltip md-direction="left" md-delay="1000">
-                    I've been here!
-                  </md-tooltip>
-                  <ng-md-icon icon="{{pubMap.pub.clickIcon}}" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
-                </md-button>
-              </div>
-              <md-content layout-padding class="side-nav-content">
-                <h2 class="name">{{pubMap.pub.title}}</h2>
-                <md-list class="side-nav-info-list">
-                  <md-list-item class="side-nav-info-list">
-                    <md-icon class="material-icons side-nav-info-icon">location_on</md-icon>
-                    <p>{{pubMap.pub.address}}</p>
-                  </md-list-item>
-                  <md-list-item>
-                    <md-icon class="material-icons side-nav-info-icon">link</md-icon>
-                    <p><a target="_blank" ng-href="{{pubMap.pub.website}}">{{pubMap.pub.website | minimizeUrl}}</a></p>
-                  </md-list-item>
-                  <md-list-item>
-                    <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
-                    <p><a href="tel:{{pubMap.pub.phone}}">{{pubMap.pub.phone}}</a></p>
-                  </md-list-item>
-                  <md-list-item>
-                    <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
-                    <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pubMap.pub.title}} pub">Directions</a></p>
-                  </md-list-item>
-                </md-list>
-              </md-content>
-              <ui-gmap-google-map center='pubMap.pub.googleMap.center' zoom='pubMap.pub.googleMap.zoom' pan="true">
-                <ui-gmap-marker coords="pubMap.pub.googleMap.marker.coords" options="pubMap.pub.googleMap.marker.options" events="pubMap.pub.googleMap.marker.events" idkey="pubMap.pub.googleMap.marker.id">
-                </ui-gmap-marker>
-              </ui-gmap-google-map>
-            </div>
-          </md-sidenav>
-        </div>
+            <md-content layout-padding class="side-nav-content">
+              <h2 class="name">{{pubMap.pub.title}}</h2>
+              <md-list class="side-nav-info-list">
+                <md-list-item class="side-nav-info-list">
+                  <md-icon class="material-icons side-nav-info-icon">location_on</md-icon>
+                  <p>{{pubMap.pub.address}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <md-icon class="material-icons side-nav-info-icon">link</md-icon>
+                  <p><a target="_blank" ng-href="{{pubMap.pub.website}}">{{pubMap.pub.website | minimizeUrl}}</a></p>
+                </md-list-item>
+                <md-list-item>
+                  <md-icon class="material-icons side-nav-info-icon">phone</md-icon>
+                  <p><a href="tel:{{pubMap.pub.phone}}">{{pubMap.pub.phone}}</a></p>
+                </md-list-item>
+                <md-list-item>
+                  <md-icon class="material-icons side-nav-info-icon">directions</md-icon>
+                  <p><a target="_blank" href="http://www.google.co.uk/maps?saddr=Current+Location&daddr={{pubMap.pub.title}} pub">Directions</a></p>
+                </md-list-item>
+                <md-list-item ng-if="pubMap.pub.hasOwnProperty('opening_hours')">
+                  <md-icon class="material-icons side-nav-info-icon">access_time</md-icon>
+                  <p>{{pubMap.pub.opening_hours}}</p>
+                </md-list-item>
+              </md-list>
+            </md-content>
+            <ui-gmap-google-map center='pubMap.pub.googleMap.center' zoom='pubMap.pub.googleMap.zoom' pan="true">
+              <ui-gmap-marker coords="pubMap.pub.googleMap.marker.coords" options="pubMap.pub.googleMap.marker.options" events="pubMap.pub.googleMap.marker.events" idkey="pubMap.pub.googleMap.marker.id">
+              </ui-gmap-marker>
+            </ui-gmap-google-map>
+            <p id='html_attributions'></p>
+          </div>
+        </md-sidenav>
       </div>
       <md-content flex>
         <div layout="column" layout-align="center stretch">
-          <div id="pubMap.score" ng-show="numVisited > 0">
+          <div id="pubMap.score" ng-show="numVisited > 0" ng-cloak>
             <p>visited {{pubMap.numVisited}}/{{pubMap.totalPubs}}</p>
           </div>
           <div id="map"></div>

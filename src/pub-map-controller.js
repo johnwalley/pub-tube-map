@@ -1,5 +1,5 @@
 export default class PubMapCtrl {
-  constructor($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
+  constructor($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location, uiGmapGoogleMapApi) {
 
     this.$scope = $scope;
     this.$mdSidenav = $mdSidenav;
@@ -7,6 +7,7 @@ export default class PubMapCtrl {
     this.$mdMedia = $mdMedia;
     this.$mdToast = $mdToast;
     this.$location = $location;
+    this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
 
     var width = 1600;
     var height = 1024;
@@ -115,6 +116,28 @@ export default class PubMapCtrl {
         }
       }
     };
+
+    var _this = this;
+
+    if (station.hasOwnProperty('place_id')) {
+      this.uiGmapGoogleMapApi.then(function(maps) {
+        var request = {
+          placeId: station.place_id
+        };
+
+        var service = new maps.places.PlacesService(document.getElementById('html_attributions'));
+        service.getDetails(request, function(place, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (place.hasOwnProperty('opening_hours')) {
+              let now = new Date(Date.now());
+              let dayOfWeek = (now.getDay() - 1) % 7;
+              _this.pub['opening_hours'] = place.opening_hours.weekday_text[dayOfWeek];
+              _this.$scope.$apply();
+            }
+          }
+        });
+      });
+    }
 
     if (!this.pub.visited) {
       this.pub.clickIcon = 'add';
