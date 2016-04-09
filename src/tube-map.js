@@ -98,7 +98,7 @@ function tubeMap() {
         gEnter.attr("transform", "translate(" + t + ")scale(" + s + ")");
       };
 
-      zoom = d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([1, 6]).on("zoom", zoomed)
+      zoom = d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([0.5, 6]).on("zoom", zoomed)
 
       gEnter = g.call(zoom).append("g");
 
