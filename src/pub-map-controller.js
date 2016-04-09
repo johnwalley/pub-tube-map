@@ -267,6 +267,8 @@ export default class PubMapCtrl {
     let directionsDisplay;
     let directionsService;
 
+    ga('send', 'event', 'GoogleMaps', 'directions', name);
+
     this.uiGmapGoogleMapApi.then((maps) => {
       directionsService = new maps.DirectionsService();
       directionsDisplay = new maps.DirectionsRenderer();
@@ -278,15 +280,13 @@ export default class PubMapCtrl {
 
       // TODO: Remove nested promises
       this.geolocation.getLocation().then((position) => {
-        var start = `${position.coords.latitude},${position.coords.longitude}`;
-        var end = this.pub.address;
-        var request = {
+        const start = `${position.coords.latitude},${position.coords.longitude}`;
+        const end = this.pub.address;
+        const request = {
           origin: start,
           destination: end,
           travelMode: google.maps.TravelMode.WALKING
         };
-
-        console.log(request);
 
         directionsService.route(request, function(result, status) {
           if (status == google.maps.DirectionsStatus.OK) {
