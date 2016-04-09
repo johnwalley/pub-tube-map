@@ -13,7 +13,7 @@
     },
     "Alma": {
       "title": "Alma",
-      "place_id": "ChIJF5v8q55w2EcRulIWFPqI484",
+      "place_id": "ChIJF5v8q55w2EcRWbfRNUQNPmE",
       "address": "26 Russel Court, Cambridge, CB2 1HW",
       "website": "http://www.thealmacambridge.co.uk/",
       "phone": "01223 316722",
@@ -35,6 +35,7 @@
     },
     "AncientShepherds": {
       "title": "Ancient Shepherds",
+      "place_id": "ChIJI5agpzlw2EcR55ZT5vZy_ok",
       "address": "5 High St, Fen Ditton, Cambridge, CB5 8ST",
       "website": "http://www.theancientshepherds.co.uk/",
       "phone": "01223 293280",
@@ -56,6 +57,7 @@
     },
     "BaronOfBeef": {
       "title": "Baron\nof Beef",
+      "place_id": "ChIJVeAxW75w2EcRkM91IuEN_oU",
       "address": "19 Bridge St, Cambridge CB2 1UF",
       "website": "http://www.baronofbeef-cambridge.co.uk/",
       "phone": "01223 505022",
