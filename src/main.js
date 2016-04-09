@@ -13,6 +13,9 @@ import minimizeUrl from './minimize-url.js';
 import config from './config.js';
 import pubs from './pubs.js'
 
+require('../node_modules/angular-material/angular-material.min.css');
+require('../tube-map.css');
+
 angular.module('pubMapApp', [ngMaterial, ngMdIcons, 'uiGmapgoogle-maps', 'geolocation'])
 .config(config)
 .controller('PubMapCtrl', PubMapCtrl)
