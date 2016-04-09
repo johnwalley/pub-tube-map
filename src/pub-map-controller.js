@@ -111,8 +111,6 @@ export default class PubMapCtrl {
       },
     };
 
-    const _this = this;
-
     if (station.hasOwnProperty('place_id')) {
       this.uiGmapGoogleMapApi.then((maps) => {
         const request = {
@@ -125,8 +123,15 @@ export default class PubMapCtrl {
             if (place.hasOwnProperty('opening_hours')) {
               const now = new Date(Date.now());
               const dayOfWeek = (now.getDay() - 1) % 7;
-              _this.pub.opening_hours = place.opening_hours.weekday_text[dayOfWeek];
-              _this.$scope.$apply();
+
+              const str = place.opening_hours.weekday_text[dayOfWeek]
+
+              const hours = str.substring(str.indexOf(":") + 1);
+
+              const openNow = place.opening_hours.open_now ? "Open now" : "Closed";
+
+              this.pub.opening_hours = `${openNow}:${hours}`;
+              this.$scope.$apply();
             }
           }
         });
