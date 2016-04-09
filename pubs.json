@@ -2,6 +2,7 @@
   "stations": {
     "AlexandraArms": {
       "title": "Alexandra\nArms",
+      "place_id": "ChIJaVrou4hw2EcROetQMMOP12M",
       "address": "22 Gwydir St, Cambridge CB1 2LL",
       "website": "http://www.thealexcambridge.com/",
       "phone": "01223 324441",
@@ -12,6 +13,7 @@
     },
     "Alma": {
       "title": "Alma",
+      "place_id": "ChIJF5v8q55w2EcRulIWFPqI484",
       "address": "26 Russel Court, Cambridge, CB2 1HW",
       "website": "http://www.thealmacambridge.co.uk/",
       "phone": "01223 316722",
@@ -22,6 +24,7 @@
     },
     "Anchor": {
       "title": "Anchor",
+      "place_id": "hIJocwdyrxw2EcRnogp-KBkY_o",
       "address": "Silver Street, Cambridge, CB3 9EL",
       "website": "http://www.anchorcambridge.com",
       "phone": "01223 353554",
@@ -42,6 +45,7 @@
     },
     "Architect": {
       "title": "Architect",
+      "place_id": "ChIJX3Dbo7hw2EcR4iVxgX74BlU",
       "address": "43 Castle St, Cambridge, CB3 0AH",
       "website": "http://www.thearchitectcambridge.co.uk/",
       "phone": "01223 563779",
@@ -162,6 +166,7 @@
     },
     "CastleInn": {
       "title": "Castle\nInn",
+      "place_id": "ChIJoccoXsdw2EcROG63agLdFi4",
       "address": "38 Castle St, City Centre, Cambridge CB3 0AJ",
       "website": "http://thecastleinncambridge.com/",
       "phone": "01223 353194",
@@ -599,6 +604,7 @@
     },
     "Punter": {
       "title": "Punter",
+      "place_id": "ChIJIwqxlbhw2EcRQYT52kWYXhQ",
       "address": "3 Pound Hill, Cambridge CB3 0AE",
       "website": "http://www.thepuntercambridge.com/",
       "phone": "01223 363322",

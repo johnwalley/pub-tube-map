@@ -1,5 +1,12 @@
 export default class PubMapCtrl {
-  constructor($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location) {
+  constructor(
+    $scope,
+    $mdSidenav,
+    $mdBottomSheet,
+    $mdMedia,
+    $mdToast,
+    $location,
+    uiGmapGoogleMapApi) {
 
     this.$scope = $scope;
     this.$mdSidenav = $mdSidenav;
@@ -7,9 +14,10 @@ export default class PubMapCtrl {
     this.$mdMedia = $mdMedia;
     this.$mdToast = $mdToast;
     this.$location = $location;
+    this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
 
-    var width = 1600;
-    var height = 1024;
+    const width = 1600;
+    const height = 1024;
 
     this.visited = [];
 
@@ -19,7 +27,7 @@ export default class PubMapCtrl {
       "title": "Default Pub"
     };
 
-    var map = tubeMap()
+    const map = tubeMap()
       .width(width)
       .height(height)
       .margin({
@@ -33,10 +41,10 @@ export default class PubMapCtrl {
 
     this.totalPubs;
 
-    var geoStations;
-    var discrepencies;
+    let geoStations;
+    let discrepencies;
 
-    let _this = this;
+    const _this = this;
 
     d3.json("pubs.json", function(data) {
       d3.select("#map").datum(data)
@@ -49,7 +57,7 @@ export default class PubMapCtrl {
       geoStations = d3.select("#map").selectAll(".geoStations");
       discrepencies = d3.select("#map").selectAll(".discrepencies");
 
-      var path = _this.$location.path().replace(/^\//g, '');
+      let path = _this.$location.path().replace(/^\//g, '');
 
       if (path.length) {
         _this.visited = path.split(',');
@@ -66,7 +74,7 @@ export default class PubMapCtrl {
         _this.$scope.$apply();
       });
     });
-  };
+  }
 
   developerModeToggle() {
     if (this.developerMode) {
@@ -76,21 +84,21 @@ export default class PubMapCtrl {
       geoStations.style("display", "none");
       discrepencies.style("display", "none");
     }
-  };
+  }
 
   toggleLeft() {
      this.buildToggler('left');
-  };
-
-  buildToggler(navID) {
-    return function() {
-      $mdSidenav(navID)
-        .toggle();
-    }
   }
 
+  buildToggler(navID) {
+     return () => {
+       $mdSidenav(navID)
+         .toggle();
+     }
+   }
+
   selectPub (name) {
-    var station = this.data.stations[name];
+    let station = this.data.stations[name];
 
     this.pub = {
       "name": name,
@@ -114,7 +122,29 @@ export default class PubMapCtrl {
           }
         }
       }
-    };
+    }
+
+    const _this = this;
+
+    if (station.hasOwnProperty('place_id')) {
+      this.uiGmapGoogleMapApi.then(function(maps) {
+        const request = {
+          placeId: station.place_id
+        };
+
+        const service = new maps.places.PlacesService(document.getElementById('html_attributions'));
+        service.getDetails(request, function(place, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (place.hasOwnProperty('opening_hours')) {
+              const now = new Date(Date.now());
+              const dayOfWeek = (now.getDay() - 1) % 7;
+              _this.pub['opening_hours'] = place.opening_hours.weekday_text[dayOfWeek];
+              _this.$scope.$apply();
+            }
+          }
+        });
+      });
+    }
 
     if (!this.pub.visited) {
       this.pub.clickIcon = 'add';
@@ -135,24 +165,24 @@ export default class PubMapCtrl {
 
   centerPub(name) {
     this.map.centerOnPub(name);
-  };
+  }
 
   selectNearestPub() {
-    let _this = this;
+    const _this = this;
 
     function success(position) {
-      var latitude  = position.coords.latitude;
-      var longitude = position.coords.longitude;
+      const latitude  = position.coords.latitude;
+      const longitude = position.coords.longitude;
 
-      var minDistance = 10000000;
-      var nearestPub;
+      let minDistance = 10000000;
+      let nearestPub;
 
-      var stations = _this.data.stations;
+      const stations = _this.data.stations;
 
-      for (var key in stations) {
+      for (let key in stations) {
         if (!stations.hasOwnProperty(key)) continue;
 
-        var distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
+        const distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
 
         if (distance < minDistance) {
           minDistance = distance;
@@ -167,7 +197,7 @@ export default class PubMapCtrl {
       d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
 
       ga('send', 'event', 'Nearest', 'click', nearestPub);
-    };
+    }
 
     function error() {
       console.log("Unable to retrieve your location");
@@ -177,13 +207,14 @@ export default class PubMapCtrl {
           .position('top right')
           .hideDelay(3000)
       );
-    };
+    }
 
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
   selectRandomPub() {
-    var randomPubName = fetch_random(this.data.stations);
+    const randomPubName = fetch_random(this.data.stations);
+
     this.centerPub(randomPubName);
     this.selectPub(randomPubName);
     d3.select("#map").selectAll(".label").classed("selected", false);
@@ -192,7 +223,7 @@ export default class PubMapCtrl {
   }
 
   fetch_random(obj) {
-    var temp_key, keys = [];
+    let temp_key, keys = [];
     for (temp_key in obj) {
       if (obj.hasOwnProperty(temp_key)) {
         keys.push(temp_key);
@@ -209,12 +240,12 @@ export default class PubMapCtrl {
       disableParentScroll: false,
       preserveScope: true // TODO: Surely this is a hack
     });
-  };
+  }
 
   togglePub() {
-    let name = this.pub.name;
+    const name = this.pub.name;
 
-    let index = this.visited.indexOf(name);
+    const index = this.visited.indexOf(name);
 
     if (index == -1) {
       this.addPub();
@@ -226,9 +257,8 @@ export default class PubMapCtrl {
   }
 
   addPub() {
-    var name = this.pub.name;
-
-    var label = d3.select("#" + name);
+    let name = this.pub.name;
+    let label = d3.select("#" + name);
 
     if (this.visited.indexOf(name) == -1) {
       this.data.stations[name].visited = true;
@@ -249,14 +279,12 @@ export default class PubMapCtrl {
         .hideDelay(1000));
 
     ga('send', 'event', 'Station', 'addPub', name);
-  };
+  }
 
   removePub() {
-    var name = this.pub.name;
-
-    var label = d3.select("#" + name);
-
-    var index = this.visited.indexOf(name);
+    const name = this.pub.name;
+    const label = d3.select("#" + name);
+    const index = this.visited.indexOf(name);
 
     if (index > -1) {
       this.data.stations[name].visited = false;
@@ -271,10 +299,9 @@ export default class PubMapCtrl {
     this.numVisited = this.visited.length;
 
     ga('send', 'event', 'Station', 'removePub', name);
-  };
+  }
 
   close() {
     $mdSidenav('left').close();
   }
-
-};
+}
