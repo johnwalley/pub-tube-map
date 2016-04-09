@@ -7,7 +7,9 @@ export default class PubMapCtrl {
     $mdToast,
     $location,
     uiGmapGoogleMapApi,
-    uiGmapIsReady) {
+    uiGmapIsReady,
+    pubs,
+    geolocation) {
     this.$scope = $scope;
     this.$mdSidenav = $mdSidenav;
     this.$mdBottomSheet = $mdBottomSheet;
@@ -16,6 +18,8 @@ export default class PubMapCtrl {
     this.$location = $location;
     this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
     this.uiGmapIsReady = uiGmapIsReady;
+    this.pubs = pubs;
+    this.geolocation = geolocation;
 
     const width = 1600;
     const height = 1024;
@@ -151,38 +155,6 @@ export default class PubMapCtrl {
   }
 
   selectNearestPub() {
-    const _this = this;
-
-    function success(position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-
-      let minDistance = 10000000;
-      let nearestPub;
-
-      const stations = _this.data.stations;
-
-      for (const key in stations) {
-        if (!stations.hasOwnProperty(key)) continue;
-
-        const distance = Math.pow(stations[key].position.lat - latitude, 2) + Math.pow(stations[key].position.lon - longitude, 2);
-
-        if (distance < minDistance) {
-          minDistance = distance;
-          nearestPub = key;
-        }
-      }
-
-      _this.centerPub(nearestPub);
-      _this.selectPub(nearestPub);
-
-      // TODO: These lines need to go into the map
-      d3.select("#map").selectAll(".label").classed("selected", false);
-      d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
-
-      ga('send', 'event', 'Nearest', 'click', nearestPub);
-    }
-
     function error() {
       console.log("Unable to retrieve your location");
       this.$mdToast.show(
@@ -193,22 +165,28 @@ export default class PubMapCtrl {
       );
     }
 
-    navigator.geolocation.getCurrentPosition(success, error);
-  }
+    this.geolocation.getLocation().then((position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
 
-  fetchRandom(obj) {
-    let tempKey;
-    const keys = [];
-    for (tempKey in obj) {
-      if (obj.hasOwnProperty(tempKey)) {
-        keys.push(tempKey);
-      }
-    }
-    return keys[Math.floor(Math.random() * keys.length)];
+      let minDistance = 10000000;
+      let nearestPub;
+
+      nearestPub = this.pubs.findNearestPub(this.data.stations, latitude, longitude);
+
+      this.centerPub(nearestPub);
+      this.selectPub(nearestPub);
+
+      // TODO: These lines need to go into the map
+      d3.select("#map").selectAll(".label").classed("selected", false);
+      d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
+
+      ga('send', 'event', 'Nearest', 'click', nearestPub);
+    });
   }
 
   selectRandomPub() {
-    const randomPubName = fetchRandom(this.data.stations);
+    const randomPubName = this.pubs.findRandomPub(this.data.stations);
 
     this.centerPub(randomPubName);
     this.selectPub(randomPubName);
@@ -286,12 +264,11 @@ export default class PubMapCtrl {
   }
 
   displayDirections() {
-    var directionsDisplay;
-    var directionsService;
+    let directionsDisplay;
+    let directionsService;
 
     this.uiGmapGoogleMapApi.then((maps) => {
       directionsService = new maps.DirectionsService();
-
       directionsDisplay = new maps.DirectionsRenderer();
 
       return this.uiGmapIsReady.promise(1);
@@ -299,18 +276,23 @@ export default class PubMapCtrl {
     .then((instances) => {
       directionsDisplay.setMap(instances[0].map);
 
-      var start = "Cambridge, UK";
-      var end = this.pub.address;
-      var request = {
-        origin: start,
-        destination: end,
-        travelMode: google.maps.TravelMode.WALKING
-      };
+      // TODO: Remove nested promises
+      this.geolocation.getLocation().then((position) => {
+        var start = `${position.coords.latitude},${position.coords.longitude}`;
+        var end = this.pub.address;
+        var request = {
+          origin: start,
+          destination: end,
+          travelMode: google.maps.TravelMode.WALKING
+        };
 
-      directionsService.route(request, function(result, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-          directionsDisplay.setDirections(result);
-        }
+        console.log(request);
+
+        directionsService.route(request, function(result, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(result);
+          }
+        });
       });
     });
   }
