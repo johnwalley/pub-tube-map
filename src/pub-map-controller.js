@@ -6,6 +6,7 @@ export default class PubMapCtrl {
     $mdMedia,
     $mdToast,
     $location,
+    $log,
     uiGmapGoogleMapApi,
     uiGmapIsReady,
     pubs,
@@ -16,6 +17,7 @@ export default class PubMapCtrl {
     this.$mdMedia = $mdMedia;
     this.$mdToast = $mdToast;
     this.$location = $location;
+    this.$log = $log;
     this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
     this.uiGmapIsReady = uiGmapIsReady;
     this.pubs = pubs;
@@ -66,6 +68,8 @@ export default class PubMapCtrl {
         _this.visited = [];
       }
 
+      _this.numVisited = _this.visited.length;
+
       _this.map.on('click', (name) => {
         _this.selectPub(name);
         _this.$scope.$apply();
@@ -111,8 +115,6 @@ export default class PubMapCtrl {
       },
     };
 
-    const _this = this;
-
     if (station.hasOwnProperty('place_id')) {
       this.uiGmapGoogleMapApi.then((maps) => {
         const request = {
@@ -125,8 +127,15 @@ export default class PubMapCtrl {
             if (place.hasOwnProperty('opening_hours')) {
               const now = new Date(Date.now());
               const dayOfWeek = (now.getDay() - 1) % 7;
-              _this.pub.opening_hours = place.opening_hours.weekday_text[dayOfWeek];
-              _this.$scope.$apply();
+
+              const str = place.opening_hours.weekday_text[dayOfWeek]
+
+              const hours = str.substring(str.indexOf(":") + 1);
+
+              const openNow = place.opening_hours.open_now ? "Open now" : "Closed";
+
+              this.pub.opening_hours = `${openNow}:${hours}`;
+              this.$scope.$apply();
             }
           }
         });
@@ -267,6 +276,8 @@ export default class PubMapCtrl {
     let directionsDisplay;
     let directionsService;
 
+    ga('send', 'event', 'GoogleMaps', 'directions', name);
+
     this.uiGmapGoogleMapApi.then((maps) => {
       directionsService = new maps.DirectionsService();
       directionsDisplay = new maps.DirectionsRenderer();
@@ -278,15 +289,13 @@ export default class PubMapCtrl {
 
       // TODO: Remove nested promises
       this.geolocation.getLocation().then((position) => {
-        var start = `${position.coords.latitude},${position.coords.longitude}`;
-        var end = this.pub.address;
-        var request = {
+        const start = `${position.coords.latitude},${position.coords.longitude}`;
+        const end = this.pub.address;
+        const request = {
           origin: start,
           destination: end,
           travelMode: google.maps.TravelMode.WALKING
         };
-
-        console.log(request);
 
         directionsService.route(request, function(result, status) {
           if (status == google.maps.DirectionsStatus.OK) {
@@ -295,5 +304,38 @@ export default class PubMapCtrl {
         });
       });
     });
+  }
+
+  getMatches(query) {
+    let stations = this.data.stations;
+
+    let pubs = [];
+
+    for (let pub in stations) {
+      if (stations.hasOwnProperty(pub)) {
+        let searchPub = {
+          value: pub,
+          display: stations[pub].title,
+          address: stations[pub].address
+        }
+
+        pubs.push(searchPub);
+      }
+    }
+
+    let lowercaseQuery = angular.lowercase(query);
+
+    return pubs.filter((pub) => angular.lowercase(pub.display).indexOf(lowercaseQuery) !== -1);
+  }
+
+  selectedItemChange(item) {
+    if (typeof item !== 'undefined') {
+      this.selectPub(item.value);
+      this.centerPub(item.value);
+
+      // TODO: These lines need to go into the map
+      d3.select("#map").selectAll(".label").classed("selected", false);
+      d3.select("#map").select(".labels").select("#" + item.value).classed("selected", true);
+    }
   }
 }

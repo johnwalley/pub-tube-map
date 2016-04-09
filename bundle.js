@@ -93868,7 +93868,7 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var PubMapCtrl = function () {
-	  function PubMapCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location, uiGmapGoogleMapApi, uiGmapIsReady, pubs, geolocation) {
+	  function PubMapCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $mdToast, $location, $log, uiGmapGoogleMapApi, uiGmapIsReady, pubs, geolocation) {
 	    _classCallCheck(this, PubMapCtrl);
 	
 	    this.$scope = $scope;
@@ -93877,6 +93877,7 @@
 	    this.$mdMedia = $mdMedia;
 	    this.$mdToast = $mdToast;
 	    this.$location = $location;
+	    this.$log = $log;
 	    this.uiGmapGoogleMapApi = uiGmapGoogleMapApi;
 	    this.uiGmapIsReady = uiGmapIsReady;
 	    this.pubs = pubs;
@@ -93923,6 +93924,8 @@
 	        _this.visited = [];
 	      }
 	
+	      _this.numVisited = _this.visited.length;
+	
 	      _this.map.on('click', function (name) {
 	        _this.selectPub(name);
 	        _this.$scope.$apply();
@@ -93947,6 +93950,8 @@
 	  }, {
 	    key: 'selectPub',
 	    value: function selectPub(pubName) {
+	      var _this3 = this;
+	
 	      var station = this.data.stations[pubName];
 	
 	      this.pub = {
@@ -93973,8 +93978,6 @@
 	        }
 	      };
 	
-	      var _this = this;
-	
 	      if (station.hasOwnProperty('place_id')) {
 	        this.uiGmapGoogleMapApi.then(function (maps) {
 	          var request = {
@@ -93987,8 +93990,15 @@
 	              if (place.hasOwnProperty('opening_hours')) {
 	                var now = new Date(Date.now());
 	                var dayOfWeek = (now.getDay() - 1) % 7;
-	                _this.pub.opening_hours = place.opening_hours.weekday_text[dayOfWeek];
-	                _this.$scope.$apply();
+	
+	                var str = place.opening_hours.weekday_text[dayOfWeek];
+	
+	                var hours = str.substring(str.indexOf(":") + 1);
+	
+	                var openNow = place.opening_hours.open_now ? "Open now" : "Closed";
+	
+	                _this3.pub.opening_hours = openNow + ':' + hours;
+	                _this3.$scope.$apply();
 	              }
 	            }
 	          });
@@ -94019,7 +94029,7 @@
 	  }, {
 	    key: 'selectNearestPub',
 	    value: function selectNearestPub() {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      function error() {
 	        console.log("Unable to retrieve your location");
@@ -94033,10 +94043,10 @@
 	        var minDistance = 10000000;
 	        var nearestPub = void 0;
 	
-	        nearestPub = _this3.pubs.findNearestPub(_this3.data.stations, latitude, longitude);
+	        nearestPub = _this4.pubs.findNearestPub(_this4.data.stations, latitude, longitude);
 	
-	        _this3.centerPub(nearestPub);
-	        _this3.selectPub(nearestPub);
+	        _this4.centerPub(nearestPub);
+	        _this4.selectPub(nearestPub);
 	
 	        // TODO: These lines need to go into the map
 	        d3.select("#map").selectAll(".label").classed("selected", false);
@@ -94127,30 +94137,30 @@
 	  }, {
 	    key: 'displayDirections',
 	    value: function displayDirections() {
-	      var _this4 = this;
+	      var _this5 = this;
 	
 	      var directionsDisplay = void 0;
 	      var directionsService = void 0;
+	
+	      ga('send', 'event', 'GoogleMaps', 'directions', name);
 	
 	      this.uiGmapGoogleMapApi.then(function (maps) {
 	        directionsService = new maps.DirectionsService();
 	        directionsDisplay = new maps.DirectionsRenderer();
 	
-	        return _this4.uiGmapIsReady.promise(1);
+	        return _this5.uiGmapIsReady.promise(1);
 	      }).then(function (instances) {
 	        directionsDisplay.setMap(instances[0].map);
 	
 	        // TODO: Remove nested promises
-	        _this4.geolocation.getLocation().then(function (position) {
+	        _this5.geolocation.getLocation().then(function (position) {
 	          var start = position.coords.latitude + ',' + position.coords.longitude;
-	          var end = _this4.pub.address;
+	          var end = _this5.pub.address;
 	          var request = {
 	            origin: start,
 	            destination: end,
 	            travelMode: google.maps.TravelMode.WALKING
 	          };
-	
-	          console.log(request);
 	
 	          directionsService.route(request, function (result, status) {
 	            if (status == google.maps.DirectionsStatus.OK) {
@@ -94159,6 +94169,43 @@
 	          });
 	        });
 	      });
+	    }
+	  }, {
+	    key: 'getMatches',
+	    value: function getMatches(query) {
+	      var stations = this.data.stations;
+	
+	      var pubs = [];
+	
+	      for (var pub in stations) {
+	        if (stations.hasOwnProperty(pub)) {
+	          var searchPub = {
+	            value: pub,
+	            display: stations[pub].title,
+	            address: stations[pub].address
+	          };
+	
+	          pubs.push(searchPub);
+	        }
+	      }
+	
+	      var lowercaseQuery = angular.lowercase(query);
+	
+	      return pubs.filter(function (pub) {
+	        return angular.lowercase(pub.display).indexOf(lowercaseQuery) !== -1;
+	      });
+	    }
+	  }, {
+	    key: 'selectedItemChange',
+	    value: function selectedItemChange(item) {
+	      if (typeof item !== 'undefined') {
+	        this.selectPub(item.value);
+	        this.centerPub(item.value);
+	
+	        // TODO: These lines need to go into the map
+	        d3.select("#map").selectAll(".label").classed("selected", false);
+	        d3.select("#map").select(".labels").select("#" + item.value).classed("selected", true);
+	      }
 	    }
 	  }]);
 	
@@ -94666,7 +94713,7 @@
 	
 	
 	// module
-	exports.push([module.id, "[ng\\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {\r\n  display: none !important;\r\n}\r\n\r\nhtml, body {\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\nbody {\r\n  overflow: hidden;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n  color: rgba(0,0,0,0.87);\r\n}\r\n\r\na:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.md-sidenav-left p {\r\n  font-size: 13px;\r\n}\r\n\r\n.toggle-pub-button {\r\n  margin: -30px 8px 10px;\r\n  background-color: rgb(0,152,212);\r\n  fill: rgb(255, 255, 255);\r\n}\r\n\r\n.angular-google-map-container { height: 300px; }\r\n\r\n#score p {\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 20px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 1%;\r\n  color: rgba(0, 0, 0, 0.8);\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  font-size: 36px;\r\n  text-align: center;\r\n}\r\nh2.name {\r\n  -webkit-margin-before: 0em;\r\n  -webkit-margin-after: 0.2em;\r\n  -webkit-margin-start: 0px;\r\n  -webkit-margin-end: 0px;\r\n}\r\ntext {\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  fill: #0019A8;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  font-weight: normal;\r\n}\r\n.side-nav-content {\r\n  overflow-x: hidden;\r\n  margin: -20px 0px 0px 0px;\r\n}\r\n.side-nav-info-icon {\r\n  margin: 0px 24px 0px 0px !important;\r\n  color: rgb(49, 133, 255);\r\n}\r\n.side-nav-info-list md-list-item {\r\n  padding: 0px 24px 6px 0px;\r\n  min-height: 0px;\r\n}\r\n\r\n/*text:hover {\r\n  opacity: 0.6;\r\n}*/\r\n\r\ntext.highlighted {\r\n  text-decoration: line-through;\r\n}\r\n.line {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.line.translucent {\r\n  opacity: 0.1;\r\n}\r\n.station {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.station.translucent {\r\n  opacity: 0.1;\r\n}\r\n.interchange {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.interchange.translucent {\r\n  opacity: 0.3;\r\n}\r\n\r\n.label {\r\n  transition: opacity 0.5s ease-out;\r\n  transition: transform 0.5s ease-in-out;\r\n  transform-origin: 50% 50%;\r\n}\r\n\r\n.label.translucent {\r\n  opacity: 0.1;\r\n}\r\n\r\n.label.selected {\r\n  transform: scale(1.2);\r\n}\r\n", ""]);
+	exports.push([module.id, "html, body {\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\nbody {\r\n  overflow: hidden;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n  color: rgba(0,0,0,0.87);\r\n}\r\n\r\na:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.md-sidenav-left p {\r\n  font-size: 13px;\r\n}\r\n\r\n.toggle-pub-button {\r\n  margin: -30px 8px 10px;\r\n  background-color: rgb(0,152,212);\r\n  fill: rgb(255, 255, 255);\r\n}\r\n\r\n.angular-google-map-container { height: 300px; }\r\n\r\n.autocomplete {\r\n  width: 400px;\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 20px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 20%;\r\n}\r\n\r\n#score p {\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 20px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 1%;\r\n  color: rgba(0, 0, 0, 0.8);\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  font-size: 36px;\r\n  text-align: center;\r\n}\r\nh2.name {\r\n  -webkit-margin-before: 0em;\r\n  -webkit-margin-after: 0.2em;\r\n  -webkit-margin-start: 0px;\r\n  -webkit-margin-end: 0px;\r\n}\r\ntext {\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  fill: #0019A8;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  font-weight: normal;\r\n}\r\n.side-nav-content {\r\n  overflow-x: hidden;\r\n  margin: -20px 0px 0px 0px;\r\n}\r\n.side-nav-info-icon {\r\n  margin: 0px 24px 0px 0px !important;\r\n  color: rgb(49, 133, 255);\r\n}\r\n.side-nav-info-list md-list-item {\r\n  padding: 0px 24px 6px 0px;\r\n  min-height: 0px;\r\n}\r\n\r\n/*text:hover {\r\n  opacity: 0.6;\r\n}*/\r\n\r\ntext.highlighted {\r\n  text-decoration: line-through;\r\n}\r\n.line {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.line.translucent {\r\n  opacity: 0.1;\r\n}\r\n.station {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.station.translucent {\r\n  opacity: 0.1;\r\n}\r\n.interchange {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.interchange.translucent {\r\n  opacity: 0.3;\r\n}\r\n\r\n.label {\r\n  transition: opacity 0.5s ease-out;\r\n  transition: transform 0.5s ease-in-out;\r\n  transform-origin: 50% 50%;\r\n}\r\n\r\n.label.translucent {\r\n  opacity: 0.1;\r\n}\r\n\r\n.label.selected {\r\n  transform: scale(1.2);\r\n}\r\n", ""]);
 	
 	// exports
 
