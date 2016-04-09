@@ -72,7 +72,6 @@
               <ui-gmap-marker coords="pubMap.pub.googleMap.marker.coords" options="pubMap.pub.googleMap.marker.options" events="pubMap.pub.googleMap.marker.events" idkey="pubMap.pub.googleMap.marker.id">
               </ui-gmap-marker>
             </ui-gmap-google-map>
-            <p id='html_attributions'></p>
           </div>
         </md-sidenav>
       </div>
@@ -81,6 +80,7 @@
           <div id="pubMap.score" ng-show="numVisited > 0" ng-cloak>
             <p>visited {{pubMap.numVisited}}/{{pubMap.totalPubs}}</p>
           </div>
+          <p id='html_attributions' ng-show="false"></p>
           <div id="map"></div>
         </div>
         <md-button ng-click="pubMap.selectNearestPub()" class="md-fab md-primary md-fab-bottom-right toggle-pub-button" aria-label="Go to nearest pub">
