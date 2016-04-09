@@ -7,6 +7,7 @@ import 'angularjs-geolocation';
 
 import 'lodash';
 import 'angular-simple-logger';
+import 'angular-svg-round-progressbar';
 
 import PubMapCtrl from './pub-map-controller';
 import minimizeUrl from './minimize-url.js';
@@ -16,7 +17,7 @@ import pubs from './pubs.js'
 require('../node_modules/angular-material/angular-material.min.css');
 require('../tube-map.css');
 
-angular.module('pubMapApp', [ngMaterial, ngMdIcons, 'uiGmapgoogle-maps', 'geolocation'])
+angular.module('pubMapApp', [ngMaterial, ngMdIcons, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar'])
 .config(config)
 .controller('PubMapCtrl', PubMapCtrl)
 .service('pubs', pubs)

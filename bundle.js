@@ -66,28 +66,30 @@
 	
 	__webpack_require__(15);
 	
-	var _pubMapController = __webpack_require__(19);
+	__webpack_require__(19);
+	
+	var _pubMapController = __webpack_require__(20);
 	
 	var _pubMapController2 = _interopRequireDefault(_pubMapController);
 	
-	var _minimizeUrl = __webpack_require__(20);
+	var _minimizeUrl = __webpack_require__(21);
 	
 	var _minimizeUrl2 = _interopRequireDefault(_minimizeUrl);
 	
-	var _config = __webpack_require__(21);
+	var _config = __webpack_require__(22);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
-	var _pubs = __webpack_require__(22);
+	var _pubs = __webpack_require__(23);
 	
 	var _pubs2 = _interopRequireDefault(_pubs);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(23);
-	__webpack_require__(27);
+	__webpack_require__(24);
+	__webpack_require__(28);
 	
-	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps', 'geolocation']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).service('pubs', _pubs2.default).filter('minimizeUrl', _minimizeUrl2.default);
+	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).service('pubs', _pubs2.default).filter('minimizeUrl', _minimizeUrl2.default);
 
 /***/ },
 /* 1 */
@@ -93857,6 +93859,13 @@
 /* 19 */
 /***/ function(module, exports) {
 
+	/* angular-svg-round-progressbar@0.4.2 2016-03-30 */
+	"use strict";!function(){for(var a=0,b=["webkit","moz"],c=0;c<b.length&&!window.requestAnimationFrame;++c)window.requestAnimationFrame=window[b[c]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[b[c]+"CancelAnimationFrame"]||window[b[c]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(b){var c=(new Date).getTime(),d=Math.max(0,16-(c-a)),e=window.setTimeout(function(){b(c+d)},d);return a=c+d,e}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(a){window.clearTimeout(a)})}(),angular.module("angular-svg-round-progressbar",[]),angular.module("angular-svg-round-progress",["angular-svg-round-progressbar"]).run(["$log",function(a){a.warn("Hey there! In version 0.4.0 `angular-svg-round-progress` was renamed to `angular-svg-round-progressbar` in order to match the NPM and Bower package names. You're currently using a proxy module that will be gone on May 1st 2016. Please rename your module dependency accordingly.")}]),angular.module("angular-svg-round-progressbar").constant("roundProgressConfig",{max:50,semi:!1,rounded:!1,responsive:!1,clockwise:!0,radius:100,color:"#45ccce",bgcolor:"#eaeaea",stroke:15,duration:800,animation:"easeOutCubic",animationDelay:0,offset:0}),angular.module("angular-svg-round-progressbar").service("roundProgressService",["$window",function(a){function b(a,b,c,d){var e=(d-90)*Math.PI/180,f=a+c*Math.cos(e),g=b+c*Math.sin(e);return f+" "+g}var c={},d=angular.isNumber,e=document.head.querySelector("base");return c.isSupported=!(!document.createElementNS||!document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect),c.resolveColor=e&&e.href?function(a){var b=a.indexOf("#");return b>-1&&a.indexOf("url")>-1?a.slice(0,b)+window.location.href+a.slice(b):a}:function(a){return a},c.toNumber=function(a){return d(a)?a:parseFloat((a+"").replace(",","."))},c.getOffset=function(a,b){var d=+b.offset||0;if("inherit"===b.offset)for(var e,f=a;!f.hasClass("round-progress-wrapper");)c.isDirective(f)&&(e=f.scope().$parent.getOptions(),d+=(+e.offset||0)+(+e.stroke||0)),f=f.parent();return d},c.getTimestamp=a.performance&&a.performance.now&&angular.isNumber(a.performance.now())?function(){return a.performance.now()}:function(){return(new a.Date).getTime()},c.updateState=function(a,c,d,e,f,g){if(!f)return e;var h=a>0?Math.min(a,c):0,i=g?180:359.9999,j=0===c?0:h/c*i,k=b(f,f,d,j),l=b(f,f,d,0),m=180>=j?0:1,n="M "+k+" A "+d+" "+d+" 0 "+m+" 0 "+l;return e.attr("d",n)},c.isDirective=function(a){if(a&&a.length){var b="round-progress";return"undefined"!=typeof a.attr(b)||a[0].nodeName.toLowerCase()===b}return!1},c.animations={linearEase:function(a,b,c,d){return c*a/d+b},easeInQuad:function(a,b,c,d){return c*(a/=d)*a+b},easeOutQuad:function(a,b,c,d){return-c*(a/=d)*(a-2)+b},easeInOutQuad:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a+b:-c/2*(--a*(a-2)-1)+b},easeInCubic:function(a,b,c,d){return c*(a/=d)*a*a+b},easeOutCubic:function(a,b,c,d){return c*((a=a/d-1)*a*a+1)+b},easeInOutCubic:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a*a+b:c/2*((a-=2)*a*a+2)+b},easeInQuart:function(a,b,c,d){return c*(a/=d)*a*a*a+b},easeOutQuart:function(a,b,c,d){return-c*((a=a/d-1)*a*a*a-1)+b},easeInOutQuart:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a*a*a+b:-c/2*((a-=2)*a*a*a-2)+b},easeInQuint:function(a,b,c,d){return c*(a/=d)*a*a*a*a+b},easeOutQuint:function(a,b,c,d){return c*((a=a/d-1)*a*a*a*a+1)+b},easeInOutQuint:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a*a*a*a+b:c/2*((a-=2)*a*a*a*a+2)+b},easeInSine:function(a,b,c,d){return-c*Math.cos(a/d*(Math.PI/2))+c+b},easeOutSine:function(a,b,c,d){return c*Math.sin(a/d*(Math.PI/2))+b},easeInOutSine:function(a,b,c,d){return-c/2*(Math.cos(Math.PI*a/d)-1)+b},easeInExpo:function(a,b,c,d){return 0==a?b:c*Math.pow(2,10*(a/d-1))+b},easeOutExpo:function(a,b,c,d){return a==d?b+c:c*(-Math.pow(2,-10*a/d)+1)+b},easeInOutExpo:function(a,b,c,d){return 0==a?b:a==d?b+c:(a/=d/2)<1?c/2*Math.pow(2,10*(a-1))+b:c/2*(-Math.pow(2,-10*--a)+2)+b},easeInCirc:function(a,b,c,d){return-c*(Math.sqrt(1-(a/=d)*a)-1)+b},easeOutCirc:function(a,b,c,d){return c*Math.sqrt(1-(a=a/d-1)*a)+b},easeInOutCirc:function(a,b,c,d){return(a/=d/2)<1?-c/2*(Math.sqrt(1-a*a)-1)+b:c/2*(Math.sqrt(1-(a-=2)*a)+1)+b},easeInElastic:function(a,b,c,d){var e=1.70158,f=0,g=c;return 0==a?b:1==(a/=d)?b+c:(f||(f=.3*d),g<Math.abs(c)?(g=c,e=f/4):e=f/(2*Math.PI)*Math.asin(c/g),-(g*Math.pow(2,10*(a-=1))*Math.sin((a*d-e)*(2*Math.PI)/f))+b)},easeOutElastic:function(a,b,c,d){var e=1.70158,f=0,g=c;return 0==a?b:1==(a/=d)?b+c:(f||(f=.3*d),g<Math.abs(c)?(g=c,e=f/4):e=f/(2*Math.PI)*Math.asin(c/g),g*Math.pow(2,-10*a)*Math.sin((a*d-e)*(2*Math.PI)/f)+c+b)},easeInOutElastic:function(a,b,c,d){var e=1.70158,f=0,g=c;return 0==a?b:2==(a/=d/2)?b+c:(f||(f=d*(.3*1.5)),g<Math.abs(c)?(g=c,e=f/4):e=f/(2*Math.PI)*Math.asin(c/g),1>a?-.5*(g*Math.pow(2,10*(a-=1))*Math.sin((a*d-e)*(2*Math.PI)/f))+b:g*Math.pow(2,-10*(a-=1))*Math.sin((a*d-e)*(2*Math.PI)/f)*.5+c+b)},easeInBack:function(a,b,c,d,e){return void 0==e&&(e=1.70158),c*(a/=d)*a*((e+1)*a-e)+b},easeOutBack:function(a,b,c,d,e){return void 0==e&&(e=1.70158),c*((a=a/d-1)*a*((e+1)*a+e)+1)+b},easeInOutBack:function(a,b,c,d,e){return void 0==e&&(e=1.70158),(a/=d/2)<1?c/2*(a*a*(((e*=1.525)+1)*a-e))+b:c/2*((a-=2)*a*(((e*=1.525)+1)*a+e)+2)+b},easeInBounce:function(a,b,d,e){return d-c.animations.easeOutBounce(e-a,0,d,e)+b},easeOutBounce:function(a,b,c,d){return(a/=d)<1/2.75?c*(7.5625*a*a)+b:2/2.75>a?c*(7.5625*(a-=1.5/2.75)*a+.75)+b:2.5/2.75>a?c*(7.5625*(a-=2.25/2.75)*a+.9375)+b:c*(7.5625*(a-=2.625/2.75)*a+.984375)+b},easeInOutBounce:function(a,b,d,e){return e/2>a?.5*c.animations.easeInBounce(2*a,0,d,e)+b:.5*c.animations.easeOutBounce(2*a-e,0,d,e)+.5*d+b}},c}]),angular.module("angular-svg-round-progressbar").directive("roundProgress",["$window","roundProgressService","roundProgressConfig",function(a,b,c){var d={restrict:"EA",replace:!0,transclude:!0,scope:{current:"=",max:"=",semi:"=",rounded:"=",clockwise:"=",responsive:"=",onRender:"=",radius:"@",color:"@",bgcolor:"@",stroke:"@",duration:"@",animation:"@",offset:"@",animationDelay:"@"}};return b.isSupported?angular.extend(d,{link:function(e,f){var g,h,i=!f.hasClass("round-progress-wrapper"),j=i?f:f.find("svg").eq(0),k=j.find("path").eq(0),l=j.find("circle").eq(0),m=angular.copy(c),n=0;e.getOptions=function(){return m};var o=function(){var a=m.semi,c=m.responsive,d=+m.radius||0,e=+m.stroke,g=2*d,h=d-e/2-b.getOffset(f,m);j.css({top:0,left:0,position:c?"absolute":"static",width:c?"100%":g+"px",height:c?"100%":(a?d:g)+"px",overflow:"hidden"}),i||j[0].setAttribute("viewBox","0 0 "+g+" "+(a?d:g)),f.css({width:c?"100%":"auto",position:"relative",paddingBottom:c?a?"50%":"100%":0}),k.css({stroke:b.resolveColor(m.color),strokeWidth:e,strokeLinecap:m.rounded?"round":"butt"}),a?k.attr("transform",m.clockwise?"translate(0, "+g+") rotate(-90)":"translate("+g+", "+g+") rotate(90) scale(-1, 1)"):k.attr("transform",m.clockwise?"":"scale(-1, 1) translate("+-g+" 0)"),l.attr({cx:d,cy:d,r:h>=0?h:0}).css({stroke:b.resolveColor(m.bgcolor),strokeWidth:e})},p=function(c,d,e){var h=b.toNumber(m.max||0),i=c>0?a.Math.min(c,h):0,j=d===i||0>d?0:d||0,l=i-j,o=b.animations[m.animation],p=+m.duration||0,q=e||c>h&&d>h||0>c&&0>d||25>p,r=b.toNumber(m.radius),s=r-m.stroke/2-b.getOffset(f,m),t=m.semi,u=function(){if(q)b.updateState(i,h,s,k,r,t),m.onRender&&m.onRender(i,m,f);else{var c=b.getTimestamp(),d=++n;a.requestAnimationFrame(function e(){var g=a.Math.min(b.getTimestamp()-c,p),i=o(g,j,l,p);b.updateState(i,h,s,k,r,t),m.onRender&&m.onRender(i,m,f),d===n&&p>g&&a.requestAnimationFrame(e)})}};m.animationDelay>0?(a.clearTimeout(g),a.setTimeout(u,m.animationDelay)):u()},q=Object.keys(d.scope).filter(function(a){return"current"!==a});e.$watchGroup(q,function(a){for(var b=0;b<a.length;b++)"undefined"!=typeof a[b]&&(m[q[b]]=a[b]);o(),e.$broadcast("$parentOffsetChanged"),"inherit"!==m.offset||h?"inherit"!==m.offset&&h&&h():h=e.$on("$parentOffsetChanged",function(){p(e.current,e.current,!0),o()})}),e.$watchGroup(["current","max","radius","stroke","semi","offset"],function(a,c){p(b.toNumber(a[0]),b.toNumber(c[0]))})},template:function(a){for(var c=a.parent(),d="round-progress",e=['<svg class="'+d+'" xmlns="http://www.w3.org/2000/svg">','<circle fill="none"/>','<path fill="none"/>',"<g ng-transclude></g>","</svg>"];c.length&&!b.isDirective(c);)c=c.parent();return c&&c.length||(e.unshift('<div class="round-progress-wrapper">'),e.push("</div>")),e.join("\n")}}):angular.extend(d,{template:'<div class="round-progress" ng-transclude></div>'})}]);
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -93925,6 +93934,7 @@
 	      }
 	
 	      _this.numVisited = _this.visited.length;
+	      _this.$scope.$apply(); // TODO: Fix these ugly hacks
 	
 	      _this.map.on('click', function (name) {
 	        _this.selectPub(name);
@@ -94215,7 +94225,7 @@
 	exports.default = PubMapCtrl;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -94252,7 +94262,7 @@
 	;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -94274,7 +94284,7 @@
 	;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -94331,16 +94341,16 @@
 	exports.default = pubs;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(24);
+	var content = __webpack_require__(25);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(26)(content, {});
+	var update = __webpack_require__(27)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -94357,10 +94367,10 @@
 	}
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(25)();
+	exports = module.exports = __webpack_require__(26)();
 	// imports
 	
 	
@@ -94371,7 +94381,7 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/*
@@ -94427,7 +94437,7 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -94679,16 +94689,16 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(28);
+	var content = __webpack_require__(29);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(26)(content, {});
+	var update = __webpack_require__(27)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -94705,15 +94715,15 @@
 	}
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(25)();
+	exports = module.exports = __webpack_require__(26)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "html, body {\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\nbody {\r\n  overflow: hidden;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n  color: rgba(0,0,0,0.87);\r\n}\r\n\r\na:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.md-sidenav-left p {\r\n  font-size: 13px;\r\n}\r\n\r\n.toggle-pub-button {\r\n  margin: -30px 8px 10px;\r\n  background-color: rgb(0,152,212);\r\n  fill: rgb(255, 255, 255);\r\n}\r\n\r\n.angular-google-map-container { height: 300px; }\r\n\r\n.autocomplete {\r\n  width: 400px;\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 20px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 20%;\r\n}\r\n\r\n#score p {\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 20px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 1%;\r\n  color: rgba(0, 0, 0, 0.8);\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  font-size: 36px;\r\n  text-align: center;\r\n}\r\nh2.name {\r\n  -webkit-margin-before: 0em;\r\n  -webkit-margin-after: 0.2em;\r\n  -webkit-margin-start: 0px;\r\n  -webkit-margin-end: 0px;\r\n}\r\ntext {\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  fill: #0019A8;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  font-weight: normal;\r\n}\r\n.side-nav-content {\r\n  overflow-x: hidden;\r\n  margin: -20px 0px 0px 0px;\r\n}\r\n.side-nav-info-icon {\r\n  margin: 0px 24px 0px 0px !important;\r\n  color: rgb(49, 133, 255);\r\n}\r\n.side-nav-info-list md-list-item {\r\n  padding: 0px 24px 6px 0px;\r\n  min-height: 0px;\r\n}\r\n\r\n/*text:hover {\r\n  opacity: 0.6;\r\n}*/\r\n\r\ntext.highlighted {\r\n  text-decoration: line-through;\r\n}\r\n.line {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.line.translucent {\r\n  opacity: 0.1;\r\n}\r\n.station {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.station.translucent {\r\n  opacity: 0.1;\r\n}\r\n.interchange {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.interchange.translucent {\r\n  opacity: 0.3;\r\n}\r\n\r\n.label {\r\n  transition: opacity 0.5s ease-out;\r\n  transition: transform 0.5s ease-in-out;\r\n  transform-origin: 50% 50%;\r\n}\r\n\r\n.label.translucent {\r\n  opacity: 0.1;\r\n}\r\n\r\n.label.selected {\r\n  transform: scale(1.2);\r\n}\r\n", ""]);
+	exports.push([module.id, "html, body {\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\nbody {\r\n  overflow: hidden;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n  color: rgba(0,0,0,0.87);\r\n}\r\n\r\na:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.md-sidenav-left p {\r\n  font-size: 13px;\r\n}\r\n\r\n.toggle-pub-button {\r\n  margin: -30px 8px 10px;\r\n  background-color: rgb(0,152,212);\r\n  fill: rgb(255, 255, 255);\r\n}\r\n\r\n.angular-google-map-container { height: 300px; }\r\n\r\n.autocomplete {\r\n  width: 200px;\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 60px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 20%;\r\n}\r\n\r\n.progress-wrapper {\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 5px;\r\n  margin-top: 5px;\r\n  left: auto;\r\n  right: 1%;\r\n}\r\n\r\n.progress {\r\n    position: absolute;\r\n    font-weight: 100;\r\n    line-height: 1;\r\n    transform: translateY(-50%) translateX(-50%);\r\n    top: 50%;\r\n    bottom: auto;\r\n    left: 50%;\r\n    color: rgba(0, 0, 0, 0.9);\r\n    font-family: 'Hammersmith One', sans-serif;\r\n    font-size: 22px;\r\n    text-align: center;\r\n}\r\n\r\n\r\nh2.name {\r\n  -webkit-margin-before: 0em;\r\n  -webkit-margin-after: 0.2em;\r\n  -webkit-margin-start: 0px;\r\n  -webkit-margin-end: 0px;\r\n}\r\ntext {\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  fill: #0019A8;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  font-weight: normal;\r\n}\r\n.side-nav-content {\r\n  overflow-x: hidden;\r\n  margin: -20px 0px 0px 0px;\r\n}\r\n.side-nav-info-icon {\r\n  margin: 0px 24px 0px 0px !important;\r\n  color: rgb(49, 133, 255);\r\n}\r\n.side-nav-info-list md-list-item {\r\n  padding: 0px 24px 6px 0px;\r\n  min-height: 0px;\r\n}\r\n\r\n/*text:hover {\r\n  opacity: 0.6;\r\n}*/\r\n\r\ntext.highlighted {\r\n  text-decoration: line-through;\r\n}\r\n.line {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.line.translucent {\r\n  opacity: 0.1;\r\n}\r\n.station {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.station.translucent {\r\n  opacity: 0.1;\r\n}\r\n.interchange {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.interchange.translucent {\r\n  opacity: 0.3;\r\n}\r\n\r\n.label {\r\n  transition: opacity 0.5s ease-out;\r\n  transition: transform 0.5s ease-in-out;\r\n  transform-origin: 50% 50%;\r\n}\r\n\r\n.label.translucent {\r\n  opacity: 0.1;\r\n}\r\n\r\n.label.selected {\r\n  transform: scale(1.2);\r\n}\r\n", ""]);
 	
 	// exports
 

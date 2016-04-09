@@ -101,8 +101,25 @@
               </span>
             </md-item-template>
           </md-autocomplete>
-          <div id="score" ng-show="pubMap.numVisited > 0" ng-cloak>
-            <p>visited {{pubMap.numVisited}}/{{pubMap.totalPubs}}</p>
+          <div class="progress-wrapper">
+            <div class="progress ng-cloak">{{ pubMap.numVisited }}/{{ pubMap.totalPubs }}</div>
+            <div id="score"
+                ng-cloak
+                round-progress
+                max="pubMap.totalPubs"
+                current="pubMap.numVisited"
+                color="rgb(0,152,212)"
+                bgcolor="#eaeaea"
+                radius="50"
+                stroke="20"
+                semi="false"
+                rounded="false"
+                clockwise="false"
+                responsive="false"
+                duration="800"
+                animation="easeInOutQuart"
+                animation-delay="0">
+            </div>
           </div>
           <p id='html_attributions' ng-show="false"></p>
           <div id="map"></div>
