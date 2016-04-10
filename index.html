@@ -85,6 +85,7 @@
         <div layout="column" layout-align="center stretch">
           <md-autocomplete
             ng-cloak
+            ng-if="$mdMedia('gt-xs')"
             class="autocomplete"
             md-selected-item="pubMap.selectedItem"
             md-search-text="pubMap.searchText"
@@ -135,9 +136,7 @@
   </div>
 
   <script src="bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
-
   <script src="bower_components/d3/d3.min.js"></script>
-
   <script src="src/tube-map.js"></script>
   <script src="bundle.js"></script>
 </body>
