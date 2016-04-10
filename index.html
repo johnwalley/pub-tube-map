@@ -4,7 +4,7 @@
   <meta name="description" content="A Cambridge Pub Map in the Style of the Iconic London Underground Map" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:url" content="http://www.pubmap.co.uk/" />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="pub-map:result">
   <meta property="og:title" content="Cambridge Pub Map" />
   <meta property="og:description" content="A Cambridge Pub Map in the Style of the Iconic London Underground Map" />
   <meta property="og:image" content="http://www.pubmap.co.uk/img/facebook.png" />
@@ -131,6 +131,12 @@
           </md-tooltip>
           <ng-md-icon icon="my_location" size="32"></ng-md-icon>
         </md-button>
+        <md-button ng-cloak ng-click="pubMap.share()" class="md-fab md-primary md-fab-top-right toggle-pub-button" style="background-color: rgb(0,152,212);">
+          <md-tooltip md-direction="left" md-delay="1000">
+            Share
+          </md-tooltip>
+          <ng-md-icon icon="share" size="32"></ng-md-icon>
+        </md-button>
       </md-content>
     </section>
   </div>
@@ -139,5 +145,23 @@
   <script src="bower_components/d3/d3.min.js"></script>
   <script src="src/tube-map.js"></script>
   <script src="bundle.js"></script>
+
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1551289211778400',
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
 </body>
 </html>
