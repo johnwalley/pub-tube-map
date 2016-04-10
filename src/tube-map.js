@@ -11,6 +11,8 @@ function tubeMap() {
 
   var dispatch = d3.dispatch("click");
 
+  var svg;
+
   var model;
 
   var gEnter;
@@ -81,7 +83,7 @@ function tubeMap() {
       lineWidth = lineWidthMultiplier*(xScale(1) - xScale(0));
 
       // Select the svg element, if it exists
-      var svg = d3.select(this).selectAll("svg").data([data]);
+      svg = d3.select(this).selectAll("svg").data([data]);
 
       var g = svg.enter().append("svg").append("g");
 
@@ -365,18 +367,28 @@ function tubeMap() {
     visitStation(name, false);
   }
 
+  map.visitStations = function(visited) {
+    d3.selectAll(".labels").select("text").classed("highlighted", false);
+    visited.map((pub) => {
+      visitStation(pub, true);
+    });
+  }
+
   map.on = function(event, callback) {
     dispatch.on(event, callback)
   }
 
+  map.selectStation = function(name) {
+    selectStation(name);
+  }
+
   function selectStation(name) {
-    d3.select("#map").selectAll(".label").classed("selected", false);
-    d3.select("#map").select(".labels").select("#" + name).classed("selected", true);
+    d3.select(".labels").selectAll(".label").classed("selected", false);
+    d3.select(".labels").select("#" + name).classed("selected", true);
   }
 
   function visitStation(name, highlighted) {
-    var labels = d3.select("#map").selectAll(".label");
-    d3.select("#map").select(".labels").select("#" + name).select("text").classed("highlighted", highlighted);
+    d3.select(".labels").select("#" + name).select("text").classed("highlighted", highlighted);
   }
 
   function drawLine(data) {

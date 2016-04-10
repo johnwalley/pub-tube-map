@@ -26,9 +26,7 @@ export default class PubMapCtrl {
     const width = 1600;
     const height = 1024;
 
-    this.visited = [];
     this.developerMode = false;
-    this.numVisited = this.visited.length;
     this.pub = {
       title: 'Default Pub',
     };
@@ -37,29 +35,27 @@ export default class PubMapCtrl {
 
     d3.json('pubs.json', function (data) {
       _this.data = data;
-
+      _this.data.visited = [];
+      _this.numVisited = _this.data.visited.length;
       _this.totalPubs = Object.keys(data.stations).length;
 
       const path = _this.$location.path().replace(/^\//g, '');
 
       if (path.length) {
-        _this.visited = path.split(',');
-        _this.visited.map((pub) => {
-          // TODO: Make data driven
-          //_this.map.addStation(pub);
+        _this.data.visited = path.split(',');
+        _this.data.visited.map((pub) => {
           _this.data.stations[pub].visited = true;
         });
       } else {
-        _this.visited = [];
+        _this.data.visited = [];
       }
 
-      _this.numVisited = _this.visited.length;
+      _this.numVisited = _this.data.visited.length;
       _this.$scope.$apply(); // TODO: Fix these ugly hacks
     });
   }
 
   onClick(item) {
-    console.log("Controller onCLick handler called")
     this.selectPub(item);
   }
 
@@ -142,7 +138,9 @@ export default class PubMapCtrl {
       this.showListBottomSheet();
     }
 
-    ga('send', 'event', 'Station', 'click', name);
+    this.data.selectedPub = pubName;
+
+    ga('send', 'event', 'Station', 'click', pubName);
   }
 
   centerPub(name) {
@@ -204,7 +202,7 @@ export default class PubMapCtrl {
   togglePub() {
     const name = this.pub.name;
 
-    const index = this.visited.indexOf(name);
+    const index = this.data.visited.indexOf(name);
 
     if (index === -1) {
       this.addPub();
@@ -212,24 +210,21 @@ export default class PubMapCtrl {
       this.removePub();
     }
 
-    this.$location.path(this.visited);
+    this.$location.path(this.data.visited);
   }
 
   addPub() {
     const name = this.pub.name;
 
-    if (this.visited.indexOf(name) === -1) {
+    if (this.data.visited.indexOf(name) === -1) {
       this.data.stations[name].visited = true;
-      this.visited.push(name);
+      this.data.visited.push(name);
       this.pub.visited = true;
       this.pub.clickIcon = 'done';
       this.pub.backgroundColor = 'rgb(0, 222, 121)';
-
-      // TODO: Make data driven
-      //this.map.addStation(name);
     }
 
-    this.numVisited = this.visited.length;
+    this.numVisited = this.data.visited.length;
 
     this.$mdToast.show(
       this.$mdToast.simple()
@@ -243,11 +238,11 @@ export default class PubMapCtrl {
   removePub() {
     const name = this.pub.name;
     const label = d3.select("#" + name);
-    const index = this.visited.indexOf(name);
+    const index = this.data.visited.indexOf(name);
 
     if (index > -1) {
       this.data.stations[name].visited = false;
-      this.visited.splice(index, 1);
+      this.data.visited.splice(index, 1);
       this.pub.visited = false;
       this.pub.clickIcon = 'add';
       this.pub.backgroundColor = 'rgb(0,152,212)';
@@ -256,7 +251,7 @@ export default class PubMapCtrl {
       //this.map.removeStation(name);
     }
 
-    this.numVisited = this.visited.length;
+    this.numVisited = this.data.visited.length;
 
     ga('send', 'event', 'Station', 'removePub', name);
   }
