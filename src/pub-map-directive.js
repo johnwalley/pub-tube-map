@@ -30,6 +30,14 @@ export default function() {
         $scope.onClick({item: name});
         $scope.$apply();
       });
+
+      $scope.$watch('data.selectedPub', function() {
+        map.selectStation($scope.data.selectedPub);
+      });
+
+      $scope.$watchCollection('data.visited', function() {
+        map.visitStations($scope.data.visited);
+      });
     }
   }
 }
