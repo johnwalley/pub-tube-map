@@ -41,10 +41,10 @@ a:hover {
 .progress-wrapper {
   position: absolute;
   margin-left: auto;
-  margin-right: 5px;
-  margin-top: 5px;
+  margin-right: 32px;
+  margin-top: 10px;
   left: auto;
-  right: 1%;
+  right: 5%;
 }
 
 .progress {

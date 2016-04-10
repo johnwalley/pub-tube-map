@@ -55,6 +55,28 @@ export default class PubMapCtrl {
     });
   }
 
+  share() {
+    // TODO: Can we make sure FB is initialized?
+    FB.ui({
+      method: 'share_open_graph',
+      action_type: 'pub-map:share',
+      action_properties: JSON.stringify({
+        'result': {
+          'pub-map:visited': 45,
+          'pub-map:total': 78,
+          'og:type': 'pub-map:result',
+          'og:url': 'http://www.pubmap.co.uk/',
+          'og:title': `I\'ve been to ${this.numVisited}/${this.totalPubs} pubs in Cambridge! How do you compare?`,
+          'og:description': 'A map of Cambridge pubs',
+          'og:image': 'http://www.pubmap.co.uk/img/facebook.png'
+        }
+      })
+    }, function(response){
+      // Debug response (optional)
+      console.log(response);
+    });
+  }
+
   onClick(item) {
     this.selectPub(item);
   }
