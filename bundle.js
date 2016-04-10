@@ -93899,10 +93899,7 @@
 	    var width = 1600;
 	    var height = 1024;
 	
-	    this.visited = [];
-	
 	    this.developerMode = false;
-	    this.numVisited = this.visited.length;
 	    this.pub = {
 	      title: 'Default Pub'
 	    };
@@ -93911,22 +93908,22 @@
 	
 	    d3.json('pubs.json', function (data) {
 	      _this.data = data;
-	
+	      _this.data.visited = [];
+	      _this.numVisited = _this.data.visited.length;
 	      _this.totalPubs = Object.keys(data.stations).length;
 	
 	      var path = _this.$location.path().replace(/^\//g, '');
 	
 	      if (path.length) {
-	        _this.visited = path.split(',');
-	        _this.visited.map(function (pub) {
-	          _this.map.addStation(pub);
+	        _this.data.visited = path.split(',');
+	        _this.data.visited.map(function (pub) {
 	          _this.data.stations[pub].visited = true;
 	        });
 	      } else {
-	        _this.visited = [];
+	        _this.data.visited = [];
 	      }
 	
-	      _this.numVisited = _this.visited.length;
+	      _this.numVisited = _this.data.visited.length;
 	      _this.$scope.$apply(); // TODO: Fix these ugly hacks
 	    });
 	  }
@@ -93934,7 +93931,6 @@
 	  _createClass(PubMapCtrl, [{
 	    key: 'onClick',
 	    value: function onClick(item) {
-	      console.log("Controller onCLick handler called");
 	      this.selectPub(item);
 	    }
 	  }, {
@@ -94023,12 +94019,15 @@
 	        this.showListBottomSheet();
 	      }
 	
-	      ga('send', 'event', 'Station', 'click', name);
+	      this.data.selectedPub = pubName;
+	
+	      ga('send', 'event', 'Station', 'click', pubName);
 	    }
 	  }, {
 	    key: 'centerPub',
 	    value: function centerPub(name) {
-	      this.map.centerOnPub(name);
+	      // TODO: Make data driven
+	      //this.map.centerOnPub(name);
 	    }
 	  }, {
 	    key: 'selectNearestPub',
@@ -94086,7 +94085,7 @@
 	    value: function togglePub() {
 	      var name = this.pub.name;
 	
-	      var index = this.visited.indexOf(name);
+	      var index = this.data.visited.indexOf(name);
 	
 	      if (index === -1) {
 	        this.addPub();
@@ -94094,24 +94093,22 @@
 	        this.removePub();
 	      }
 	
-	      this.$location.path(this.visited);
+	      this.$location.path(this.data.visited);
 	    }
 	  }, {
 	    key: 'addPub',
 	    value: function addPub() {
 	      var name = this.pub.name;
 	
-	      if (this.visited.indexOf(name) === -1) {
+	      if (this.data.visited.indexOf(name) === -1) {
 	        this.data.stations[name].visited = true;
-	        this.visited.push(name);
+	        this.data.visited.push(name);
 	        this.pub.visited = true;
 	        this.pub.clickIcon = 'done';
 	        this.pub.backgroundColor = 'rgb(0, 222, 121)';
-	
-	        this.map.addStation(name);
 	      }
 	
-	      this.numVisited = this.visited.length;
+	      this.numVisited = this.data.visited.length;
 	
 	      this.$mdToast.show(this.$mdToast.simple().textContent('Progress saved').position('top').hideDelay(1000));
 	
@@ -94122,19 +94119,20 @@
 	    value: function removePub() {
 	      var name = this.pub.name;
 	      var label = d3.select("#" + name);
-	      var index = this.visited.indexOf(name);
+	      var index = this.data.visited.indexOf(name);
 	
 	      if (index > -1) {
 	        this.data.stations[name].visited = false;
-	        this.visited.splice(index, 1);
+	        this.data.visited.splice(index, 1);
 	        this.pub.visited = false;
 	        this.pub.clickIcon = 'add';
 	        this.pub.backgroundColor = 'rgb(0,152,212)';
 	
-	        this.map.removeStation(name);
+	        // TODO: Make data driven
+	        //this.map.removeStation(name);
 	      }
 	
-	      this.numVisited = this.visited.length;
+	      this.numVisited = this.data.visited.length;
 	
 	      ga('send', 'event', 'Station', 'removePub', name);
 	    }
@@ -94253,6 +94251,14 @@
 	      map.on('click', function (name) {
 	        $scope.onClick({ item: name });
 	        $scope.$apply();
+	      });
+	
+	      $scope.$watch('data.selectedPub', function () {
+	        map.selectStation($scope.data.selectedPub);
+	      });
+	
+	      $scope.$watchCollection('data.visited', function () {
+	        map.visitStations($scope.data.visited);
 	      });
 	    }
 	  };
