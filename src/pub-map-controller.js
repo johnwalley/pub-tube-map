@@ -27,7 +27,6 @@ export default class PubMapCtrl {
     const height = 1024;
 
     this.visited = [];
-
     this.developerMode = false;
     this.numVisited = this.visited.length;
     this.pub = {
@@ -46,7 +45,8 @@ export default class PubMapCtrl {
       if (path.length) {
         _this.visited = path.split(',');
         _this.visited.map((pub) => {
-          _this.map.addStation(pub);
+          // TODO: Make data driven
+          //_this.map.addStation(pub);
           _this.data.stations[pub].visited = true;
         });
       } else {
@@ -146,7 +146,8 @@ export default class PubMapCtrl {
   }
 
   centerPub(name) {
-    this.map.centerOnPub(name);
+    // TODO: Make data driven
+    //this.map.centerOnPub(name);
   }
 
   selectNearestPub() {
@@ -224,7 +225,8 @@ export default class PubMapCtrl {
       this.pub.clickIcon = 'done';
       this.pub.backgroundColor = 'rgb(0, 222, 121)';
 
-      this.map.addStation(name);
+      // TODO: Make data driven
+      //this.map.addStation(name);
     }
 
     this.numVisited = this.visited.length;
@@ -250,7 +252,8 @@ export default class PubMapCtrl {
       this.pub.clickIcon = 'add';
       this.pub.backgroundColor = 'rgb(0,152,212)';
 
-      this.map.removeStation(name);
+      // TODO: Make data driven
+      //this.map.removeStation(name);
     }
 
     this.numVisited = this.visited.length;
