@@ -34,24 +34,9 @@ export default class PubMapCtrl {
       title: 'Default Pub',
     };
 
-    const map = tubeMap()
-      .width(width)
-      .height(height)
-      .margin({
-        top: height / 50,
-        right: width / 7,
-        bottom: height / 10,
-        left: width / 7,
-      });
-
-    this.map = map;
-
     const _this = this;
 
     d3.json('pubs.json', function (data) {
-      d3.select("#map").datum(data)
-        .call(map);
-
       _this.data = data;
 
       _this.totalPubs = Object.keys(data.stations).length;
@@ -70,12 +55,12 @@ export default class PubMapCtrl {
 
       _this.numVisited = _this.visited.length;
       _this.$scope.$apply(); // TODO: Fix these ugly hacks
-
-      _this.map.on('click', (name) => {
-        _this.selectPub(name);
-        _this.$scope.$apply();
-      });
     });
+  }
+
+  onClick(item) {
+    console.log("Controller onCLick handler called")
+    this.selectPub(item);
   }
 
   toggleLeft() {
@@ -127,7 +112,7 @@ export default class PubMapCtrl {
           if (status === maps.places.PlacesServiceStatus.OK) {
             if (place.hasOwnProperty('opening_hours')) {
               const now = new Date(Date.now());
-              const dayOfWeek = (now.getDay() - 1) % 7;
+              const dayOfWeek = (now.getDay() + 6) % 7;
 
               const str = place.opening_hours.weekday_text[dayOfWeek]
 

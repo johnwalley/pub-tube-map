@@ -72,24 +72,28 @@
 	
 	var _pubMapController2 = _interopRequireDefault(_pubMapController);
 	
-	var _minimizeUrl = __webpack_require__(21);
+	var _pubMapDirective = __webpack_require__(21);
+	
+	var _pubMapDirective2 = _interopRequireDefault(_pubMapDirective);
+	
+	var _minimizeUrl = __webpack_require__(22);
 	
 	var _minimizeUrl2 = _interopRequireDefault(_minimizeUrl);
 	
-	var _config = __webpack_require__(22);
+	var _config = __webpack_require__(23);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
-	var _pubs = __webpack_require__(23);
+	var _pubs = __webpack_require__(24);
 	
 	var _pubs2 = _interopRequireDefault(_pubs);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(24);
-	__webpack_require__(28);
+	__webpack_require__(25);
+	__webpack_require__(29);
 	
-	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).service('pubs', _pubs2.default).filter('minimizeUrl', _minimizeUrl2.default);
+	_angular2.default.module('pubMapApp', [_angularMaterial2.default, _angularMaterialIcons2.default, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar']).config(_config2.default).controller('PubMapCtrl', _pubMapController2.default).directive('pubMap', _pubMapDirective2.default).service('pubs', _pubs2.default).filter('minimizeUrl', _minimizeUrl2.default);
 
 /***/ },
 /* 1 */
@@ -93903,20 +93907,9 @@
 	      title: 'Default Pub'
 	    };
 	
-	    var map = tubeMap().width(width).height(height).margin({
-	      top: height / 50,
-	      right: width / 7,
-	      bottom: height / 10,
-	      left: width / 7
-	    });
-	
-	    this.map = map;
-	
 	    var _this = this;
 	
 	    d3.json('pubs.json', function (data) {
-	      d3.select("#map").datum(data).call(map);
-	
 	      _this.data = data;
 	
 	      _this.totalPubs = Object.keys(data.stations).length;
@@ -93935,15 +93928,16 @@
 	
 	      _this.numVisited = _this.visited.length;
 	      _this.$scope.$apply(); // TODO: Fix these ugly hacks
-	
-	      _this.map.on('click', function (name) {
-	        _this.selectPub(name);
-	        _this.$scope.$apply();
-	      });
 	    });
 	  }
 	
 	  _createClass(PubMapCtrl, [{
+	    key: 'onClick',
+	    value: function onClick(item) {
+	      console.log("Controller onCLick handler called");
+	      this.selectPub(item);
+	    }
+	  }, {
 	    key: 'toggleLeft',
 	    value: function toggleLeft() {
 	      this.buildToggler('left');
@@ -93999,7 +93993,7 @@
 	            if (status === maps.places.PlacesServiceStatus.OK) {
 	              if (place.hasOwnProperty('opening_hours')) {
 	                var now = new Date(Date.now());
-	                var dayOfWeek = (now.getDay() - 1) % 7;
+	                var dayOfWeek = (now.getDay() + 6) % 7;
 	
 	                var str = place.opening_hours.weekday_text[dayOfWeek];
 	
@@ -94231,6 +94225,46 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  return {
+	    restrict: 'EA',
+	    scope: {
+	      data: '=',
+	      onClick: '&'
+	    },
+	    link: function link($scope, element, attrs) {
+	      var svg = d3.select(element[0]).append('svg').style('width', '100%').style('height', '100%');
+	
+	      var width = 1600;
+	      var height = 1024;
+	
+	      var map = tubeMap().width(width).height(height).margin({
+	        top: height / 50,
+	        right: width / 7,
+	        bottom: height / 10,
+	        left: width / 7
+	      });
+	
+	      svg.datum($scope.data).call(map);
+	
+	      map.on('click', function (name) {
+	        $scope.onClick({ item: name });
+	        $scope.$apply();
+	      });
+	    }
+	  };
+	};
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
@@ -94262,7 +94296,7 @@
 	;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -94284,7 +94318,7 @@
 	;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -94341,16 +94375,16 @@
 	exports.default = pubs;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(25);
+	var content = __webpack_require__(26);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(27)(content, {});
+	var update = __webpack_require__(28)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -94367,10 +94401,10 @@
 	}
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(26)();
+	exports = module.exports = __webpack_require__(27)();
 	// imports
 	
 	
@@ -94381,7 +94415,7 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/*
@@ -94437,7 +94471,7 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -94689,16 +94723,16 @@
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(29);
+	var content = __webpack_require__(30);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(27)(content, {});
+	var update = __webpack_require__(28)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -94715,10 +94749,10 @@
 	}
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(26)();
+	exports = module.exports = __webpack_require__(27)();
 	// imports
 	
 	

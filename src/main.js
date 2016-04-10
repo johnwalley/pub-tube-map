@@ -10,6 +10,7 @@ import 'angular-simple-logger';
 import 'angular-svg-round-progressbar';
 
 import PubMapCtrl from './pub-map-controller';
+import PubMapDirective from './pub-map-directive.js';
 import minimizeUrl from './minimize-url.js';
 import config from './config.js';
 import pubs from './pubs.js'
@@ -20,5 +21,6 @@ require('../tube-map.css');
 angular.module('pubMapApp', [ngMaterial, ngMdIcons, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar'])
 .config(config)
 .controller('PubMapCtrl', PubMapCtrl)
+.directive('pubMap', PubMapDirective)
 .service('pubs', pubs)
 .filter('minimizeUrl', minimizeUrl);
