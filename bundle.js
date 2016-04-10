@@ -93929,6 +93929,29 @@
 	  }
 	
 	  _createClass(PubMapCtrl, [{
+	    key: 'share',
+	    value: function share() {
+	      // TODO: Can we make sure FB is initialized?
+	      FB.ui({
+	        method: 'share_open_graph',
+	        action_type: 'pub-map:share',
+	        action_properties: JSON.stringify({
+	          'result': {
+	            'pub-map:visited': 45,
+	            'pub-map:total': 78,
+	            'og:type': 'pub-map:result',
+	            'og:url': 'http://www.pubmap.co.uk/',
+	            'og:title': 'I\'ve been to ' + this.numVisited + '/' + this.totalPubs + ' pubs in Cambridge! How do you compare?',
+	            'og:description': 'A map of Cambridge pubs',
+	            'og:image': 'http://www.pubmap.co.uk/img/facebook.png'
+	          }
+	        })
+	      }, function (response) {
+	        // Debug response (optional)
+	        console.log(response);
+	      });
+	    }
+	  }, {
 	    key: 'onClick',
 	    value: function onClick(item) {
 	      this.selectPub(item);
@@ -94763,7 +94786,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html, body {\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\nbody {\r\n  overflow: hidden;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n  color: rgba(0,0,0,0.87);\r\n}\r\n\r\na:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.md-sidenav-left p {\r\n  font-size: 13px;\r\n}\r\n\r\n.toggle-pub-button {\r\n  margin: -30px 8px 10px;\r\n  background-color: rgb(0,152,212);\r\n  fill: rgb(255, 255, 255);\r\n}\r\n\r\n.angular-google-map-container { height: 300px; }\r\n\r\n.autocomplete {\r\n  width: 200px;\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 60px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 20%;\r\n}\r\n\r\n.progress-wrapper {\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 5px;\r\n  margin-top: 5px;\r\n  left: auto;\r\n  right: 1%;\r\n}\r\n\r\n.progress {\r\n    position: absolute;\r\n    font-weight: 100;\r\n    line-height: 1;\r\n    transform: translateY(-50%) translateX(-50%);\r\n    top: 50%;\r\n    bottom: auto;\r\n    left: 50%;\r\n    color: rgba(0, 0, 0, 0.9);\r\n    font-family: 'Hammersmith One', sans-serif;\r\n    font-size: 22px;\r\n    text-align: center;\r\n}\r\n\r\n\r\nh2.name {\r\n  -webkit-margin-before: 0em;\r\n  -webkit-margin-after: 0.2em;\r\n  -webkit-margin-start: 0px;\r\n  -webkit-margin-end: 0px;\r\n}\r\ntext {\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  fill: #0019A8;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  font-weight: normal;\r\n}\r\n.side-nav-content {\r\n  overflow-x: hidden;\r\n  margin: -20px 0px 0px 0px;\r\n}\r\n.side-nav-info-icon {\r\n  margin: 0px 24px 0px 0px !important;\r\n  color: rgb(49, 133, 255);\r\n}\r\n.side-nav-info-list md-list-item {\r\n  padding: 0px 24px 6px 0px;\r\n  min-height: 0px;\r\n}\r\n\r\n/*text:hover {\r\n  opacity: 0.6;\r\n}*/\r\n\r\ntext.highlighted {\r\n  text-decoration: line-through;\r\n}\r\n.line {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.line.translucent {\r\n  opacity: 0.1;\r\n}\r\n.station {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.station.translucent {\r\n  opacity: 0.1;\r\n}\r\n.interchange {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.interchange.translucent {\r\n  opacity: 0.3;\r\n}\r\n\r\n.label {\r\n  transition: opacity 0.5s ease-out;\r\n  transition: transform 0.5s ease-in-out;\r\n  transform-origin: 50% 50%;\r\n}\r\n\r\n.label.translucent {\r\n  opacity: 0.1;\r\n}\r\n\r\n.label.selected {\r\n  transform: scale(1.2);\r\n}\r\n", ""]);
+	exports.push([module.id, "html, body {\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\nbody {\r\n  overflow: hidden;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n  color: rgba(0,0,0,0.87);\r\n}\r\n\r\na:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.md-sidenav-left p {\r\n  font-size: 13px;\r\n}\r\n\r\n.toggle-pub-button {\r\n  margin: -30px 8px 10px;\r\n  background-color: rgb(0,152,212);\r\n  fill: rgb(255, 255, 255);\r\n}\r\n\r\n.angular-google-map-container { height: 300px; }\r\n\r\n.autocomplete {\r\n  width: 200px;\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 60px;\r\n  margin-top: 20px;\r\n  left: auto;\r\n  right: 20%;\r\n}\r\n\r\n.progress-wrapper {\r\n  position: absolute;\r\n  margin-left: auto;\r\n  margin-right: 32px;\r\n  margin-top: 10px;\r\n  left: auto;\r\n  right: 5%;\r\n}\r\n\r\n.progress {\r\n    position: absolute;\r\n    font-weight: 100;\r\n    line-height: 1;\r\n    transform: translateY(-50%) translateX(-50%);\r\n    top: 50%;\r\n    bottom: auto;\r\n    left: 50%;\r\n    color: rgba(0, 0, 0, 0.9);\r\n    font-family: 'Hammersmith One', sans-serif;\r\n    font-size: 22px;\r\n    text-align: center;\r\n}\r\n\r\n\r\nh2.name {\r\n  -webkit-margin-before: 0em;\r\n  -webkit-margin-after: 0.2em;\r\n  -webkit-margin-start: 0px;\r\n  -webkit-margin-end: 0px;\r\n}\r\ntext {\r\n  font-family: 'Hammersmith One', sans-serif;\r\n  fill: #0019A8;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  font-weight: normal;\r\n}\r\n.side-nav-content {\r\n  overflow-x: hidden;\r\n  margin: -20px 0px 0px 0px;\r\n}\r\n.side-nav-info-icon {\r\n  margin: 0px 24px 0px 0px !important;\r\n  color: rgb(49, 133, 255);\r\n}\r\n.side-nav-info-list md-list-item {\r\n  padding: 0px 24px 6px 0px;\r\n  min-height: 0px;\r\n}\r\n\r\n/*text:hover {\r\n  opacity: 0.6;\r\n}*/\r\n\r\ntext.highlighted {\r\n  text-decoration: line-through;\r\n}\r\n.line {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.line.translucent {\r\n  opacity: 0.1;\r\n}\r\n.station {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.station.translucent {\r\n  opacity: 0.1;\r\n}\r\n.interchange {\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  transition-timing-function: ease-out;\r\n}\r\n.interchange.translucent {\r\n  opacity: 0.3;\r\n}\r\n\r\n.label {\r\n  transition: opacity 0.5s ease-out;\r\n  transition: transform 0.5s ease-in-out;\r\n  transform-origin: 50% 50%;\r\n}\r\n\r\n.label.translucent {\r\n  opacity: 0.1;\r\n}\r\n\r\n.label.selected {\r\n  transform: scale(1.2);\r\n}\r\n", ""]);
 	
 	// exports
 
