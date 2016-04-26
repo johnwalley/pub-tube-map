@@ -33,13 +33,11 @@ export default class PubMapCtrl {
       title: 'Default Pub',
     };
 
-
     const _this = this;
 
     d3.json('pubs.json', function (data) {
       _this.data = data;
       _this.data.visited = [];
-      _this.data.centeredPub = undefined;
       _this.numVisited = _this.data.visited.length;
       _this.totalPubs = Object.keys(data.stations).length;
 

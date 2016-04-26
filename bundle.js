@@ -95384,7 +95384,6 @@
 	    d3.json('pubs.json', function (data) {
 	      _this.data = data;
 	      _this.data.visited = [];
-	      _this.data.centeredPub = undefined;
 	      _this.numVisited = _this.data.visited.length;
 	      _this.totalPubs = Object.keys(data.stations).length;
 	
@@ -95767,12 +95766,13 @@
 	        map.selectStation($scope.data.selectedPub);
 	      });
 	
-	      $scope.$watchCollection('data.visited', function () {
-	        map.visitStations($scope.data.visited);
+	      $scope.$watch('data.centeredPub', function () {
+	        map.centerOnPub($scope.data.centeredPub);
+	        $scope.data.centeredPub = undefined;
 	      });
 	
-	      $scope.$watchCollection('data.centeredPub', function () {
-	        map.centerOnPub($scope.data.centeredPub);
+	      $scope.$watchCollection('data.visited', function () {
+	        map.visitStations($scope.data.visited);
 	      });
 	    }
 	  };

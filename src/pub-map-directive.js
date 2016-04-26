@@ -35,12 +35,13 @@ export default function() {
         map.selectStation($scope.data.selectedPub);
       });
 
-      $scope.$watchCollection('data.visited', function() {
-        map.visitStations($scope.data.visited);
+      $scope.$watch('data.centeredPub', function() {
+        map.centerOnPub($scope.data.centeredPub);
+        $scope.data.centeredPub = undefined;
       });
 
-      $scope.$watchCollection('data.centeredPub', function() {
-        map.centerOnPub($scope.data.centeredPub);
+      $scope.$watchCollection('data.visited', function() {
+        map.visitStations($scope.data.visited);
       });
     }
   }
