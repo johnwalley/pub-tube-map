@@ -26,6 +26,8 @@ export default class PubMapCtrl {
     const width = 1600;
     const height = 1024;
 
+    this.bottomsheetVisible = false;
+
     this.developerMode = false;
     this.pub = {
       title: 'Default Pub',
@@ -212,13 +214,20 @@ export default class PubMapCtrl {
   }
 
   showListBottomSheet() {
-    this.$mdBottomSheet.show({
-      templateUrl: 'src/bottomSheetTemplate.html',
-      controller: 'PubMapCtrl',
-      scope: this.$scope, // Needs a real scope object to call methods like $watch
-      disableParentScroll: false,
-      preserveScope: true, // TODO: Surely this is a hack
-    });
+
+    if (!this.bottomsheetVisible) {
+      this.$mdBottomSheet.show({
+        templateUrl: 'src/bottomSheetTemplate.html',
+        controller: 'PubMapCtrl',
+        scope: this.$scope, // Needs a real scope object to call methods like $watch
+        disableParentScroll: false,
+        disableBackdrop: true,
+        clickOutsideToClose: false,
+        preserveScope: true, // TODO: Surely this is a hack
+      }).then(() => { this.bottomsheetVisible = false; }, () => { this.bottomsheetVisible = false; }); // resolved on hide() and rejected on cancel()
+    }
+
+    this.bottomsheetVisible = true;
   }
 
   togglePub() {
