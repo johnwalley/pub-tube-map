@@ -38,6 +38,10 @@ export default function() {
       $scope.$watchCollection('data.visited', function() {
         map.visitStations($scope.data.visited);
       });
+
+      $scope.$watchCollection('data.centeredPub', function() {
+        map.centerOnPub($scope.data.centeredPub);
+      });
     }
   }
 }
