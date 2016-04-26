@@ -95384,6 +95384,7 @@
 	    d3.json('pubs.json', function (data) {
 	      _this.data = data;
 	      _this.data.visited = [];
+	      _this.data.centeredPub = undefined;
 	      _this.numVisited = _this.data.visited.length;
 	      _this.totalPubs = Object.keys(data.stations).length;
 	
@@ -95524,8 +95525,7 @@
 	  }, {
 	    key: 'centerPub',
 	    value: function centerPub(name) {
-	      // TODO: Make data driven
-	      //this.map.centerOnPub(name);
+	      this.data.centeredPub = name;
 	    }
 	  }, {
 	    key: 'selectNearestPub',
@@ -95769,6 +95769,10 @@
 	
 	      $scope.$watchCollection('data.visited', function () {
 	        map.visitStations($scope.data.visited);
+	      });
+	
+	      $scope.$watchCollection('data.centeredPub', function () {
+	        map.centerOnPub($scope.data.centeredPub);
 	      });
 	    }
 	  };

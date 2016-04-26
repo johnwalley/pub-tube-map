@@ -346,6 +346,8 @@ function tubeMap() {
   }
 
   map.centerOnPub = function(name) {
+    if (name === undefined) return;
+
     var station = model.stations.stations[name];
 
     var width = window.innerWidth;
