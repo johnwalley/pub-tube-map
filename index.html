@@ -102,26 +102,6 @@
               </span>
             </md-item-template>
           </md-autocomplete>
-          <div class="progress-wrapper">
-            <div class="progress ng-cloak">{{ pubMap.numVisited }}/{{ pubMap.totalPubs }}</div>
-            <div id="score"
-                ng-cloak
-                round-progress
-                max="pubMap.totalPubs"
-                current="pubMap.numVisited"
-                color="rgb(0,152,212)"
-                bgcolor="rgba(0,76,106,0.1)"
-                radius="50"
-                stroke="20"
-                semi="false"
-                rounded="false"
-                clockwise="false"
-                responsive="false"
-                duration="800"
-                animation="easeInOutQuart"
-                animation-delay="0">
-            </div>
-          </div>
           <p id='html_attributions' ng-show="false"></p>
           <pub-map data="pubMap.data" ng-if="pubMap.data" on-click="pubMap.onClick(item)"></pub-map>
         </div>
