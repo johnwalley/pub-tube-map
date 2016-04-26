@@ -93899,6 +93899,8 @@
 	    var width = 1600;
 	    var height = 1024;
 	
+	    this.bottomsheetVisible = false;
+	
 	    this.developerMode = false;
 	    this.pub = {
 	      title: 'Default Pub'
@@ -94095,16 +94097,28 @@
 	  }, {
 	    key: 'showListBottomSheet',
 	    value: function showListBottomSheet() {
-	      this.$mdBottomSheet.show({
-	        templateUrl: 'src/bottomSheetTemplate.html',
-	        controller: 'PubMapCtrl',
-	        scope: this.$scope, // Needs a real scope object to call methods like $watch
-	        disableParentScroll: false,
-	        preserveScope: true });
+	      var _this5 = this;
+	
+	      if (!this.bottomsheetVisible) {
+	        this.$mdBottomSheet.show({
+	          templateUrl: 'src/bottomSheetTemplate.html',
+	          controller: 'PubMapCtrl',
+	          scope: this.$scope, // Needs a real scope object to call methods like $watch
+	          disableParentScroll: false,
+	          disableBackdrop: true,
+	          clickOutsideToClose: false,
+	          preserveScope: true }). // TODO: Surely this is a hack
+	        then(function () {
+	          _this5.bottomsheetVisible = false;
+	        }, function () {
+	          _this5.bottomsheetVisible = false;
+	        }); // resolved on hide() and rejected on cancel()
+	      }
+	
+	      this.bottomsheetVisible = true;
 	    }
 	  }, {
 	    key: 'togglePub',
-	    // TODO: Surely this is a hack
 	    value: function togglePub() {
 	      var name = this.pub.name;
 	
@@ -94162,7 +94176,7 @@
 	  }, {
 	    key: 'displayDirections',
 	    value: function displayDirections() {
-	      var _this5 = this;
+	      var _this6 = this;
 	
 	      var directionsDisplay = void 0;
 	      var directionsService = void 0;
@@ -94173,14 +94187,14 @@
 	        directionsService = new maps.DirectionsService();
 	        directionsDisplay = new maps.DirectionsRenderer();
 	
-	        return _this5.uiGmapIsReady.promise(1);
+	        return _this6.uiGmapIsReady.promise(1);
 	      }).then(function (instances) {
 	        directionsDisplay.setMap(instances[0].map);
 	
 	        // TODO: Remove nested promises
-	        _this5.geolocation.getLocation().then(function (position) {
+	        _this6.geolocation.getLocation().then(function (position) {
 	          var start = position.coords.latitude + ',' + position.coords.longitude;
-	          var end = _this5.pub.address;
+	          var end = _this6.pub.address;
 	          var request = {
 	            origin: start,
 	            destination: end,
