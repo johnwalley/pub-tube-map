@@ -36,6 +36,7 @@
     "angular-aria": "^1.5.3",
     "angular-google-maps": "^2.3.2",
     "angular-material": "^1.0.6",
+    "angular-material-bottom-sheet-collapsible": "^0.0.3",
     "angular-material-icons": "^0.7.0",
     "angular-simple-logger": "^0.1.7",
     "angular-svg-round-progressbar": "^0.4.2",

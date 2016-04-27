@@ -10,10 +10,11 @@ export default class PubMapCtrl {
     uiGmapGoogleMapApi,
     uiGmapIsReady,
     pubs,
-    geolocation) {
+    geolocation,
+    $mdBottomSheetCollapsible) {
     this.$scope = $scope;
     this.$mdSidenav = $mdSidenav;
-    this.$mdBottomSheet = $mdBottomSheet;
+    this.$mdBottomSheet = $mdBottomSheetCollapsible;
     this.$mdMedia = $mdMedia;
     this.$mdToast = $mdToast;
     this.$location = $location;
