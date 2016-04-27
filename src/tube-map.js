@@ -100,11 +100,13 @@ function tubeMap() {
         gEnter.attr("transform", "translate(" + t + ")scale(" + s + ")");
       };
 
-      zoom = d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([0.5, 6]).on("zoom", zoomed)
+      var initialScale = 1.5;
+
+      zoom = d3.behavior.zoom().scale(initialScale).translate([-200,-300]).scaleExtent([0.5, 6]).on("zoom", zoomed)
 
       gEnter = g.call(zoom).append("g");
 
-      gEnter.attr("transform", "translate(-200,-300) scale(2)")
+      gEnter.attr("transform", "translate(-200,-300) scale(" + initialScale + ")")
 
       var river = gEnter.append("g").attr("class", "river")
         .selectAll("path").data(function(d) { return [d.river]; });

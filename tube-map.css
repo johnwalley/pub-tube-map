@@ -26,7 +26,19 @@ a:hover {
   fill: rgb(255, 255, 255);
 }
 
+.directions-button {
+  margin: -30px 8px 10px;
+  fill: rgb(255, 255, 255);
+  background-color: rgb(66,133,244) !important;
+}
+
 .angular-google-map-container { height: 300px; }
+
+md-bottom-sheet-collapsible {
+  background-color: rgb(255,255,255);
+}
+
+
 
 .autocomplete {
   width: 200px;
