@@ -1,4 +1,4 @@
-<md-bottom-sheet ng-cloak style="padding-top:0px;">
+<md-bottom-sheet-collapsible ng-cloak style="padding-top:0px;">
   <div layout="row" layout-align="end">
     <md-button ng-click="pubMap.togglePub()" class="md-fab md-primary toggle-pub-button" style="background-color: {{pubMap.pub.backgroundColor}}" aria-label="Add Pub">
       <ng-md-icon icon="{{pubMap.pub.clickIcon}}" size="32" options='{"duration": 375, "rotation": "clockwise"}'></ng-md-icon>
@@ -7,4 +7,4 @@
   <md-content layout-padding class="side-nav-content">
     <h2 class="name">{{pubMap.pub.title}}</h2>
   </md-content>
-</md-bottom-sheet>
+</md-bottom-sheet-collapsible>
