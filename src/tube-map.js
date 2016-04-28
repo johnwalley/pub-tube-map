@@ -372,7 +372,7 @@ function tubeMap() {
   }
 
   map.visitStations = function(visited) {
-    d3.selectAll(".labels").select("text").classed("highlighted", false);
+    d3.selectAll(".label").select("text").classed("highlighted", false);
     visited.map((pub) => {
       visitStation(pub, true);
     });
