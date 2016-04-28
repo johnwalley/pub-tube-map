@@ -11,6 +11,8 @@ import 'lodash';
 import 'angular-simple-logger';
 import 'angular-svg-round-progressbar';
 
+import 'd3';
+
 import PubMapCtrl from './pub-map-controller';
 import PubMapDirective from './pub-map-directive.js';
 import minimizeUrl from './minimize-url.js';

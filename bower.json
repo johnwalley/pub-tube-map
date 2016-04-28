@@ -17,7 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "svg-morpheus": "^0.1.8",
-    "d3": "^3.5.16"
+    "svg-morpheus": "^0.1.8"
   }
 }

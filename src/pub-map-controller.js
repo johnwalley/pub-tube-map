@@ -257,12 +257,6 @@ export default class PubMapCtrl {
 
     this.numVisited = this.data.visited.length;
 
-    this.$mdToast.show(
-      this.$mdToast.simple()
-        .textContent('Progress saved')
-        .position('top')
-        .hideDelay(1000));
-
     ga('send', 'event', 'Station', 'addPub', name);
   }
 
