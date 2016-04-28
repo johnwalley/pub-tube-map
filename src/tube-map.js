@@ -101,12 +101,13 @@ function tubeMap() {
       };
 
       var initialScale = 1.5;
+      var initialTranslate = [-300*initialScale, -200*initialScale]
 
-      zoom = d3.behavior.zoom().scale(initialScale).translate([-200,-300]).scaleExtent([0.5, 6]).on("zoom", zoomed)
+      zoom = d3.behavior.zoom().scale(initialScale).translate(initialTranslate).scaleExtent([0.5, 6]).on("zoom", zoomed)
 
       gEnter = g.call(zoom).append("g");
 
-      gEnter.attr("transform", "translate(-200,-300) scale(" + initialScale + ")")
+      gEnter.attr("transform", "translate(" + initialTranslate[0] + "," + initialTranslate[1] + ") scale(" + initialScale + ")")
 
       var river = gEnter.append("g").attr("class", "river")
         .selectAll("path").data(function(d) { return [d.river]; });
