@@ -1,3 +1,15 @@
+@Inject('$scope',
+'$mdSidenav',
+'$mdBottomSheet',
+'$mdMedia',
+'$mdToast',
+'$location',
+'$log',
+'uiGmapGoogleMapApi',
+'uiGmapIsReady',
+'pubs',
+'geolocation',
+'$mdBottomSheetCollapsible')
 export default class PubMapCtrl {
   constructor(
     $scope,

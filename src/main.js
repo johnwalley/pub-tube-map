@@ -16,7 +16,7 @@ import 'd3';
 import PubMapCtrl from './pub-map-controller';
 import PubMapDirective from './pub-map-directive.js';
 import minimizeUrl from './minimize-url.js';
-import config from './config.js';
+import PubMapConfig from './config.js';
 import pubs from './pubs.js'
 
 require('../node_modules/angular-material/angular-material.min.css');
@@ -24,7 +24,7 @@ require('../node_modules/angular-material-bottom-sheet-collapsible/bottomSheetCo
 require('../tube-map.css');
 
 angular.module('pubMapApp', [ngMaterial, ngMdIcons, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar', 'material.components.bottomSheetCollapsible'])
-.config(config)
+.config(['$mdThemingProvider', 'uiGmapGoogleMapApiProvider', ($mdThemingProvider, uiGmapGoogleMapApiProvider) => new PubMapConfig($mdThemingProvider, uiGmapGoogleMapApiProvider)])
 .controller('PubMapCtrl', PubMapCtrl)
 .directive('pubMap', PubMapDirective)
 .service('pubs', pubs)
