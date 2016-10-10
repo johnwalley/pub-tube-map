@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
   entry: "./src/main.js",
   devtool: 'source-map',
@@ -11,7 +13,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
-        exclude: /node_modules/
+        include: path.resolve(__dirname, 'src')
       }, {
         test: /\.css$/,
         loader: "style-loader!css-loader"
