@@ -17,7 +17,7 @@ export default function() {
       const width = 1600;
       const height = 1024;
 
-      const map = tubeMap.tubeMap()()
+      const map = tubeMap.tubeMap()
         .width(width)
         .height(height)
         .margin({
