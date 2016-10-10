@@ -1,5 +1,5 @@
 import * as tubeMap from 'd3-tube-map';
-import * as d3 from 'd3';
+import {select} from 'd3-selection';
 
 export default function() {
   return {
@@ -9,7 +9,7 @@ export default function() {
       onClick: '&',
     },
     link: function($scope, element, attrs) {
-      const svg = d3.select(element[0])
+      const svg = select(element[0])
         .append('svg')
         .style('width', '100%')
         .style('height', '100%');

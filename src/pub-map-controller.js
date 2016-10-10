@@ -1,4 +1,5 @@
-import * as d3 from 'd3';
+import {json} from 'd3-request';
+import {select} from 'd3-selection';
 
 @Inject('$scope',
 '$mdSidenav',
@@ -50,7 +51,7 @@ export default class PubMapCtrl {
 
     const _this = this;
 
-    d3.json('pubs.json', function (data) {
+    json('pubs.json', function (data) {
       _this.data = data;
       _this.data.visited = [];
       _this.numVisited = _this.data.visited.length;
@@ -210,8 +211,8 @@ export default class PubMapCtrl {
       this.selectPub(nearestPub);
 
       // TODO: These lines need to go into the map
-      d3.select("#map").selectAll(".label").classed("selected", false);
-      d3.select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
+      select("#map").selectAll(".label").classed("selected", false);
+      select("#map").select(".labels").select("#" + nearestPub).classed("selected", true);
 
       ga('send', 'event', 'Nearest', 'click', nearestPub);
     });
@@ -222,13 +223,12 @@ export default class PubMapCtrl {
 
     this.centerPub(randomPubName);
     this.selectPub(randomPubName);
-    d3.select("#map").selectAll(".label").classed("selected", false);
+    select("#map").selectAll(".label").classed("selected", false);
 
-    d3.select("#map").select(".labels").select("#" + randomPubName).classed("selected", true);
+    select("#map").select(".labels").select("#" + randomPubName).classed("selected", true);
   }
 
   showListBottomSheet() {
-
     if (!this.bottomsheetVisible) {
       this.$mdBottomSheet.show({
         templateUrl: 'src/bottomSheetTemplate.html',
@@ -276,7 +276,7 @@ export default class PubMapCtrl {
 
   removePub() {
     const name = this.pub.name;
-    const label = d3.select("#" + name);
+    const label = select("#" + name);
     const index = this.data.visited.indexOf(name);
 
     if (index > -1) {
@@ -357,8 +357,8 @@ export default class PubMapCtrl {
       this.centerPub(item.value);
 
       // TODO: These lines need to go into the map
-      d3.select("#map").selectAll(".label").classed("selected", false);
-      d3.select("#map").select(".labels").select("#" + item.value).classed("selected", true);
+      select("#map").selectAll(".label").classed("selected", false);
+      select("#map").select(".labels").select("#" + item.value).classed("selected", true);
     }
   }
 }
