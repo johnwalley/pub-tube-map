@@ -105,18 +105,14 @@
           <p id='html_attributions' ng-show="false"></p>
           <pub-map data="pubMap.data" ng-if="pubMap.data" on-click="pubMap.onClick(item)"></pub-map>
         </div>
-        <md-button ng-cloak ng-click="pubMap.selectNearestPub()" class="md-fab md-primary md-fab-bottom-right toggle-pub-button" style="background-color: rgb(0,152,212);" aria-label="Go to nearest pub">
-          <md-tooltip md-direction="left" md-delay="1000">
-            Go to nearest pub
-          </md-tooltip>
-          <ng-md-icon icon="my_location" size="32"></ng-md-icon>
+        <md-button ng-cloak ng-click="pubMap.selectNearestPub()" class="md-fab md-primary md-fab-bottom-right nearest-pub-button" aria-label="Go to nearest pub">
+          <ng-md-icon icon="my_location" size="24"></ng-md-icon>
         </md-button>
       </md-content>
     </section>
   </div>
 
   <script src="bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
-  <script src="bower_components/d3/d3.min.js"></script>
   <script src="src/tube-map.js"></script>
   <script src="bundle.js"></script>
 

@@ -1,3 +1,15 @@
+@Inject('$scope',
+'$mdSidenav',
+'$mdBottomSheet',
+'$mdMedia',
+'$mdToast',
+'$location',
+'$log',
+'uiGmapGoogleMapApi',
+'uiGmapIsReady',
+'pubs',
+'geolocation',
+'$mdBottomSheetCollapsible')
 export default class PubMapCtrl {
   constructor(
     $scope,
@@ -10,10 +22,11 @@ export default class PubMapCtrl {
     uiGmapGoogleMapApi,
     uiGmapIsReady,
     pubs,
-    geolocation) {
+    geolocation,
+    $mdBottomSheetCollapsible) {
     this.$scope = $scope;
     this.$mdSidenav = $mdSidenav;
-    this.$mdBottomSheet = $mdBottomSheet;
+    this.$mdBottomSheet = $mdBottomSheetCollapsible;
     this.$mdMedia = $mdMedia;
     this.$mdToast = $mdToast;
     this.$location = $location;
@@ -168,8 +181,7 @@ export default class PubMapCtrl {
   }
 
   centerPub(name) {
-    // TODO: Make data driven
-    //this.map.centerOnPub(name);
+    this.data.centeredPub = name;
   }
 
   selectNearestPub() {
@@ -256,12 +268,6 @@ export default class PubMapCtrl {
     }
 
     this.numVisited = this.data.visited.length;
-
-    this.$mdToast.show(
-      this.$mdToast.simple()
-        .textContent('Progress saved')
-        .position('top')
-        .hideDelay(1000));
 
     ga('send', 'event', 'Station', 'addPub', name);
   }

@@ -100,11 +100,14 @@ function tubeMap() {
         gEnter.attr("transform", "translate(" + t + ")scale(" + s + ")");
       };
 
-      zoom = d3.behavior.zoom().scale(2).translate([-200,-300]).scaleExtent([0.5, 6]).on("zoom", zoomed)
+      var initialScale = 1.5;
+      var initialTranslate = [-300*initialScale, -200*initialScale]
+
+      zoom = d3.behavior.zoom().scale(initialScale).translate(initialTranslate).scaleExtent([0.5, 6]).on("zoom", zoomed)
 
       gEnter = g.call(zoom).append("g");
 
-      gEnter.attr("transform", "translate(-200,-300) scale(2)")
+      gEnter.attr("transform", "translate(" + initialTranslate[0] + "," + initialTranslate[1] + ") scale(" + initialScale + ")")
 
       var river = gEnter.append("g").attr("class", "river")
         .selectAll("path").data(function(d) { return [d.river]; });
@@ -346,6 +349,8 @@ function tubeMap() {
   }
 
   map.centerOnPub = function(name) {
+    if (name === undefined) return;
+
     var station = model.stations.stations[name];
 
     var width = window.innerWidth;
@@ -368,7 +373,7 @@ function tubeMap() {
   }
 
   map.visitStations = function(visited) {
-    d3.selectAll(".labels").select("text").classed("highlighted", false);
+    d3.selectAll(".label").select("text").classed("highlighted", false);
     visited.map((pub) => {
       visitStation(pub, true);
     });
