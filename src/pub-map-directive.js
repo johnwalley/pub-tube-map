@@ -1,3 +1,6 @@
+import * as tubeMap from 'd3-tube-map';
+import * as d3 from 'd3';
+
 export default function() {
   return {
     restrict: 'EA',
@@ -14,7 +17,7 @@ export default function() {
       const width = 1600;
       const height = 1024;
 
-      const map = tubeMap()
+      const map = tubeMap.tubeMap()()
         .width(width)
         .height(height)
         .margin({

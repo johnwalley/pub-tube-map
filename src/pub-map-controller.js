@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 @Inject('$scope',
 '$mdSidenav',
 '$mdBottomSheet',

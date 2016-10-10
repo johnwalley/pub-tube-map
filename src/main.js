@@ -11,8 +11,6 @@ import 'lodash';
 import 'angular-simple-logger';
 import 'angular-svg-round-progressbar';
 
-import 'd3';
-
 import PubMapCtrl from './pub-map-controller';
 import PubMapDirective from './pub-map-directive.js';
 import minimizeUrl from './minimize-url.js';
@@ -23,7 +21,13 @@ require('../node_modules/angular-material/angular-material.min.css');
 require('../node_modules/angular-material-bottom-sheet-collapsible/bottomSheetCollapsible.css');
 require('../tube-map.css');
 
-angular.module('pubMapApp', [ngMaterial, ngMdIcons, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar', 'material.components.bottomSheetCollapsible'])
+angular.module('d3Module', []).factory('d3', [
+  function(){
+    // returning our service so it can be used
+    return d3;
+}])
+
+angular.module('pubMapApp', ['d3Module', ngMaterial, ngMdIcons, 'uiGmapgoogle-maps', 'geolocation', 'angular-svg-round-progressbar', 'material.components.bottomSheetCollapsible'])
 .config(['$mdThemingProvider', 'uiGmapGoogleMapApiProvider', ($mdThemingProvider, uiGmapGoogleMapApiProvider) => new PubMapConfig($mdThemingProvider, uiGmapGoogleMapApiProvider)])
 .controller('PubMapCtrl', PubMapCtrl)
 .directive('pubMap', PubMapDirective)
