@@ -1,6 +1,6 @@
 {
   "name": "pub-tube-map",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Cambridge Pub Map in the Style of the Iconic London Underground Map",
   "homepage": "http://www.pubmap.co.uk",
   "main": "src/main.js",
@@ -44,6 +44,7 @@
     "angular-svg-round-progressbar": "^0.4.8",
     "angularjs-geolocation": "^0.1.3",
     "d3": "^3.5.17",
-    "lodash": "^4.16.4"
+    "lodash": "^4.16.4",
+    "svg-morpheus": "^0.3.0"
   }
 }
